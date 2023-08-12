@@ -1,0 +1,36 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{1728DFEF-251E-46BB-898F-59989AAEE014}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="Breakout.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="Breakout">
+        <MSBuild Projects="Breakout.dproj"/>
+    </Target>
+    <Target Name="Breakout:Clean">
+        <MSBuild Projects="Breakout.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Breakout:Make">
+        <MSBuild Projects="Breakout.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="Breakout"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="Breakout:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="Breakout:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
