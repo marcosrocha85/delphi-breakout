@@ -34,15 +34,15 @@ end;
 procedure TFrmDebug.FormShow(Sender: TObject);
 begin
   VLE.Strings.Clear;
-  VLE.InsertRow('Vidas','',False);
+  VLE.InsertRow('Lives','',False);
   VLE.InsertRow('Score','',False);
   VLE.InsertRow('Player Left','',False);
   VLE.InsertRow('Player Top','',False);
-  VLE.InsertRow('Bola Left','',False);
-  VLE.InsertRow('Bola Top','',False);
-  VLE.InsertRow('Barra Left','',False);
-  VLE.InsertRow('Barra Top','',False);
-  VLE.InsertRow('Barra Nome','',False);
+  VLE.InsertRow('Ball Left','',False);
+  VLE.InsertRow('Ball Top','',False);
+  VLE.InsertRow('Bar Left','',False);
+  VLE.InsertRow('Bar Top','',False);
+  VLE.InsertRow('Bar Name','',False);
 end;
 
 end.

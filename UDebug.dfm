@@ -12,10 +12,8 @@ object FrmDebug: TFrmDebug
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   KeyPreview = True
-  OldCreateOrder = False
   OnKeyDown = FormKeyDown
   OnShow = FormShow
-  PixelsPerInch = 96
   TextHeight = 13
   object VLE: TValueListEditor
     Left = 0
@@ -34,6 +32,8 @@ object FrmDebug: TFrmDebug
     TitleCaptions.Strings = (
       'Componente'
       'Valor')
+    ExplicitWidth = 248
+    ExplicitHeight = 445
     ColWidths = (
       150
       98)
