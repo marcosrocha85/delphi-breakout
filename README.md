@@ -3,6 +3,9 @@ My very first "game" written in Delphi
 
 <img src="https://github.com/marcosrocha85/delphi-breakout/blob/main/images/main%20game.jpg?size=400" width=400>
 
+# ATENÇÃO RECRUTADORES
+Este repositório não representa minha organização de código hoje em dia ou quaisquer práticas em Delphi atuais que utilizo. Ele foi desenvolvido no início do meu aprendizado e eu resolvi postar apenas para não deixar tudo "num PenDrive". Programo em Pascal produzindo pacotes de componentes DesignTime, RunTime, consigo criar .DLLs, comunicação com API do Windows e muito mais.
+
 # How to play?
 - When the game opens, it already ready to play. If you left click with your mouse you will start to play.
 - Press F2 to restart the game.
