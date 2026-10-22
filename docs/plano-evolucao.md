@@ -2,7 +2,7 @@
 
 Data: 22/10/2026. Ambiente de execução informado: Delphi 13, Windows.
 
-Status: plano de implementação incremental; **E0 concluída em 22/10/2026**. O diagnóstico inicial foi produzido por leitura dos fontes, formulários, configurações e imagem de referência. A compilação, os cenários executados e as medições posteriores estão no [relatório da E0](e0-referencia.md), distinguindo observações de execução das hipóteses ainda pendentes.
+Status: implementação incremental; **E0 e E1 concluídas em 22/10/2026**. O diagnóstico inicial foi produzido por leitura dos fontes, formulários, configurações e imagem de referência. A compilação, os cenários executados e as medições posteriores estão no [relatório da E0](e0-referencia.md). As correções de fluxo, builds e 43 regressões aprovadas estão no [resultado da E1](e1-resultados.md). Próxima etapa: E2, extração do motor e dos estados.
 
 ## 1. Objetivo e direção
 
@@ -17,7 +17,7 @@ Premissas de escopo:
 - Usar Win32 Debug como primeira referência e validar também Win64 e Release antes de concluir.
 - Adotar uma área lógica fixa inicialmente, sem transformar redimensionamento livre ou tela cheia em requisito.
 - Priorizar a biblioteca padrão e VCL. Troca de framework gráfico, rede, editor de fases e sistemas extensos de power-ups ficam fora da primeira entrega.
-- Este trabalho se limita ao plano no repositório, sem abertura de sessão da Gideon.
+- O plano e os resultados ficam no repositório, sem abertura de sessão da Gideon. A implementação prossegue por etapas autorizadas após a elaboração inicial do plano.
 
 ## 2. Diagnóstico com evidências
 
@@ -30,6 +30,7 @@ As linhas abaixo se referem à versão local analisada e mudarão durante a impl
 | Alta | `UMain.pas:111` a `UMain.pas:126`, resposta da raquete | Nas três regiões, os módulos dos deslocamentos X/Y são iguais: 15/15 nas pontas e 5/5 no centro. A inclinação permanece em 45°; mudam a velocidade e, nas pontas, o sentido horizontal. Calcular a proporção X/Y a partir do ponto de impacto para obter o ângulo proporcional desejado. |
 | Alta | `UMain.pas:153` e `UMain.pas:166` | A interseção é examinada antes do deslocamento, e a face atingida depende de condições sobrepostas, sem instante de impacto nem posição anterior. Corrigir faces, cantos, penetração e atravessamento em alta velocidade. |
 | Alta | `UMain.pas:166` a `UMain.pas:184`, seleção da face do bloco | A condição vertical do primeiro ramo já é garantida pelo teste externo de interseção; as condições horizontais são iguais às do `else if`. Assim, o ramo `bY := Up` é inacessível nesse fluxo: uma bola descendo pode continuar descendo e destruir o bloco sem refletir. O segundo ramo lateral também repete condições já satisfeitas e não distingue o lado atingido. Corrigir a seleção da face e testar cada sentido de aproximação. |
+| Alta | Relato do usuário em 22/10/2026: colisão na lateral do bloco | Às vezes a bola destrói o bloco sem ricochetear horizontalmente, continuando no mesmo sentido. Registrar e reproduzir separadamente os impactos nas faces esquerda e direita; corrigir na E3 para inverter a velocidade horizontal, preservando a vertical em contatos isolados de face e pontuando o bloco uma única vez. Este caso foi relatado pelo usuário; ainda falta uma reprodução dirigida específica. |
 | Alta | `UMain.pas:104` e `UMain.pas:130` | A raquete usa a borda esquerda da bola e margens fixas; a perda de vida depende também da posição horizontal relativa à raquete. Definir geometria coerente e uma linha inferior de perda independente da raquete. |
 | Alta | `UMain.pas:132` e fim de `Timer1Timer` | Depois de `Reposition` na perda de vida, a chamada continua e desloca a bola novamente. Encerrar o passo assim que houver transição de estado. |
 | Alta | `UMain.pas:30`, `PlayerClick`, `Pause`, `FormKeyDown` | Estado espalhado entre dois booleanos e `Timer1.Enabled`. Espaço durante pausa passa por `PlayerClick`, que reposiciona; F1 chama a atualização diretamente em qualquer estado. Centralizar as transições e as permissões de cada comando. |
@@ -156,6 +157,8 @@ Cada etapa deve resultar em uma alteração pequena e revisável, com build e ve
 
 ### Etapa 1 — Organizar o código e corrigir defeitos localizados
 
+**Concluída:** ver [resultado e evidências da E1](e1-resultados.md). Física e renderização permanecem nas etapas E3 e E4.
+
 - Extrair de `Timer1Timer` métodos como `HandleBounds`, `HandlePaddleCollision`, `HandleBrickCollisions`, `LoseLife`, `MoveBall` e `UpdateDebug` ainda no formulário.
 - Centralizar `StartNewGame`, lançamento e pausa, removendo fluxos diferentes entre clique, espaço e F3.
 - Remover `ProcessMessages`, corrigir `StrZero`, inicializar a aleatoriedade uma vez, tratar a saída imediata na perda de vida e eliminar nomes de direção ambíguos.
@@ -179,6 +182,7 @@ Cada etapa deve resultar em uma alteração pequena e revisável, com build e ve
 
 - Introduzir passo fixo, relógio medido, acumulador e velocidades por segundo.
 - Extrair as funções geométricas e implementar resolução pelo primeiro impacto, incluindo cantos, contatos simultâneos e tempo restante.
+- Reproduzir e corrigir o caso relatado de destruir um bloco pelo lado sem ricochete horizontal. Cobrir as faces esquerda e direita com aproximações subindo e descendo; distinguir contatos de face dos de canto.
 - Implementar resposta contínua da raquete e limite inferior de perda de vida.
 - Acrescentar testes determinísticos para as colisões e para diferentes agendas de atualização do mesmo tempo simulado.
 - Validar o adaptador visual existente antes de trocar a renderização, separando defeitos de mecânica dos de desenho.
@@ -224,7 +228,7 @@ Testes automatizados devem cobrir regras e geometria, não reproduzir detalhes i
 | Vidas | Uma queda desconta exatamente uma vida; zero vidas impede lançamento; nenhuma movimentação extra acontece após reposicionar. |
 | Pontuação | Cada bloco pontua uma vez; F2 zera; formatação de 0, 42, 999999999 e 1000000000 não duplica nem trunca dígitos. |
 | Paredes | Contatos laterais e superiores mantêm a bola dentro da área e refletem o componente correto. |
-| Blocos | Bola descendo contra a face superior deve sair subindo; bola subindo contra a inferior deve sair descendo; contato lateral deve inverter o componente horizontal correspondente. Cobrir também cantos, emendas e alta velocidade, sem travamento por sobreposição nem colisão com bloco inativo. |
+| Blocos | Bola descendo contra a face superior deve sair subindo; bola subindo contra a inferior deve sair descendo. Em contato isolado com a face esquerda, a bola que vai para a direita deve sair para a esquerda; na face direita, o inverso. Repetir esses dois casos com a bola subindo e descendo: inverter somente a velocidade horizontal, preservar a vertical e destruir/pontuar o bloco uma vez. Esses casos devem reproduzir e impedir o defeito relatado de destruir o bloco sem ricochete lateral. Cobrir também cantos, emendas e alta velocidade, sem travamento por sobreposição nem colisão com bloco inativo. |
 | Raquete | Extremos, centro e posições intermediárias devem produzir ângulos proporcionais ao impacto, com velocidade total constante para a dificuldade definida; extremos simétricos produzem saídas espelhadas. Cobrir bola já abaixo da raquete e bola subindo, evitando reflexão indevida. |
 | Tempo | Com mesma semente e entradas por passo, agendas de 30, 60 e 144 acionamentos por segundo produzem o mesmo estado para o mesmo número de passos; atraso acima do limite segue a política de descarte. |
 | Fases | Mesma semente gera mesma fase; último bloco aciona conclusão uma vez; progressão preserva vidas/pontos; última fase leva à vitória. |
@@ -259,4 +263,4 @@ A entrega principal corresponde às etapas 0 a 4: código organizado, motor sepa
 - A apresentação preserva os recursos gráficos existentes, com melhorias de fluidez demonstradas por comparação e medição.
 - Builds e testes passam nas configurações declaradas, com evidência registrada e sem sobrescrever alterações locais do usuário.
 
-Começar pela etapa 0 e pelo primeiro lote da etapa 1. A migração para canvas deve acontecer depois que estados e física tiverem limites claros, para permitir identificar a origem de qualquer regressão. Os parâmetros de velocidade, ângulo, cadência e dificuldade são pontos de ajuste durante os testes de jogabilidade.
+Com E0 e E1 concluídas, prosseguir pela E2. A migração para canvas deve acontecer depois que estados e física tiverem limites claros, para permitir identificar a origem de qualquer regressão. Os parâmetros de velocidade, ângulo, cadência e dificuldade são pontos de ajuste durante os testes de jogabilidade.

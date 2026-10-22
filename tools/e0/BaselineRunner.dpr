@@ -8,7 +8,8 @@ uses
   Vcl.Forms, Vcl.ExtCtrls,
   UMain in '..\..\UMain.pas',
   UDM in '..\..\UDM.pas',
-  UDebug in '..\..\UDebug.pas';
+  UDebug in '..\..\UDebug.pas',
+  UE1Checks in '..\e1\UE1Checks.pas';
 
 type
   TTickSample = record
@@ -26,6 +27,7 @@ type
     FOutput: string;
     FStart, FLastTick: Int64;
     FPhase: Integer;
+    FE1Only: Boolean;
     procedure Key(AKey: Word);
     procedure Reset;
     procedure Fixture;
@@ -62,7 +64,9 @@ var
   Root, Parent: string;
 begin
   inherited;
-  FOutput := ParamStr(1);
+  FE1Only := SameText(ParamStr(1), '--e1');
+  if FE1Only then FOutput := ParamStr(2)
+  else FOutput := ParamStr(1);
   if FOutput = '' then
   begin
     Root := ExcludeTrailingPathDelimiter(ExtractFilePath(ParamStr(0)));
@@ -72,7 +76,9 @@ begin
       if Parent = Root then raise Exception.Create('Repository root not found');
       Root := Parent;
     end;
-    FOutput := Root + '\docs\evidencias\e0-2026-10-22';
+    if FE1Only then FOutput := Root + '\build\e1\latest'
+    else FOutput := Root + '\build\baseline-runs\' +
+      FormatDateTime('yyyymmdd-hhnnsszzz', Now);
   end;
   ForceDirectories(FOutput);
   FSamples := TList<TTickSample>.Create;
@@ -137,6 +143,8 @@ end;
 
 procedure TBaseline.PrimeDown;
 begin
+  FrmMain.PlayerClick(nil);
+  FrmMain.Timer1.Enabled := False;
   FrmMain.Ball.SetBounds(20, -10, 17, 17);
   FrmMain.Timer1Timer(nil);
 end;
@@ -192,8 +200,12 @@ begin
   Observe('pause_f3', 0, 0);
   Key(VK_SPACE);
   Observe('space_while_paused', 0, 0);
+  { The immediate-pause case must not depend on space having relaunched. }
+  Reset;
+  FrmMain.PlayerClick(nil);
   Key(VK_F3);
   Observe('f3_immediately_after_launch', 0, 0);
+  Key(VK_F3);
   FrmMain.Timer1Timer(nil);
   Key(VK_F3);
   Observe('pause_after_first_tick', 0, 0);
@@ -214,6 +226,8 @@ begin
   Observe('brick_top_downward', FrmMain.Ball.Left-310, FrmMain.Ball.Top-84);
   Reset;
   Fixture;
+  FrmMain.PlayerClick(nil);
+  FrmMain.Timer1.Enabled := False;
   FrmMain.Ball.SetBounds(310, 119, 17, 17);
   FrmMain.Timer1Timer(nil);
   Observe('brick_bottom_upward', FrmMain.Ball.Left-310, FrmMain.Ball.Top-119);
@@ -235,6 +249,8 @@ begin
   PrimeDown;
   for I := 1 to 3 do
   begin
+    FrmMain.PlayerClick(nil);
+    FrmMain.Timer1.Enabled := False;
     FrmMain.Ball.SetBounds(20, 440, 17, 17);
     FrmMain.Timer1Timer(nil);
     Observe('lose_life_' + IntToStr(I), FrmMain.Ball.Left-335, FrmMain.Ball.Top-395);
@@ -290,6 +306,15 @@ begin
   if FPhase = -1 then
   begin
     FControl.Enabled := False;
+    if FE1Only then
+    begin
+      FPhase := 2;
+      if RunE1Checks(FOutput) then
+        FrmMain.Caption := 'Breakout E1 - checks passed'
+      else
+        FrmMain.Caption := 'Breakout E1 - checks failed';
+      Exit;
+    end;
     Scenarios;
     FStart := Stamp;
     FLastTick := 0;
