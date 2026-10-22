@@ -2,7 +2,7 @@
 
 Data: 22/10/2026. Ambiente de execução informado: Delphi 13, Windows.
 
-Status: plano de implementação incremental; **E0 concluída em 22/10/2026**. O diagnóstico inicial foi produzido por leitura dos fontes, formulários, configurações e imagem de referência. A compilação, os cenários executados e as medições posteriores estão no [relatório da E0](e0-referencia.md), distinguindo observações de execução das hipóteses ainda pendentes.
+Status: implementação incremental; **E0 e E1 concluídas em 22/10/2026**. O diagnóstico inicial foi produzido por leitura dos fontes, formulários, configurações e imagem de referência. A compilação, os cenários executados e as medições posteriores estão no [relatório da E0](e0-referencia.md). As correções de fluxo, builds e 43 regressões aprovadas estão no [resultado da E1](e1-resultados.md). Próxima etapa: E2, extração do motor e dos estados.
 
 ## 1. Objetivo e direção
 
@@ -17,7 +17,7 @@ Premissas de escopo:
 - Usar Win32 Debug como primeira referência e validar também Win64 e Release antes de concluir.
 - Adotar uma área lógica fixa inicialmente, sem transformar redimensionamento livre ou tela cheia em requisito.
 - Priorizar a biblioteca padrão e VCL. Troca de framework gráfico, rede, editor de fases e sistemas extensos de power-ups ficam fora da primeira entrega.
-- Este trabalho se limita ao plano no repositório, sem abertura de sessão da Gideon.
+- O plano e os resultados ficam no repositório, sem abertura de sessão da Gideon. A implementação prossegue por etapas autorizadas após a elaboração inicial do plano.
 
 ## 2. Diagnóstico com evidências
 
@@ -156,6 +156,8 @@ Cada etapa deve resultar em uma alteração pequena e revisável, com build e ve
 
 ### Etapa 1 — Organizar o código e corrigir defeitos localizados
 
+**Concluída:** ver [resultado e evidências da E1](e1-resultados.md). Física e renderização permanecem nas etapas E3 e E4.
+
 - Extrair de `Timer1Timer` métodos como `HandleBounds`, `HandlePaddleCollision`, `HandleBrickCollisions`, `LoseLife`, `MoveBall` e `UpdateDebug` ainda no formulário.
 - Centralizar `StartNewGame`, lançamento e pausa, removendo fluxos diferentes entre clique, espaço e F3.
 - Remover `ProcessMessages`, corrigir `StrZero`, inicializar a aleatoriedade uma vez, tratar a saída imediata na perda de vida e eliminar nomes de direção ambíguos.
@@ -259,4 +261,4 @@ A entrega principal corresponde às etapas 0 a 4: código organizado, motor sepa
 - A apresentação preserva os recursos gráficos existentes, com melhorias de fluidez demonstradas por comparação e medição.
 - Builds e testes passam nas configurações declaradas, com evidência registrada e sem sobrescrever alterações locais do usuário.
 
-Começar pela etapa 0 e pelo primeiro lote da etapa 1. A migração para canvas deve acontecer depois que estados e física tiverem limites claros, para permitir identificar a origem de qualquer regressão. Os parâmetros de velocidade, ângulo, cadência e dificuldade são pontos de ajuste durante os testes de jogabilidade.
+Com E0 e E1 concluídas, prosseguir pela E2. A migração para canvas deve acontecer depois que estados e física tiverem limites claros, para permitir identificar a origem de qualquer regressão. Os parâmetros de velocidade, ângulo, cadência e dificuldade são pontos de ajuste durante os testes de jogabilidade.

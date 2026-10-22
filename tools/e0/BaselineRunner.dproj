@@ -98,6 +98,7 @@
         <DCCReference Include="..\..\UMain.pas"/>
         <DCCReference Include="..\..\UDM.pas"/>
         <DCCReference Include="..\..\UDebug.pas"/>
+        <DCCReference Include="..\e1\UE1Checks.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

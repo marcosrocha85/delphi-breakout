@@ -22,7 +22,7 @@ object FrmDebug: TFrmDebug
     Height = 446
     TabStop = False
     Align = alClient
-    Color = clBackground
+    Color = clWindow
     Ctl3D = False
     FixedColor = clWhite
     Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goColSizing, goRowSelect, goThumbTracking]

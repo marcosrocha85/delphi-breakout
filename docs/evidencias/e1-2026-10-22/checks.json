@@ -1,0 +1,223 @@
+﻿{
+    "suite": "E1 game-flow regressions",
+    "passed": true,
+    "checks": 43,
+    "failures": 0,
+    "results": [
+        {
+            "name": "ready_has_96_bricks_and_three_lives",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "ready_has_no_message_or_running_timer",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "ready_ignores_step_tick_and_pause",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "click_launch_preserves_paddle_and_ball",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "f3_consumes_key_and_pauses_immediately",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "space_consumes_key_while_paused",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "all_launch_paths_and_ticks_preserve_pause",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "resume_preserves_position_and_hides_message",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "deactivation_pauses",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "resume_after_deactivation_preserves_position",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "f2_during_play_returns_to_ready",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "space_launches_from_ready",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "f2_during_pause_clears_pause_message",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "fall_1_removes_one_life",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "fall_1_repositions_without_extra_motion",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "idle_tick_after_fall_1_is_ignored",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "fall_2_removes_one_life",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "fall_2_repositions_without_extra_motion",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "idle_tick_after_fall_2_is_ignored",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "fall_3_removes_one_life",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "fall_3_repositions_without_extra_motion",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "idle_tick_after_fall_3_is_ignored",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "game_over_has_message",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "game_over_ignores_launch_and_step",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "restart_after_game_over_restores_score_lives_and_bricks",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "f10_consumes_key",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "debug_opens_with_form_owner_and_nine_keys",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "debug_toggle_preserves_main_window_position",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "debug_cannot_step_ready",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "debug_cannot_step_unpaused_game",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "debug_can_step_paused_game_once",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "debug_reports_post_step_position_with_stable_keys",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "hidden_debug_disables_manual_step",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "f10_reopens_hidden_debug_with_current_values",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "closing_debug_disables_manual_step",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "score_zero",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "score_42",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "score_nine_digits",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "score_ten_digits",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "score_max_integer",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "language_and_labels_have_explicit_owners",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "seeded_direction_is_independent_of_window_left",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "fifty_restarts_keep_component_and_brick_counts",
+            "passed": true,
+            "detail": ""
+        }
+    ]
+}
