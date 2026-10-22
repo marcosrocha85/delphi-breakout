@@ -6,6 +6,9 @@
         <Projects Include="Breakout.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="tools\e0\BaselineRunner.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -23,14 +26,23 @@
     <Target Name="Breakout:Make">
         <MSBuild Projects="Breakout.dproj" Targets="Make"/>
     </Target>
+    <Target Name="BaselineRunner">
+        <MSBuild Projects="tools\e0\BaselineRunner.dproj"/>
+    </Target>
+    <Target Name="BaselineRunner:Clean">
+        <MSBuild Projects="tools\e0\BaselineRunner.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="BaselineRunner:Make">
+        <MSBuild Projects="tools\e0\BaselineRunner.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="Breakout"/>
+        <CallTarget Targets="Breakout;BaselineRunner"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="Breakout:Clean"/>
+        <CallTarget Targets="Breakout:Clean;BaselineRunner:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="Breakout:Make"/>
+        <CallTarget Targets="Breakout:Make;BaselineRunner:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>
