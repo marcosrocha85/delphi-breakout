@@ -1,0 +1,81 @@
+{
+  "method": "instrumented legacy event handlers; not a rendering FPS measurement",
+  "phases": [
+    {
+      "name": "without_debug",
+      "samples": 320,
+      "duration_ms": 20008.071,
+      "mean_interval_ms": 62.508689341692794,
+      "median_interval_ms": 60.4973,
+      "p95_interval_ms": 76.1095,
+      "max_interval_ms": 80.4664,
+      "updates_per_second": 15.997775837750737,
+      "mean_handler_ms": 0.2068628125,
+      "p95_handler_ms": 0.994,
+      "cpu_one_core_percent": 11.7140228060966,
+      "working_set_min_mib": 20.6875,
+      "working_set_max_mib": 20.93359375,
+      "handles_start": 270,
+      "handles_end": 270,
+      "gdi_start": 155,
+      "gdi_end": 149,
+      "user_start": 54,
+      "user_end": 55
+    },
+    {
+      "name": "with_debug",
+      "samples": 319,
+      "duration_ms": 19950.1844,
+      "mean_interval_ms": 62.52251194968554,
+      "median_interval_ms": 60.63355,
+      "p95_interval_ms": 75.602,
+      "max_interval_ms": 79.006,
+      "updates_per_second": 15.994239015936236,
+      "mean_handler_ms": 0.41297648902821316,
+      "p95_handler_ms": 1.8317,
+      "cpu_one_core_percent": 20.91146084845211,
+      "working_set_min_mib": 21.125,
+      "working_set_max_mib": 21.265625,
+      "handles_start": 274,
+      "handles_end": 276,
+      "gdi_start": 157,
+      "gdi_end": 155,
+      "user_start": 65,
+      "user_end": 61
+    }
+  ],
+  "observations": {
+    "initial_96_bricks_three_lives": true,
+    "paddle_left_dx_dy": [
+      -15,
+      -15
+    ],
+    "paddle_center_dx_dy": [
+      5,
+      -5
+    ],
+    "paddle_right_dx_dy": [
+      15,
+      -15
+    ],
+    "brick_top_destroyed_continues_down": true,
+    "pause_stops_timer": true,
+    "space_during_pause_relaunches": true,
+    "space_during_pause_leaves_message_visible": true,
+    "immediate_f3_after_launch_ignored": true,
+    "f3_resume_preserves_position": true,
+    "deactivate_handler_pauses": true,
+    "lives_width_after_each_fall": [
+      30,
+      15,
+      0
+    ],
+    "extra_motion_after_life_loss": [
+      5,
+      -5
+    ],
+    "click_does_not_launch_at_game_over": true,
+    "f1_moves_after_game_over": true,
+    "f2_restores_96_bricks_three_lives": true
+  }
+}

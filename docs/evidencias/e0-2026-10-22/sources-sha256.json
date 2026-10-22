@@ -1,0 +1,79 @@
+{
+  "date": "2026-10-22",
+  "timezone": "America/Sao_Paulo",
+  "production_sources_preserved": true,
+  "files": [
+    {
+      "path": "README.md",
+      "before_sha256": "6547D48FD62AC7764670066242EE5E54F5569B93D532F505A29D9C291D7FD430",
+      "after_sha256": "6547D48FD62AC7764670066242EE5E54F5569B93D532F505A29D9C291D7FD430",
+      "unchanged": true
+    },
+    {
+      "path": "UMain.pas",
+      "before_sha256": "8BAFBF40D87CB278DD49FE5C542683B3051D7BA01E9CB3181547AB08EF49F774",
+      "after_sha256": "8BAFBF40D87CB278DD49FE5C542683B3051D7BA01E9CB3181547AB08EF49F774",
+      "unchanged": true
+    },
+    {
+      "path": "UMain.dfm",
+      "before_sha256": "0730AA69DDAA7FE9B2914C31B64323B37CD2AD7CC98299C7B19C10A1A60B27E7",
+      "after_sha256": "0730AA69DDAA7FE9B2914C31B64323B37CD2AD7CC98299C7B19C10A1A60B27E7",
+      "unchanged": true
+    },
+    {
+      "path": "UDebug.pas",
+      "before_sha256": "E2127E65292F5192C0D2857714CCFDFE308290E8B1BEC05659278E641E8CD616",
+      "after_sha256": "E2127E65292F5192C0D2857714CCFDFE308290E8B1BEC05659278E641E8CD616",
+      "unchanged": true
+    },
+    {
+      "path": "UDebug.dfm",
+      "before_sha256": "F50E024B0F121BA91CFD0EC5F5DB7809772C9588CBF21B43CFF162E85915EA5C",
+      "after_sha256": "F50E024B0F121BA91CFD0EC5F5DB7809772C9588CBF21B43CFF162E85915EA5C",
+      "unchanged": true
+    },
+    {
+      "path": "UDM.pas",
+      "before_sha256": "A433D23FB244149D9E3A59583F6E593927E631887C4D3B4A86169955054C0975",
+      "after_sha256": "A433D23FB244149D9E3A59583F6E593927E631887C4D3B4A86169955054C0975",
+      "unchanged": true
+    },
+    {
+      "path": "UDM.dfm",
+      "before_sha256": "3FD73653E8ED2363856322F2FBADBB0E24FA44E265CF5CCA5799634AFE743168",
+      "after_sha256": "3FD73653E8ED2363856322F2FBADBB0E24FA44E265CF5CCA5799634AFE743168",
+      "unchanged": true
+    },
+    {
+      "path": "Breakout.dpr",
+      "before_sha256": "E78B9F854C6CC0C95C73CE12BCBEDB580F23566AA3C3FAFC2634F039AFC3408F",
+      "after_sha256": "E78B9F854C6CC0C95C73CE12BCBEDB580F23566AA3C3FAFC2634F039AFC3408F",
+      "unchanged": true
+    },
+    {
+      "path": "Breakout.dproj",
+      "before_sha256": "ABC44395AB66E6389B5C51C2FD99E66D2A577E5EFCAD2233A48D264BFA67B7F8",
+      "after_sha256": "BCD7558962D14A989135C193567918232C012CE9834519590DCFCD967AC87F68",
+      "unchanged": false,
+      "note": "IDE metadata upgrade: ProjectVersion 19.5 to 20.3 and default ProjectName."
+    },
+    {
+      "path": "Breakout.res",
+      "before_sha256": "2441A6173AA5B16AF88B4FCB4EE0FB72BC8B7E4EAE35247D6D087399A2E07958",
+      "after_sha256": "2441A6173AA5B16AF88B4FCB4EE0FB72BC8B7E4EAE35247D6D087399A2E07958",
+      "unchanged": true
+    },
+    {
+      "path": "DelphiBlocks.groupproj",
+      "before_sha256": "B021CC56B5D08ABD9E0154FD032837995A9304483B5A42A0AD1EDEC826680CCB",
+      "after_sha256": "E2A986BAC8A9170BFDCF1D009CFFE8BA44CF1D031D4142264D6D7CAE5806AF3A",
+      "unchanged": false
+    }
+  ],
+  "measurement_harness_source_sha256": "B2DAD8B4B9679AB532857DD1BAA68CA1B4655F1EBD73F5706FA47B75EA3557AF",
+  "measurement_harness_executable_sha256": "A7DB3F92C5ADF8396F4DFDB1500CA08E7790E9B368C9D7B4462B0C427438C476",
+  "original_win32_debug_executable_sha256": "064D1EA3E97CDF12AF909912BB79782BBF483F7D9A00B8E4E7058E691DC47A20",
+  "measurement_finished_at": "2026-10-22T19:28:56.697096-03:00",
+  "note": "Build All after measurement rebuilt the executables; production units remained unchanged."
+}

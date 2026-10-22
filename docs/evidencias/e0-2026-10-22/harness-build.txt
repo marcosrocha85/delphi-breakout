@@ -1,0 +1,1 @@
+This version of the product does not support command line compiling.
