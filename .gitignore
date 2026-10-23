@@ -35,6 +35,7 @@
 __history/
 __recovery/
 build/
+/tests/Breakout.Tests.res
 *.~*
 
 # Castalia statistics file (since XE7 Castalia is distributed with Delphi)

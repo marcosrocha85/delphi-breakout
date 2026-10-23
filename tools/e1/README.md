@@ -1,6 +1,6 @@
 # Regressões de fluxo da E1
 
-A unidade `UE1Checks.pas` usa os mesmos formulários do jogo e está referenciada pelo `BaselineRunner.dproj`, já incluído no grupo `DelphiBlocks.groupproj`. Não é necessário abrir outro projeto.
+A unidade `UE1Checks.pas` usa os mesmos formulários do jogo e está referenciada pelo `BaselineRunner.dproj`, já incluído no grupo `DelphiBlocks.groupproj`. Não é necessário abrir outro projeto. Desde a E2, a preparação dos cenários usa o motor, os labels pertencem diretamente ao formulário e o diagnóstico tem 15 chaves. A evidência histórica da E1 permanece preservada; o [modo `--e2`](../e2/README.md) acrescenta verificações do adaptador.
 
 1. Abra o grupo, ative `BaselineRunner.exe` e selecione **Win32 / Debug**.
 2. Use **Build**. Se os fontes tiverem sido editados fora da IDE, aceite sua recarga antes de compilar.

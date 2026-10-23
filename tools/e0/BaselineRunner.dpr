@@ -7,9 +7,14 @@ uses
   System.Math, System.Diagnostics, System.Generics.Collections,
   Vcl.Forms, Vcl.ExtCtrls,
   UMain in '..\..\UMain.pas',
-  UDM in '..\..\UDM.pas',
   UDebug in '..\..\UDebug.pas',
-  UE1Checks in '..\e1\UE1Checks.pas';
+  UE1Checks in '..\e1\UE1Checks.pas',
+  Breakout.Types in '..\..\src\Breakout.Types.pas',
+  Breakout.Texts in '..\..\src\Breakout.Texts.pas',
+  Breakout.Levels in '..\..\src\Breakout.Levels.pas',
+  Breakout.Game in '..\..\src\Breakout.Game.pas',
+  Breakout.TestScenarios in '..\..\tests\Breakout.TestScenarios.pas',
+  UE2ViewChecks in '..\e2\UE2ViewChecks.pas';
 
 type
   TTickSample = record
@@ -27,7 +32,7 @@ type
     FOutput: string;
     FStart, FLastTick: Int64;
     FPhase: Integer;
-    FE1Only: Boolean;
+    FE1Only, FE2Only: Boolean;
     procedure Key(AKey: Word);
     procedure Reset;
     procedure Fixture;
@@ -65,7 +70,8 @@ var
 begin
   inherited;
   FE1Only := SameText(ParamStr(1), '--e1');
-  if FE1Only then FOutput := ParamStr(2)
+  FE2Only := SameText(ParamStr(1), '--e2');
+  if FE1Only or FE2Only then FOutput := ParamStr(2)
   else FOutput := ParamStr(1);
   if FOutput = '' then
   begin
@@ -76,7 +82,8 @@ begin
       if Parent = Root then raise Exception.Create('Repository root not found');
       Root := Parent;
     end;
-    if FE1Only then FOutput := Root + '\build\e1\latest'
+    if FE2Only then FOutput := Root + '\build\e2\latest'
+    else if FE1Only then FOutput := Root + '\build\e1\latest'
     else FOutput := Root + '\build\baseline-runs\' +
       FormatDateTime('yyyymmdd-hhnnsszzz', Now);
   end;
@@ -116,47 +123,34 @@ begin
 end;
 
 function TBaseline.BrickCount: Integer;
-var
-  I: Integer;
 begin
-  Result := 0;
-  for I := 0 to FrmMain.ComponentCount - 1 do
-    if (FrmMain.Components[I] is TImage) and
-       (TImage(FrmMain.Components[I]).Tag > 0) then
-      Inc(Result);
+  Result := FrmMain.Game.Snapshot.ActiveBricks;
 end;
 
 procedure TBaseline.Fixture;
-var
-  I: Integer;
-  Brick: TImage;
 begin
-  for I := FrmMain.ComponentCount - 1 downto 0 do
-    if (FrmMain.Components[I] is TImage) and
-       (TImage(FrmMain.Components[I]).Tag > 0) then
-      FrmMain.Components[I].Free;
-  Brick := TImage.Create(FrmMain);
-  Brick.Parent := FrmMain;
-  Brick.SetBounds(300, 100, 50, 20);
-  Brick.Tag := 10;
+  { A second distant brick keeps the scenario away from level completion. }
+  TGameProbe(FrmMain.Game).Fixture;
+  FrmMain.RefreshView;
 end;
 
 procedure TBaseline.PrimeDown;
 begin
   FrmMain.PlayerClick(nil);
   FrmMain.Timer1.Enabled := False;
-  FrmMain.Ball.SetBounds(20, -10, 17, 17);
+  TGameProbe(FrmMain.Game).PlaceBall(20, -10);
   FrmMain.Timer1Timer(nil);
 end;
 
 procedure TBaseline.Observe(const Name: string; DX, DY: Integer);
 begin
+  FrmMain.RefreshView;
   FResults.Add(Format('%s,%d,%d,%d,%d,%d,%d,%d,%s,%s,"%s","%s"',
     [Name, FrmMain.Ball.Left, FrmMain.Ball.Top, DX, DY,
      FrmMain.Player.Left, FrmMain.VLives.Width, BrickCount,
      BoolToStr(FrmMain.Timer1.Enabled, True),
-     BoolToStr(Language.Messages.Visible, True),
-     Language.Messages.Caption, Language.Score.Caption]));
+     BoolToStr(FrmMain.MessageLabel.Visible, True),
+     FrmMain.MessageLabel.Caption, FrmMain.ScoreLabel.Caption]));
 end;
 
 procedure TBaseline.ResourceSample(const Name: string);
@@ -194,7 +188,7 @@ begin
   Reset;
   FrmMain.PlayerClick(nil);
   Observe('launch_click', 0, 0);
-  FrmMain.Ball.SetBounds(500, 300, 17, 17);
+  TGameProbe(FrmMain.Game).PlaceBall(500, 300);
   FrmMain.Timer1Timer(nil);
   Key(VK_F3);
   Observe('pause_f3', 0, 0);
@@ -221,14 +215,14 @@ begin
   Reset;
   Fixture;
   PrimeDown;
-  FrmMain.Ball.SetBounds(310, 84, 17, 17);
+  TGameProbe(FrmMain.Game).PlaceBall(310, 84);
   FrmMain.Timer1Timer(nil);
   Observe('brick_top_downward', FrmMain.Ball.Left-310, FrmMain.Ball.Top-84);
   Reset;
   Fixture;
   FrmMain.PlayerClick(nil);
   FrmMain.Timer1.Enabled := False;
-  FrmMain.Ball.SetBounds(310, 119, 17, 17);
+  TGameProbe(FrmMain.Game).PlaceBall(310, 119);
   FrmMain.Timer1Timer(nil);
   Observe('brick_bottom_upward', FrmMain.Ball.Left-310, FrmMain.Ball.Top-119);
   Hits[0] := 296;
@@ -239,8 +233,8 @@ begin
     Reset;
     Fixture;
     PrimeDown;
-    FrmMain.Player.Left := 300;
-    FrmMain.Ball.SetBounds(Hits[I], 398, 17, 17);
+    FrmMain.Game.MovePaddle(325);
+    TGameProbe(FrmMain.Game).PlaceBall(Hits[I], 398);
     FrmMain.Timer1Timer(nil);
     Observe('paddle_region_' + IntToStr(I), FrmMain.Ball.Left-Hits[I], FrmMain.Ball.Top-398);
   end;
@@ -251,7 +245,7 @@ begin
   begin
     FrmMain.PlayerClick(nil);
     FrmMain.Timer1.Enabled := False;
-    FrmMain.Ball.SetBounds(20, 440, 17, 17);
+    TGameProbe(FrmMain.Game).PlaceBall(20, 440);
     FrmMain.Timer1Timer(nil);
     Observe('lose_life_' + IntToStr(I), FrmMain.Ball.Left-335, FrmMain.Ball.Top-395);
   end;
@@ -306,10 +300,17 @@ begin
   if FPhase = -1 then
   begin
     FControl.Enabled := False;
-    if FE1Only then
+    if FE1Only or FE2Only then
     begin
       FPhase := 2;
-      if RunE1Checks(FOutput) then
+      if FE2Only then
+      begin
+        if RunE2ViewChecks(FOutput) then
+          FrmMain.Caption := 'Breakout E2 - checks passed'
+        else
+          FrmMain.Caption := 'Breakout E2 - checks failed';
+      end
+      else if RunE1Checks(FOutput) then
         FrmMain.Caption := 'Breakout E1 - checks passed'
       else
         FrmMain.Caption := 'Breakout E1 - checks failed';
@@ -348,8 +349,7 @@ begin
   else
   begin
     { Test driver keeps the paddle below the ball; it is not production input. }
-    FrmMain.Player.Left := EnsureRange(FrmMain.Ball.Left + 8 -
-      FrmMain.Player.Width div 2, 0, FrmMain.ClientWidth-FrmMain.Player.Width);
+    FrmMain.Game.MovePaddle(FrmMain.Game.Snapshot.Ball.X + 8);
     if not FrmMain.Timer1.Enabled then FrmMain.PlayerClick(nil);
     ResourceSample('sample_' + IntToStr(FPhase));
   end;
@@ -362,7 +362,6 @@ begin
   { Harness only: expose the legacy form as a targetable taskbar window. }
   Application.MainFormOnTaskbar := True;
   Application.Title := 'Breakout E0';
-  Application.CreateForm(TDM, DM);
   Application.CreateForm(TFrmMain, FrmMain);
   Baseline := TBaseline.Create;
   try

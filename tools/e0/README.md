@@ -1,6 +1,6 @@
 # Executor de observação da E0
 
-Este projeto auxiliar usa `UMain`, `UDM`, `UDebug` e seus DFM por referência. Sem parâmetros, observa a versão atual com os cenários criados na E0. Com `--e1`, executa a [suíte de regressões de fluxo](../e1/README.md). As evidências históricas da E0 continuam em `docs/evidencias/e0-2026-10-22/`.
+Este projeto auxiliar usa os formulários atuais e o motor por referência. Sem parâmetros, observa a versão atual com os cenários criados na E0. Com `--e1`, executa a [suíte de regressões de fluxo](../e1/README.md); com `--e2`, verifica também o [adaptador visual](../e2/README.md). As evidências históricas da E0 continuam em `docs/evidencias/e0-2026-10-22/`.
 
 ## Executar no Delphi 13 Community Edition
 
@@ -16,8 +16,8 @@ Se o arquivo do executor for alterado fora da IDE, confirme a recarga do módulo
 
 ## O que o executor faz
 
-- Instancia os mesmos formulários e chama os handlers públicos existentes para observar lançamento, estados, vidas e respostas de colisão.
-- Nos cenários de colisão, substitui a grade, somente na memória do processo auxiliar, por um bloco em posição conhecida. Depois restaura a partida usando F2. Isso isola a face atingida de colisões simultâneas com vizinhos.
+- Instancia os mesmos formulários e chama seus handlers para observar lançamento, estados, vidas e respostas de colisão. Desde a E2, os cenários são preparados no motor por um probe exclusivo dos testes; mover um controle não altera a simulação.
+- Nos cenários de colisão, substitui a grade, somente na memória do processo auxiliar, por um bloco em posição conhecida e outro distante. O segundo evita que a transição de conclusão interrompa a observação do deslocamento após o impacto. Depois restaura a partida usando F2. A referência histórica da E0 usava apenas um bloco.
 - Registra as três regiões da raquete com as mesmas dimensões atuais. A largura do indicador de vidas é observada em pixels: 45, 30, 15 e 0 correspondem a três, duas, uma e zero vidas.
 - Mede o início e a duração de cada chamada real do timer, delegando ao handler original. A primeira chamada de cada período tem intervalo zero e é excluída das estatísticas de intervalo.
 - Coleta aproximadamente 20 segundos sem F10 e 20 segundos com F10. Um timer auxiliar acompanha a bola com a raquete e relança quando necessário, para manter a simulação ativa. As fases têm a aleatoriedade do código original e não constituem cargas idênticas.

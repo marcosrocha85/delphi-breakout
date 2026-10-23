@@ -1,0 +1,93 @@
+{
+  "date": "2026-10-22",
+  "compiler": "Delphi 13 Community Edition",
+  "compiler_file_version": "37.0.60542.8024",
+  "engine_checks_per_platform": 46,
+  "adapter_checks_win32": 52,
+  "failures": 0,
+  "historical_summary_compatible": true,
+  "sources": [
+    {
+      "path": "Breakout.dpr",
+      "sha256": "79d8739e24a2b697d68b8d8d30f2cbdc51a5648fc15dc26ac54e3f52378c12ed"
+    },
+    {
+      "path": "Breakout.dproj",
+      "sha256": "eb62c862c8077a1efd7024bd1a685d9a0639b96c52bd01a8141e10e5e2550774"
+    },
+    {
+      "path": "DelphiBlocks.groupproj",
+      "sha256": "ea498775e6416a8703fbbe071108a4530cd7a873736c410f18da25fd53b749e4"
+    },
+    {
+      "path": "UMain.pas",
+      "sha256": "a8bd79efe78075a97498bdbdec98c5793a8b8506278769b9b80a37aa07534f44"
+    },
+    {
+      "path": "UDebug.pas",
+      "sha256": "eb95f935e32175c6b2bfc240a94edb6dfc1af6bdba3d805d5e7afd79b4b8cf84"
+    },
+    {
+      "path": "src/Breakout.Types.pas",
+      "sha256": "e570b98c2afdf626cb5f575aa3a40d888d09c3673cc73075ffe8a3417c84f172"
+    },
+    {
+      "path": "src/Breakout.Game.pas",
+      "sha256": "c7cb00e2e9fef53cf5a51ac889ca1b8b8e0d413335f4385ac72c7a9676fe017a"
+    },
+    {
+      "path": "src/Breakout.Levels.pas",
+      "sha256": "07b495775262a8a806cba06c7f309a91178fe445bc3f388ddf2dfcba2ba2442b"
+    },
+    {
+      "path": "src/Breakout.Texts.pas",
+      "sha256": "0d7f35a0221ef587d69108bb03785e8378cc65f9a9cf1459d96b1e4d5aab9cfd"
+    },
+    {
+      "path": "tests/Breakout.Tests.dpr",
+      "sha256": "d154817454ab7f236012edcff392231d96f384340fd2ab5d86d98a64e96ce5c2"
+    },
+    {
+      "path": "tests/Breakout.Tests.dproj",
+      "sha256": "49c5d03339f70c8d788990dad2ff0174d81e6c94a6752798a9fad9b19e56900c"
+    },
+    {
+      "path": "tests/Breakout.Game.Tests.pas",
+      "sha256": "4a01e86dcd5e23af596dffa27e624e760c6371a6f1f524a376df58904b088d54"
+    },
+    {
+      "path": "tests/Breakout.TestScenarios.pas",
+      "sha256": "36d1bcd34df6d5b6598ddf09b4872ffa13dcf25b758c2c467c1d8b4bd81c2158"
+    },
+    {
+      "path": "tools/e0/BaselineRunner.dpr",
+      "sha256": "7f95d63b40e84051e3b0252b608cad15c2197f802bb462a1b49b46b6cc1466b1"
+    },
+    {
+      "path": "tools/e1/UE1Checks.pas",
+      "sha256": "19baa32762a8dd13cba0358480a2dc2f4dacb352450a2ae55881a033a6af1a57"
+    },
+    {
+      "path": "tools/e2/UE2ViewChecks.pas",
+      "sha256": "93615554c7441049a145ffed00ce93b9214350125283ff3dad4b1592b99ca025"
+    }
+  ],
+  "binaries": [
+    {
+      "path": "build/x86/Breakout.exe",
+      "sha256": "1012ad5c93f5b2f20fe75e188707d7d957c0ee6967061ea2ac5431ee12caad34"
+    },
+    {
+      "path": "tools/e0/BaselineRunner.exe",
+      "sha256": "957e80263a6c3f731205cd26cdc5cad2df1eba492f751ad1fca81545d02f169c"
+    },
+    {
+      "path": "build/tests/Win32/Debug/Breakout.Tests.exe",
+      "sha256": "7516b44eea765abee2a921472043ec3f7aa14422911f348d2875d153ddcf8906"
+    },
+    {
+      "path": "build/tests/Win64/Debug/Breakout.Tests.exe",
+      "sha256": "e0794fdc73c3c67a538d5f158f3f348b1d112a4c6e0c8f70220741d6ca8fba60"
+    }
+  ]
+}

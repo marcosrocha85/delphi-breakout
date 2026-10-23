@@ -8,7 +8,8 @@ implementation
 
 uses
   Winapi.Windows, System.SysUtils, System.Classes, System.JSON,
-  System.IOUtils, Vcl.ExtCtrls, UMain, UDM, UDebug;
+  System.IOUtils, Vcl.ExtCtrls, UMain, UDebug, Breakout.Types, Breakout.Texts,
+  Breakout.TestScenarios;
 
 type
   TE1Checks = class
@@ -79,7 +80,7 @@ begin
   Result := 0;
   for I := 0 to FrmMain.ComponentCount - 1 do
     if (FrmMain.Components[I] is TImage) and
-       (TImage(FrmMain.Components[I]).Tag > 0) then
+       (Copy(FrmMain.Components[I].Name, 1, 3) = 'Bar') and TImage(FrmMain.Components[I]).Visible then
       Inc(Result);
 end;
 
@@ -95,7 +96,7 @@ begin
   Check('ready_has_96_bricks_and_three_lives',
     (BrickCount = 96) and (FrmMain.VLives.Width = 45));
   Check('ready_has_no_message_or_running_timer',
-    not (FrmMain.Timer1.Enabled or Language.Messages.Visible));
+    not (FrmMain.Timer1.Enabled or FrmMain.MessageLabel.Visible));
   X := FrmMain.Ball.Left;
   Y := FrmMain.Ball.Top;
   Key(VK_F1);
@@ -103,17 +104,17 @@ begin
   Key(VK_F3);
   Check('ready_ignores_step_tick_and_pause',
     (FrmMain.Ball.Left = X) and (FrmMain.Ball.Top = Y) and
-    not FrmMain.Timer1.Enabled and not Language.Messages.Visible);
+    not FrmMain.Timer1.Enabled and not FrmMain.MessageLabel.Visible);
 
-  FrmMain.Player.Left := 100;
-  FrmMain.Ball.Left := 100 + (FrmMain.Player.Width - FrmMain.Ball.Width) div 2;
+  FrmMain.Game.MovePaddle(125);
+  FrmMain.RefreshView;
   X := FrmMain.Ball.Left;
   FrmMain.FormClick(nil);
   Check('click_launch_preserves_paddle_and_ball',
     FrmMain.Timer1.Enabled and (FrmMain.Player.Left = 100) and
     (FrmMain.Ball.Left = X));
   Check('f3_consumes_key_and_pauses_immediately',
-    (Key(VK_F3) = 0) and not FrmMain.Timer1.Enabled and Language.Messages.Visible);
+    (Key(VK_F3) = 0) and not FrmMain.Timer1.Enabled and FrmMain.MessageLabel.Visible);
   X := FrmMain.Ball.Left;
   Y := FrmMain.Ball.Top;
   Check('space_consumes_key_while_paused', Key(VK_SPACE) = 0);
@@ -122,34 +123,32 @@ begin
   Key(VK_F1);
   FrmMain.Timer1Timer(nil);
   Check('all_launch_paths_and_ticks_preserve_pause',
-    not FrmMain.Timer1.Enabled and Language.Messages.Visible and
+    not FrmMain.Timer1.Enabled and FrmMain.MessageLabel.Visible and
     (FrmMain.Ball.Left = X) and (FrmMain.Ball.Top = Y));
   Key(VK_F3);
   Check('resume_preserves_position_and_hides_message',
-    FrmMain.Timer1.Enabled and not Language.Messages.Visible and
+    FrmMain.Timer1.Enabled and not FrmMain.MessageLabel.Visible and
     (FrmMain.Ball.Left = X) and (FrmMain.Ball.Top = Y));
   FrmMain.ApplicationEvents1Deactivate(nil);
-  Check('deactivation_pauses', not FrmMain.Timer1.Enabled and Language.Messages.Visible);
+  Check('deactivation_pauses', not FrmMain.Timer1.Enabled and FrmMain.MessageLabel.Visible);
   Key(VK_F3);
   Check('resume_after_deactivation_preserves_position',
-    FrmMain.Timer1.Enabled and not Language.Messages.Visible and
+    FrmMain.Timer1.Enabled and not FrmMain.MessageLabel.Visible and
     (FrmMain.Ball.Left = X) and (FrmMain.Ball.Top = Y));
   Key(VK_F2);
   Check('f2_during_play_returns_to_ready',
-    not FrmMain.Timer1.Enabled and not Language.Messages.Visible and (BrickCount = 96));
+    not FrmMain.Timer1.Enabled and not FrmMain.MessageLabel.Visible and (BrickCount = 96));
   Key(VK_SPACE);
   Check('space_launches_from_ready', FrmMain.Timer1.Enabled);
   Key(VK_F3);
   Key(VK_F2);
   Check('f2_during_pause_clears_pause_message',
-    not FrmMain.Timer1.Enabled and not Language.Messages.Visible);
+    not FrmMain.Timer1.Enabled and not FrmMain.MessageLabel.Visible);
 
   for I := 1 to 3 do
   begin
     StartForStep;
-    FrmMain.Player.Left := 300;
-    FrmMain.Ball.SetBounds(20, FrmMain.Player.Top + 20,
-      FrmMain.Ball.Width, FrmMain.Ball.Height);
+    TGameProbe(FrmMain.Game).PrepareFall;
     FrmMain.Timer1Timer(nil);
     Check('fall_' + IntToStr(I) + '_removes_one_life',
       FrmMain.VLives.Width = (3 - I) * 15);
@@ -162,8 +161,8 @@ begin
       (FrmMain.VLives.Width = (3 - I) * 15) and
       (FrmMain.Ball.Left = ExpectedBallX) and (FrmMain.Ball.Top = ExpectedBallY));
   end;
-  Check('game_over_has_message', Language.Messages.Visible and
-    (Language.Messages.Caption = Language.LangGameOver));
+  Check('game_over_has_message', FrmMain.MessageLabel.Visible and
+    (FrmMain.MessageLabel.Caption = SGameOver));
   FrmMain.FormClick(nil);
   FrmMain.PlayerClick(nil);
   Key(VK_SPACE);
@@ -174,14 +173,14 @@ begin
   Reset;
   Check('restart_after_game_over_restores_score_lives_and_bricks',
     (FrmMain.VLives.Width = 45) and (BrickCount = 96) and
-    (Language.Score.Caption = Language.LangScore + ' 000000000'));
+    (FrmMain.ScoreLabel.Caption = SScore + ' 000000000'));
 
   WindowLeft := FrmMain.Left;
   X := FrmMain.Ball.Left;
   Y := FrmMain.Ball.Top;
   Check('f10_consumes_key', Key(VK_F10) = 0);
-  Check('debug_opens_with_form_owner_and_nine_keys', Assigned(FrmDebug) and
-    (FrmDebug.Owner = FrmMain) and (FrmDebug.VLE.Strings.Count = 9));
+  Check('debug_opens_with_form_owner_and_fifteen_keys', Assigned(FrmDebug) and
+    (FrmDebug.Owner = FrmMain) and (FrmDebug.VLE.Strings.Count = 15));
   Check('debug_toggle_preserves_main_window_position', FrmMain.Left = WindowLeft);
   Key(VK_F1);
   Check('debug_cannot_step_ready', (FrmMain.Ball.Left = X) and (FrmMain.Ball.Top = Y));
@@ -193,12 +192,12 @@ begin
   Key(VK_F3);
   Key(VK_F1);
   Check('debug_can_step_paused_game_once', not FrmMain.Timer1.Enabled and
-    Language.Messages.Visible and (Abs(FrmMain.Ball.Left-X) = 5) and
+    FrmMain.MessageLabel.Visible and (Abs(FrmMain.Ball.Left-X) = 5) and
     (FrmMain.Ball.Top = Y-5));
   Check('debug_reports_post_step_position_with_stable_keys',
     (FrmDebug.VLE.Values[DebugBallLeft] = IntToStr(FrmMain.Ball.Left)) and
     (FrmDebug.VLE.Values[DebugBallTop] = IntToStr(FrmMain.Ball.Top)) and
-    (FrmDebug.VLE.Values[DebugLives] = '3') and (FrmDebug.VLE.Strings.Count = 9));
+    (FrmDebug.VLE.Values[DebugLives] = '3') and (FrmDebug.VLE.Strings.Count = 15));
   FrmDebug.Close;
   X := FrmMain.Ball.Left;
   Y := FrmMain.Ball.Top;
@@ -209,7 +208,7 @@ begin
   Check('f10_reopens_hidden_debug_with_current_values', FrmDebug.Visible and
     (FrmDebug.VLE.Values[DebugBallLeft] = IntToStr(X)) and
     (FrmDebug.VLE.Values[DebugBallTop] = IntToStr(Y)) and
-    (FrmDebug.VLE.Strings.Count = 9));
+    (FrmDebug.VLE.Strings.Count = 15));
   Key(VK_F10);
   X := FrmMain.Ball.Left;
   Y := FrmMain.Ball.Top;
@@ -222,22 +221,22 @@ begin
   Check('score_nine_digits', TFrmMain.FormatScore(999999999) = '999999999');
   Check('score_ten_digits', TFrmMain.FormatScore(1000000000) = '1000000000');
   Check('score_max_integer', TFrmMain.FormatScore(MaxInt) = IntToStr(MaxInt));
-  Check('language_and_labels_have_explicit_owners', (Language.Owner = FrmMain) and
-    (Language.Messages.Owner = Language) and (Language.Score.Owner = Language) and
-    (Language.Lives.Owner = Language));
+  Check('hud_labels_have_form_owner',
+    (FrmMain.MessageLabel.Owner = FrmMain) and (FrmMain.ScoreLabel.Owner = FrmMain) and
+    (FrmMain.LivesLabel.Owner = FrmMain));
 
   FrmMain.Left := 0;
   RandSeed := 12345;
   Reset;
   StartForStep;
-  FrmMain.Ball.SetBounds(300, 300, FrmMain.Ball.Width, FrmMain.Ball.Height);
+  TGameProbe(FrmMain.Game).PlaceBall(300, 300);
   FrmMain.Timer1Timer(nil);
   FirstDirection := FrmMain.Ball.Left - 300;
   FrmMain.Left := 200;
   RandSeed := 12345;
   Reset;
   StartForStep;
-  FrmMain.Ball.SetBounds(300, 300, FrmMain.Ball.Width, FrmMain.Ball.Height);
+  TGameProbe(FrmMain.Game).PlaceBall(300, 300);
   FrmMain.Timer1Timer(nil);
   SecondDirection := FrmMain.Ball.Left - 300;
   FrmMain.Left := WindowLeft;
