@@ -53,7 +53,7 @@ begin
   inherited;
   FBenchmark := SameText(ParamStr(1), '--benchmark');
   if FBenchmark and (ParamStr(3) <> '') then FrmMain.Timer1.Interval := StrToInt(ParamStr(3));
-  if FBenchmark or SameText(ParamStr(1), '--e4') then FOutput := ParamStr(2)
+  if FBenchmark or SameText(ParamStr(1), '--e4') or SameText(ParamStr(1), '--e5') then FOutput := ParamStr(2)
   else FOutput := ParamStr(1);
   if FOutput = '' then
   begin
@@ -64,7 +64,7 @@ begin
       if Parent = Root then raise Exception.Create('Repository root not found');
       Root := Parent;
     end;
-    FOutput := Root + '\build\e4\latest';
+    FOutput := Root + '\build\e5\latest';
   end;
   ForceDirectories(FOutput);
   FTicks := TStringList.Create; FPaints := TStringList.Create; FResources := TStringList.Create;
@@ -148,8 +148,8 @@ begin
     if not FBenchmark then
     begin
       FPhase := 2;
-      if RunE4ViewChecks(FOutput) then FrmMain.Caption := 'Breakout E4 checks PASSED'
-      else FrmMain.Caption := 'Breakout E4 checks FAILED';
+      if RunE4ViewChecks(FOutput) then FrmMain.Caption := 'Breakout E5 checks PASSED'
+      else FrmMain.Caption := 'Breakout E5 checks FAILED';
       Exit;
     end;
     FStart := Stamp; FPhase := 0; FLastTick := 0; FLastPaint := 0;

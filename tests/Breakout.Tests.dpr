@@ -30,7 +30,7 @@ begin
         if Parent = Folder then raise Exception.Create('Repository root not found');
         Folder := Parent;
       end;
-      Folder := TPath.Combine(Folder, 'build\e4\latest');
+      Folder := TPath.Combine(Folder, 'build\e5\latest');
     end;
     Folder := ExpandFileName(Folder);
     EnginePassed := RunEngineTests(Folder);
@@ -38,12 +38,12 @@ begin
     PresentationPassed := RunPresentationTests(Folder);
     if EnginePassed and PhysicsPassed and PresentationPassed then
     begin
-      Writeln('E4 checks passed: ', TPath.Combine(Folder, 'engine.json'));
+      Writeln('E5 checks passed: ', TPath.Combine(Folder, 'engine.json'));
       ExitCode := 0;
     end
     else
     begin
-      Writeln('E4 checks failed: ', TPath.Combine(Folder, 'engine.json'));
+      Writeln('E5 checks failed: ', TPath.Combine(Folder, 'engine.json'));
       ExitCode := 1;
     end;
   except

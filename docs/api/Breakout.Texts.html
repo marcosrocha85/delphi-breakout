@@ -36,16 +36,22 @@ Player-facing resource strings, separated for future localization.</p>
 <span id="PasDoc-Constants"></span><h3 class="summary">Constants</h3>
 <table class="summary wide_list">
 <tr class="list visibility-published">
-<td class="itemcode"><code><strong><a href="Breakout.Texts.html#SGameOver">SGameOver</a></strong> = 'Game Over, Press F2 to Start a New Game . . .';</code></td>
+<td class="itemcode"><code><strong><a href="Breakout.Texts.html#SReady">SReady</a></strong> = 'Ready - click or press Space to launch';</code></td>
 </tr>
 <tr class="list2 visibility-published">
-<td class="itemcode"><code><strong><a href="Breakout.Texts.html#SPaused">SPaused</a></strong> = 'Game Paused, Press F3 to Continue . . .';</code></td>
+<td class="itemcode"><code><strong><a href="Breakout.Texts.html#SGameOver">SGameOver</a></strong> = 'Game over - press F2 to restart';</code></td>
 </tr>
 <tr class="list visibility-published">
-<td class="itemcode"><code><strong><a href="Breakout.Texts.html#SLevelComplete">SLevelComplete</a></strong> = 'Level Complete, Click or Press Space to Continue . . .';</code></td>
+<td class="itemcode"><code><strong><a href="Breakout.Texts.html#SPaused">SPaused</a></strong> = 'Paused - press F3 to resume';</code></td>
 </tr>
 <tr class="list2 visibility-published">
-<td class="itemcode"><code><strong><a href="Breakout.Texts.html#SVictory">SVictory</a></strong> = 'Victory, Press F2 to Start a New Game . . .';</code></td>
+<td class="itemcode"><code><strong><a href="Breakout.Texts.html#SLevelComplete">SLevelComplete</a></strong> = 'Level complete - click or press Space for the next level';</code></td>
+</tr>
+<tr class="list visibility-published">
+<td class="itemcode"><code><strong><a href="Breakout.Texts.html#SVictory">SVictory</a></strong> = 'Victory! All levels cleared - press F2 to restart';</code></td>
+</tr>
+<tr class="list2 visibility-published">
+<td class="itemcode"><code><strong><a href="Breakout.Texts.html#SLevel">SLevel</a></strong> = 'Level %d / %d';</code></td>
 </tr>
 <tr class="list visibility-published">
 <td class="itemcode"><code><strong><a href="Breakout.Texts.html#SScore">SScore</a></strong> = 'Score:';</code></td>
@@ -58,45 +64,59 @@ Player-facing resource strings, separated for future localization.</p>
 <h3 class="detail">Constants</h3>
 <table class="detail visibility-published wide_list">
 <tr class="list visibility-published">
-<td class="itemcode"><span id="SGameOver"></span><code><strong>SGameOver</strong> = 'Game Over, Press F2 to Start a New Game . . .';</code></td>
+<td class="itemcode"><span id="SReady"></span><code><strong>SReady</strong> = 'Ready - click or press Space to launch';</code></td>
 </tr>
 <tr><td colspan="1">
 <p class="nodescription">This item has no description.</p><p class="source_position">Source: src/Breakout.Texts.pas (line 9).</p></td></tr>
 </table>
 <table class="detail visibility-published wide_list">
 <tr class="list visibility-published">
-<td class="itemcode"><span id="SPaused"></span><code><strong>SPaused</strong> = 'Game Paused, Press F3 to Continue . . .';</code></td>
+<td class="itemcode"><span id="SGameOver"></span><code><strong>SGameOver</strong> = 'Game over - press F2 to restart';</code></td>
 </tr>
 <tr><td colspan="1">
 <p class="nodescription">This item has no description.</p><p class="source_position">Source: src/Breakout.Texts.pas (line 10).</p></td></tr>
 </table>
 <table class="detail visibility-published wide_list">
 <tr class="list visibility-published">
-<td class="itemcode"><span id="SLevelComplete"></span><code><strong>SLevelComplete</strong> = 'Level Complete, Click or Press Space to Continue . . .';</code></td>
+<td class="itemcode"><span id="SPaused"></span><code><strong>SPaused</strong> = 'Paused - press F3 to resume';</code></td>
 </tr>
 <tr><td colspan="1">
 <p class="nodescription">This item has no description.</p><p class="source_position">Source: src/Breakout.Texts.pas (line 11).</p></td></tr>
 </table>
 <table class="detail visibility-published wide_list">
 <tr class="list visibility-published">
-<td class="itemcode"><span id="SVictory"></span><code><strong>SVictory</strong> = 'Victory, Press F2 to Start a New Game . . .';</code></td>
+<td class="itemcode"><span id="SLevelComplete"></span><code><strong>SLevelComplete</strong> = 'Level complete - click or press Space for the next level';</code></td>
 </tr>
 <tr><td colspan="1">
 <p class="nodescription">This item has no description.</p><p class="source_position">Source: src/Breakout.Texts.pas (line 12).</p></td></tr>
 </table>
 <table class="detail visibility-published wide_list">
 <tr class="list visibility-published">
-<td class="itemcode"><span id="SScore"></span><code><strong>SScore</strong> = 'Score:';</code></td>
+<td class="itemcode"><span id="SVictory"></span><code><strong>SVictory</strong> = 'Victory! All levels cleared - press F2 to restart';</code></td>
 </tr>
 <tr><td colspan="1">
 <p class="nodescription">This item has no description.</p><p class="source_position">Source: src/Breakout.Texts.pas (line 13).</p></td></tr>
 </table>
 <table class="detail visibility-published wide_list">
 <tr class="list visibility-published">
-<td class="itemcode"><span id="SLives"></span><code><strong>SLives</strong> = 'Lives:';</code></td>
+<td class="itemcode"><span id="SLevel"></span><code><strong>SLevel</strong> = 'Level %d / %d';</code></td>
 </tr>
 <tr><td colspan="1">
 <p class="nodescription">This item has no description.</p><p class="source_position">Source: src/Breakout.Texts.pas (line 14).</p></td></tr>
+</table>
+<table class="detail visibility-published wide_list">
+<tr class="list visibility-published">
+<td class="itemcode"><span id="SScore"></span><code><strong>SScore</strong> = 'Score:';</code></td>
+</tr>
+<tr><td colspan="1">
+<p class="nodescription">This item has no description.</p><p class="source_position">Source: src/Breakout.Texts.pas (line 15).</p></td></tr>
+</table>
+<table class="detail visibility-published wide_list">
+<tr class="list visibility-published">
+<td class="itemcode"><span id="SLives"></span><code><strong>SLives</strong> = 'Lives:';</code></td>
+</tr>
+<tr><td colspan="1">
+<p class="nodescription">This item has no description.</p><p class="source_position">Source: src/Breakout.Texts.pas (line 16).</p></td></tr>
 </table>
 <hr><span class="appinfo"><em>Generated by <a href="https://pasdoc.github.io/">PasDoc 1.0.4</a>. </em>
 </span>

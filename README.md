@@ -20,6 +20,7 @@ Start with the [study guide](docs/study/README.md). It connects the mathematics 
 | Trajectory, paddle angle, circles, capsules, and continuous collision | [Physics and collisions](docs/study/physics-and-collisions.md) |
 | Canvas, buffering, sprites, layers, scaling, and FPS calculation | [Rendering and measurement](docs/study/rendering-and-fps.md) |
 | Animated score, fading, deterministic tests, and experiments | [Presentation and validation](docs/study/presentation-and-tests.md) |
+| Finite maps, explicit transitions, and capped difficulty | [Levels and progression](docs/study/levels-and-progression.md) |
 | Classes, functions, parameters, units, and ownership contracts | [PasDoc API reference](docs/api/README.md) |
 
 The HTML reference is generated from `{** ... }` comments in the Pascal interfaces. Use GitHub Pages for online browsing, or open [`docs/api/index.html`](docs/api/index.html) locally after cloning. The [PasDoc instructions](docs/api/README.md) explain generation; [publishing instructions](docs/publishing.md) describe the site. Pages publishes the checked-in files after they are merged into `main`.
@@ -37,7 +38,7 @@ The group also contains `BaselineRunner.exe` for VCL checks and measurements, an
 | Input | Action |
 | --- | --- |
 | Mouse movement | Move the paddle center, clamped to the field boundaries. |
-| Left click or Space | Launch the ball when the game is ready. |
+| Left click or Space | Launch in Ready; after level completion, load the next board in Ready, then launch with another click/Space. |
 | F2 | Restart the match, score, and effects. |
 | F3 | Pause or resume. |
 | F10 | Show or hide diagnostics. |
@@ -54,9 +55,12 @@ The cursor is hidden over the game, but the mouse can still leave the window. Lo
 - Canvas composition, cached sprites, transparency, and a HUD drawn above the field.
 - A three-part paddle with a stretchable center for a future size powerup.
 - Immediate gameplay scoring and a visual counter at **200 points/s**; block fading over **250 ms**.
+- Seeded class balance by formation height: cheaper blocks are more likely below; silver/gold are more likely above and never occupy side-neighboring cells. Diagonals are allowed.
+- A finite three-level campaign: the legacy grid, twin gates, and diamond; lives/score carry over, and the HUD identifies the current level.
+- Initial speeds of **240 / 252 / 264.6 units/s**: 5% compounded per level, capped by configuration at 300 units/s.
 - Tests that control elapsed time and measurements that distinguish simulation, callbacks, and painting.
 
-The current implementation is **E4** of the [evolution plan](docs/implementation-plan.md). The window remains fixed; menus, fullscreen, template-based levels, powerups, and an OpenGL comparison are planned. Final consolidation also includes removing remaining magic numbers, especially in HUD layout. The [E4 results](docs/e4-results.md) record measurements and their limits.
+The current implementation is **E5** of the [evolution plan](docs/implementation-plan.md). See the [progression results](docs/e5-results.md) and [VCL checks](tools/e5/README.md). The window remains fixed; menus, fullscreen, template-based levels, powerups, and an OpenGL comparison are planned. E6 includes removing remaining magic numbers, especially in HUD layout. The [E4 results](docs/e4-results.md) retain the rendering measurements and their limits. The published 1.0.1.0 binaries above precede E5; build this branch to try the campaign.
 
 ## From a USB backup to a study project
 

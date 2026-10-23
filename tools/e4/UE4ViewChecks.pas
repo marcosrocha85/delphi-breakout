@@ -13,12 +13,15 @@ type
   TViewProbe = class(TGameProbe)
     procedure SetCounters(State: TGameState; Score: Integer);
     procedure SetWidth(Width: Double);
+    procedure SetFinalLevel;
   end;
 
 procedure TViewProbe.SetCounters(State: TGameState; Score: Integer);
 begin FState := State; FScore := Score; end;
 procedure TViewProbe.SetWidth(Width: Double);
 begin FPaddle.Width := Width; end;
+procedure TViewProbe.SetFinalLevel;
+begin FLevel := Snapshot.LevelCount; end;
 
 function SamePixels(A, B: TBitmap; AX, AY, BX, BY, W, H: Integer): Boolean;
 var X, Y: Integer;
@@ -33,7 +36,7 @@ const Scales: array[0..3] of Double = (1, 1.25, 1.5, 2);
 var
   Report, Row: TJSONObject;
   Results: TJSONArray;
-  Failures, I, X, Y, BaseGdi, BaseUser, Updates, Resizes: Integer;
+  Failures, I, J, Level, X, Y, BaseGdi, BaseUser, Updates, Resizes, SavedScore: Integer;
   Count: Int64;
   Before, S: TGameSnapshot;
   V: TGamePresentation;
@@ -109,7 +112,7 @@ begin
       Press(VK_F3);
       for I := 1 to 5 do FrmMain.AdvanceFrame(0.1);
       Check('score_reaches_target_after_half_second', FrmMain.Presentation.DisplayedScore = 100);
-      Press(VK_F2); Probe.Fixture(True); FrmMain.RefreshView; Press(VK_SPACE);
+      Press(VK_F2); Probe.SetFinalLevel; Probe.Fixture(True); FrmMain.RefreshView; Press(VK_SPACE);
       Probe.SetBall(310, 82, 120, 600); FrmMain.AdvanceFrame(FixedDeltaSeconds);
       Check('victory_keeps_visual_timer_alive', (FrmMain.Game.State = gsVictory) and FrmMain.Timer1.Enabled);
       for I := 1 to 21 do FrmMain.AdvanceFrame(0.1);
@@ -144,6 +147,69 @@ begin
       Press(VK_F3); Count := FrmMain.GameLoop.Diagnostics.TotalSteps; Press(VK_F1);
       Check('f1_debug_step_only_one_fixed_step', FrmMain.GameLoop.Diagnostics.TotalSteps = Count+1);
       Press(VK_F10); Press(VK_F2);
+      { E5: drive the real form/loop/presentation across every campaign board.
+        Fixture shortens each board to one collision; console tests clear all
+        136 real bricks separately. No production skip-level command is added. }
+      for Level := 1 to 3 do
+      begin
+        S := FrmMain.Game.Snapshot;
+        Check('campaign_ready_board_' + IntToStr(Level), (S.State = gsReady) and
+          (S.Level = Level) and (S.LevelCount = 3) and
+          (((Level = 1) and (S.ActiveBricks = 96)) or ((Level > 1) and (S.ActiveBricks = 20))));
+        Passed := True;
+        for I := 0 to High(S.Bricks) do
+          if S.Bricks[I].Kind in [bkSilver, bkGold] then
+            for J := 0 to I - 1 do
+              if S.Bricks[J].Kind in [bkSilver, bkGold] then
+                Passed := Passed and not
+                  (((S.Bricks[I].Y = S.Bricks[J].Y) and
+                    (Abs(S.Bricks[I].X - S.Bricks[J].X) = 56)) or
+                   ((S.Bricks[I].X = S.Bricks[J].X) and
+                    (Abs(S.Bricks[I].Y - S.Bricks[J].Y) = 24)));
+        Check('campaign_premium_spacing_' + IntToStr(Level), Passed);
+        V.Reset(S); R.Compose(V,688,453); SaveFrame('level-' + IntToStr(Level) + '-ready');
+        Check('ready_message_and_level_feedback_' + IntToStr(Level),
+          (GameMessage(S.State) <> '') and (Pos('Space', GameMessage(S.State)) > 0));
+        Probe.Fixture(True); FrmMain.RefreshView; FrmMain.FormClick(nil);
+        Probe.SetBall(310,82,0,240); FrmMain.AdvanceFrame(0.1);
+        S := FrmMain.Game.Snapshot;
+        Check('campaign_terminal_visuals_' + IntToStr(Level), (S.Score = Level * 100) and
+          FrmMain.Timer1.Enabled and FrmMain.Presentation.Fades[0].Active and
+          (FrmMain.GameLoop.Diagnostics.LastSteps = 1) and
+          (FrmMain.GameLoop.Diagnostics.AccumulatorSeconds = 0));
+        V.Reset(S); R.Compose(V,688,453); SaveFrame('level-' + IntToStr(Level) + '-complete');
+        if Level < 3 then
+        begin
+          Check('campaign_level_complete_waits_' + IntToStr(Level), S.State = gsLevelComplete);
+          SavedScore := FrmMain.Presentation.DisplayedScore;
+          Press(VK_SPACE);
+          Check('campaign_continue_keeps_score_debt_' + IntToStr(Level),
+            (FrmMain.Game.State = gsReady) and
+            (FrmMain.Game.Snapshot.Score = Level * 100) and
+            (FrmMain.Game.Snapshot.Lives = 3) and
+            (FrmMain.Presentation.DisplayedScore = SavedScore) and FrmMain.Presentation.HasPending);
+          Passed := True;
+          for J := 0 to FrmMain.Presentation.FadeCapacity - 1 do
+            Passed := Passed and not FrmMain.Presentation.Fades[J].Active;
+          Check('campaign_continue_removes_old_fades_' + IntToStr(Level), Passed);
+          for J := 1 to 10 do FrmMain.AdvanceFrame(0.1);
+          Check('campaign_ready_finishes_debt_then_idles_' + IntToStr(Level),
+            (FrmMain.Presentation.DisplayedScore = Level * 100) and not FrmMain.Timer1.Enabled);
+        end
+        else
+        begin
+          Press(VK_SPACE); FrmMain.FormClick(nil); Press(VK_F3);
+          Check('campaign_victory_rejects_continue', FrmMain.Game.State = gsVictory);
+          for J := 1 to 10 do FrmMain.AdvanceFrame(0.1);
+          Check('campaign_victory_settles_score', (FrmMain.Presentation.DisplayedScore = 300) and
+            not FrmMain.Timer1.Enabled);
+        end;
+      end;
+      Press(VK_F2);
+      Check('campaign_f2_resets_presentation_and_match',
+        (FrmMain.Game.Snapshot.Level = 1) and (FrmMain.Game.Snapshot.Score = 0) and
+        (FrmMain.Game.Snapshot.Lives = 3) and (FrmMain.Presentation.DisplayedScore = 0) and
+        not FrmMain.Presentation.HasPending and not FrmMain.Timer1.Enabled);
       S := FrmMain.Game.Snapshot; V.Reset(S); R.Compose(V,688,453); SaveFrame('original-size');
       SetLength(S.Bricks,0); S.Paddle.X := 100; S.Ball.X := 400; S.Ball.Y := 350;
       V.Reset(S); R.Compose(V,688,453); Ref.Assign(R.Buffer);
@@ -188,7 +254,7 @@ begin
         Results.AddElement(Row); Inc(Failures);
       end;
     end;
-    Report.AddPair('suite','E4 VCL and bitmap');
+    Report.AddPair('suite','E5 progression with E4 VCL and bitmap regressions');
     Report.AddPair('checks',TJSONNumber.Create(Results.Count));
     Report.AddPair('failures',TJSONNumber.Create(Failures));
     Report.AddPair('results',Results); Results := nil;

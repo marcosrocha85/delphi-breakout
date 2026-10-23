@@ -1,0 +1,73 @@
+{
+  "date": "2026-10-23",
+  "base": "dd4c50bfa808bbf58b5f45060865dedaff0e4bc4",
+  "build_method": "Delphi 13 Community Edition IDE, DelphiBlocks.groupproj",
+  "console": {
+    "Win32 Debug": 232,
+    "Win64 Debug": 232
+  },
+  "vcl": {
+    "Win32 Debug": 67
+  },
+  "game_builds": [
+    "Win32 Debug",
+    "Win64 Release"
+  ],
+  "sources": {
+    "src/Breakout.Bricks.pas": "bdb85a220c9a047eeaf34983cabf8e3b4f5ca97450a6fdb01627fc8a6e1e985e",
+    "src/Breakout.Game.pas": "ff0589d9427c37509c5d79abef431c19a946e1b13a73982138a98f093668fec7",
+    "src/Breakout.Levels.pas": "9b9eb74d0eb0476a7fd96f57a330b7cb71e06c37d71ca427a376c48410d1fcb8",
+    "src/Breakout.Loop.pas": "fac6c18a402c6495dba81918f85be8aee31789f182ea982723106e2269cb4c99",
+    "src/Breakout.Physics.pas": "0281c52ec873fa8a632ffc030ec32ff169a0ea93474961f1633fb6485de8ff6f",
+    "src/Breakout.Presentation.pas": "de8ec632f5ad62f03fea102b856b5fba900d003d35c5f895ccc6158a6d474599",
+    "src/Breakout.Renderer.Vcl.pas": "b7182785a7f5ec36a9735c5cd5fab7d5ad2465037887b61b9b7b4d552a73f3c7",
+    "src/Breakout.Texts.pas": "739044301260b52ac34a37a2d1ea9f4de898dff03f4db6eb0a72b880a161534c",
+    "src/Breakout.Types.pas": "adcac008063917d76439767a43615b77f49ec48113c41218beb87523d55c906e",
+    "UMain.pas": "b87504ca8dddd2237fa12cb8b29c02a1ebe867b07df3b26c1f20cf3edd568ee1",
+    "tests/Breakout.Game.Tests.pas": "8c17f40ae6f5eb13b870646a35aeef72ca4f2a09a05e6cac95ff54a380491d76",
+    "tests/Breakout.Physics.Tests.pas": "841b59154abaf877d2b0217befe242ed65defffe6fb42246d70f92bdc79556b4",
+    "tests/Breakout.Tests.dpr": "c9df25b7fcbbe79ad1baa16304ff02fba6fd98fa74b9c1bfe23c6787cbcf03db",
+    "tools/e0/BaselineRunner.dpr": "94f3219d8aa35f3566bc0c626e4b5702f245265c7185e9e9d37ec6565c7b99fb",
+    "tools/e4/UE4ViewChecks.pas": "f1f3d9d0b3d540c2b1d51eef13c4249a98a147ae46c349de0d079c6d58894268"
+  },
+  "executables": {
+    "build/tests/Win32/Debug/Breakout.Tests.exe": {
+      "sha256": "c5e7b6e96490468c3e4265497b8d787c9ec5d4d2b205bd45f29b8b5a5a812bd6",
+      "bytes": 1191936
+    },
+    "build/tests/Win64/Debug/Breakout.Tests.exe": {
+      "sha256": "501723f5ac90cb6d75b0ddc6efae727cea9038ec7935114be64a7d45d3f67d3b",
+      "bytes": 1950208
+    },
+    "build/x86/Breakout.exe": {
+      "sha256": "1cf226eabcd55f832f8a2a1dde3bc87c327c5d609bc1246e571bd0c783eef8f9",
+      "bytes": 2627584
+    },
+    "build/x64/Breakout.exe": {
+      "sha256": "f90d19038aca038e21a8674d459d646953f872306d96ca8719a9c8c8c092860e",
+      "bytes": 4168192
+    },
+    "tools/e0/BaselineRunner.exe": {
+      "sha256": "3915f1a823564acd1bd50b9d6cc09a7abe6828b2fd160290a8c9c88d70f1ca1a",
+      "bytes": 2776064
+    }
+  },
+  "preserved_local_files": {
+    "Breakout.dproj": {
+      "sha256": "d8fe221bbba3d564673775d0b84eabb78b821778a1d4ee2559467f549edd5253",
+      "identical_to_initial_backup": true,
+      "included_in_commit": false
+    },
+    "UMain.dfm": {
+      "sha256": "bd6fb50fee104f78322b53af2bf88753b16599535d9f94b2c8fcec8a8580b5cf",
+      "identical_to_initial_backup": true,
+      "included_in_commit": false
+    },
+    "tests/Breakout.Tests.dproj": {
+      "sha256": "72d4640f8f0b39f5c94e4d3a1213aa7dabc29e77dfe60e8a1815ad23dfeaf972",
+      "identical_to_initial_backup": true,
+      "included_in_commit": false
+    }
+  },
+  "source_note": "Source hashes include a final PasDoc-only comment update to Breakout.Game after the verified executable builds."
+}

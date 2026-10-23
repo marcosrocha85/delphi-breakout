@@ -2,7 +2,7 @@
 
 [Documentation website](https://marcosrocha85.github.io/delphi-breakout/) · [Online API](https://marcosrocha85.github.io/delphi-breakout/api/)
 
-This guide follows the implementation through E4. Find a rule in the code, understand its mathematics, reproduce a scenario, and change a parameter knowing what to measure. Contracts are documented in the [PasDoc API reference](../api/README.md).
+This guide follows the implementation through E5. Find a rule in the code, understand its mathematics, reproduce a scenario, and change a parameter knowing what to measure. Contracts are documented in the [PasDoc API reference](../api/README.md).
 
 ## Reading path
 
@@ -11,7 +11,9 @@ This guide follows the implementation through E4. Find a rule in the code, under
 3. [Rendering and FPS](rendering-and-fps.md): persistent buffering, layers, the three-part paddle, viewport, and measurement interpretation.
 4. [Presentation and tests](presentation-and-tests.md): fading, score counting, seeds, tests without waiting, and exercises.
 
-Keep the [project group](../../DelphiBlocks.groupproj) open while reading. The main executable contains the game; the console contains deterministic scenarios; BaselineRunner checks VCL integration. Stage decisions and evidence are recorded in the [plan](../implementation-plan.md) and the E0–E4 reports in the parent directory.
+5. [Levels and progression](levels-and-progression.md): finite maps, explicit transitions, capped speed, and feedback lifetime.
+
+Keep the [project group](../../DelphiBlocks.groupproj) open while reading. The main executable contains the game; the console contains deterministic scenarios; BaselineRunner checks VCL integration. Stage decisions and evidence are recorded in the [plan](../implementation-plan.md) and the E0–E5 reports in the parent directory.
 
 ## Code map
 
@@ -21,7 +23,7 @@ Keep the [project group](../../DelphiBlocks.groupproj) open while reading. The m
 | [Breakout.Game](../../src/Breakout.Game.pas) | Rules and contact resolution | `Execute`, `Step`, `Advance` |
 | [Breakout.Physics](../../src/Breakout.Physics.pas) | Geometric queries and velocity response | `SweepCircleRect`, `PaddleVelocity` |
 | [Breakout.Loop](../../src/Breakout.Loop.pas) | Accumulator and step budget | `Advance` |
-| [Breakout.Levels](../../src/Breakout.Levels.pas) | Deterministic legacy grid | `GenerateLegacyLevel` |
+| [Breakout.Levels](../../src/Breakout.Levels.pas) | Fixed formations with seeded class balance | `GenerateLevel`, `GenerateLegacyLevel` |
 | [Breakout.Bricks](../../src/Breakout.Bricks.pas) | Class identity, sprite, and points | `BrickDefinition` |
 | [Breakout.Presentation](../../src/Breakout.Presentation.pas) | Visual state and coordinate conversion | `Sync`, `Advance`, `TViewport.Fit` |
 | [Breakout.Renderer.Vcl](../../src/Breakout.Renderer.Vcl.pas) | Canvas/GDI composition and presentation | `Compose`, `Paint` |
@@ -36,4 +38,4 @@ Examples use current defaults. Historical results may use earlier values: score 
 
 ## Current scope
 
-This is a dedicated Breakout engine with a linear scan over blocks and a VCL backend. Its techniques can transfer to an engine of your own. There is no spatial index, render interpolation, monitor synchronization, or separate physics thread. The generator currently creates one 96-block grid recipe; the default configuration has one level and ends in victory. Level progression, menus, fullscreen, powerups, and other backends remain planned work.
+This is a dedicated Breakout engine with a linear scan over blocks and a VCL backend. Its techniques can transfer to an engine of your own. There is no spatial index, render interpolation, monitor synchronization, or separate physics thread. The default campaign has three levels: the legacy 96-block formation and two fixed 20-block formations, all with seeded height-weighted classes. Silver/gold cannot occupy neighboring cells horizontally or vertically; diagonals are allowed. Explicit transitions preserve lives/score and end in victory. Menus, fullscreen, powerups, template-based continuous levels, and other backends remain planned work.

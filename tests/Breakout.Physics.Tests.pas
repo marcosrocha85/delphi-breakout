@@ -334,7 +334,9 @@ begin
       Game.Free;
     end;
   end;
-  Game := TGameProbe.Create(TGameConfig.Default, 123);
+  Config := TGameConfig.Default;
+  Config.LevelCount := 1; // This fixture specifically exercises the final-board transition.
+  Game := TGameProbe.Create(Config, 123);
   Loop := TGameLoop.Create(Game);
   try
     Loop.Execute(gcLaunch);

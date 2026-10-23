@@ -34,6 +34,8 @@ Mouse events and commands can also request updates. `Invalidate` requests painti
 
 `TGame.Execute` centralizes transitions. Click/Space become `gcLaunch`; F2 becomes `gcRestart`; F3 becomes `gcTogglePause`. The VCL layer chooses key bindings; the engine knows intent. Losing a life ends that step immediately, resets positions, and enters Ready or GameOver. One fall cannot consume several lives within the same step.
 
+The default match now has three boards. Continuing after `gsLevelComplete` loads the next board in Ready; another click/Space launches it. The HUD reads `Level`/`LevelCount` from the snapshot. See [levels and progression](levels-and-progression.md) for maps, speed policy, and presentation cleanup.
+
 ## Real time and simulated time
 
 The **15 ms** timer schedules opportunities to work. Elapsed time comes from `TStopwatch`:

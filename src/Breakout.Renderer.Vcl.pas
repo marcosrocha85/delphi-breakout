@@ -70,6 +70,7 @@ end;
 function GameMessage(State: TGameState): string;
 begin
   case State of
+    gsReady: Result := SReady;
     gsPaused: Result := SPaused;
     gsGameOver: Result := SGameOver;
     gsLevelComplete: Result := SLevelComplete;
@@ -216,6 +217,9 @@ begin
   FBuffer.Canvas.TextOut(Round(FViewport.OffsetX + 5 * FViewport.Scale),
     Round(FViewport.OffsetY + 437 * FViewport.Scale), SLives);
   for I := 0 to View.Snapshot.Lives - 1 do DrawSprite(FLife, 48 + I * 15, 440, 15, 10);
+  Text := Format(SLevel, [View.Snapshot.Level, View.Snapshot.LevelCount]);
+  FBuffer.Canvas.TextOut((R.Left + R.Right - FBuffer.Canvas.TextWidth(Text)) div 2,
+    Round(FViewport.OffsetY + 437 * FViewport.Scale), Text);
   Text := SScore + ' ' + FormatGameScore(View.DisplayedScore);
   Saved := SaveDC(FBuffer.Canvas.Handle);
   try

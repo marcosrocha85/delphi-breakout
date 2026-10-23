@@ -2,7 +2,7 @@
 
 Created: 2026-10-22. Updated: 2026-10-23. Runtime environment: Delphi 13, Windows.
 
-Status: incremental implementation; **E0–E4 completed on 2026-10-22**. [E0](e0-baseline.md) records the baseline; [E1](e1-results.md) covers flow fixes; [E2](e2-results.md) extracts the engine and translation-ready text; [E3](e3-results.md) adds fixed-step continuous collision with a circular ball and rounded paddle; [E4](e4-results.md) adds Canvas, layering, animated scoring, fading, and a stretchable paddle. Next: **E5, progression and feedback**.
+Status: incremental implementation; **E0–E4 completed on 2026-10-22**. [E0](e0-baseline.md) records the baseline; [E1](e1-results.md) covers flow fixes; [E2](e2-results.md) extracts the engine and translation-ready text; [E3](e3-results.md) adds fixed-step continuous collision with a circular ball and rounded paddle; [E4](e4-results.md) adds Canvas, layering, animated scoring, fading, and a stretchable paddle. **E5 completed on 2026-10-23** adds a finite campaign and progression feedback; see [E5 results](e5-results.md). Next: **E6, consolidation**.
 
 ## 1. Goal and direction
 
@@ -187,16 +187,16 @@ Measure simulation, composition, presentation, and paint intervals separately. R
 
 Output: [Canvas/feedback results](e4-results.md), 191 non-VCL cases per configuration and 47 VCL/bitmap checks. Initial builds covered Win32/Win64 Debug/Release. Real DPI/multiple monitors and prolonged evaluation remain E6. Graphics speed/flicker claims require observation/measurement rather than technology assumptions.
 
-### E5 — Complete progression and feedback (next)
+### E5 — Complete progression and feedback (completed)
 
-- Preserve the current generator as level 1 and add two small data-defined levels with understandable layouts.
+- Preserve the legacy geometry as level 1 and add two small data-defined formations. Marcos authorized height-weighted class balance in all three on 2026-10-23: cheaper classes favor lower rows; silver/gold favor upper rows, cannot be horizontal/vertical neighbors, and may be diagonal neighbors. Retain the historical generator as a reference.
 - Complete LevelComplete/Victory progression and load levels through explicit transitions.
 - Propose an initial 5% speed increase per level, capped by configuration and revised after playtesting.
 - Preserve lives/score across levels; F2 resets everything.
 - Refine ready/pause/game-over/victory feedback using E4's score/fade foundation.
 - Consider arrows/A/D later through the same movement intent with an explicit simultaneous-input policy.
 
-Output: a complete match from start to defeat/victory without unnecessary engine complexity.
+Output: a finite three-board match with explicit Ready transitions, lives/score preservation, 5% compounded level speed capped at 300 units/s, localized state feedback, and a level HUD. See [E5 results](e5-results.md) and [progression chapter](study/levels-and-progression.md) for validation and human playtesting limits.
 
 ### E6 — Consolidate project and documentation
 
@@ -226,7 +226,7 @@ Test rules/geometry rather than duplicating handler internals or mechanically te
 | Blocks | Descending top hit exits upward; ascending bottom hit exits downward. Left/right contacts reverse horizontal motion only, preserve Y, score once; repeat ascending/descending. Cover corners, seams, high speed, overlaps, and inactive blocks. |
 | Paddle | Center/intermediate/edge offsets give proportional mirrored angles with constant speed. Cover ascending ball and ball below paddle to reject inappropriate rebounds. |
 | Time | Same seed/configuration/per-step inputs at 30/60/144 callbacks/s yield equivalent states for equal steps; excessive delays follow discard policy. |
-| Levels | Same seed regenerates board; final brick completes once; progression preserves lives/score; final level wins. |
+| Levels | Same seed regenerates each balanced board; approved formations stay fixed; sample height-weighted classes and check silver/gold side separation with diagonals allowed; final brick completes once; progression preserves lives/score; final level wins. |
 | Resources | Repeated restart/debug toggles show no continuous handle/object growth; closing frees game/resources. |
 
 Inject elapsed time for temporal tests and call Step with known inputs for rules. Compare floating-point values with explicit tolerance. Reproduction needs configuration/seed/input sequence, not seed alone.
@@ -258,7 +258,7 @@ E0–E4 deliver organized code, separated engine, predictable physics, and compo
 - Preserve art and demonstrate smoothness changes by comparison/measurement.
 - Declared builds/tests pass with evidence and without overwriting local user work.
 
-With E0–E4 completed, proceed to E5. Keep simulation boundaries clear before graphics changes so regressions can be located. Speed, angle, cadence, and difficulty remain playtesting parameters.
+With E0–E5 completed, proceed to E6. Keep simulation boundaries clear before graphics changes so regressions can be located. Speed, angle, cadence, and difficulty remain playtesting parameters.
 
 ## 9. Desires after E6
 
