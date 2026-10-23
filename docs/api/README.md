@@ -2,7 +2,7 @@
 
 The [HTML reference](index.html) is generated with **PasDoc 1.0.4** from the nine units in `src/`. It includes the public APIs for types, engine, loop, geometry, presentation, renderer, bricks, levels, and text. The [study guide](../study/README.md) explains `UMain` and test probes outside this engine API.
 
-After cloning, open `index.html` in a local browser. GitHub displays HTML source rather than automatically publishing a website. Generated files are checked in so the reference can be read without installing the generator.
+Browse the [online API](https://marcosrocha85.github.io/delphi-breakout/api/) or open `index.html` locally after cloning. Generated files are checked in so the reference can be read without installing the generator. The [documentation home](../index.html) links the API and study chapters; [publishing instructions](../publishing.md) describe how `main` is published through GitHub Pages.
 
 ## Regenerate
 

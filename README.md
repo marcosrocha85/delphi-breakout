@@ -10,6 +10,8 @@ Download the Windows executables and offline documentation from [release 1.0.1.0
 
 ## Learn how the engine works
 
+**[Online documentation](https://marcosrocha85.github.io/delphi-breakout/)** · **[Browse the API](https://marcosrocha85.github.io/delphi-breakout/api/)**
+
 Start with the [study guide](docs/study/README.md). It connects the mathematics to the units, methods, and tests implementing each technique.
 
 | Topic | Read |
@@ -20,7 +22,7 @@ Start with the [study guide](docs/study/README.md). It connects the mathematics 
 | Animated score, fading, deterministic tests, and experiments | [Presentation and validation](docs/study/presentation-and-tests.md) |
 | Classes, functions, parameters, units, and ownership contracts | [PasDoc API reference](docs/api/README.md) |
 
-The HTML reference is generated from `{** ... }` comments in the Pascal interfaces. After cloning the repository, open [`docs/api/index.html`](docs/api/index.html) in a browser. GitHub displays HTML source; the [PasDoc instructions](docs/api/README.md) explain how to generate and open the local reference.
+The HTML reference is generated from `{** ... }` comments in the Pascal interfaces. Use GitHub Pages for online browsing, or open [`docs/api/index.html`](docs/api/index.html) locally after cloning. The [PasDoc instructions](docs/api/README.md) explain generation; [publishing instructions](docs/publishing.md) describe the site. Pages publishes the checked-in files after they are merged into `main`.
 
 ## Build and play
 

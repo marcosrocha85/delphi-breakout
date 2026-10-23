@@ -1,5 +1,7 @@
 # Building a 2D engine with Delphi
 
+[Documentation website](https://marcosrocha85.github.io/delphi-breakout/) · [Online API](https://marcosrocha85.github.io/delphi-breakout/api/)
+
 This guide follows the implementation through E4. Find a rule in the code, understand its mathematics, reproduce a scenario, and change a parameter knowing what to measure. Contracts are documented in the [PasDoc API reference](../api/README.md).
 
 ## Reading path
