@@ -1,0 +1,238 @@
+﻿{
+    "suite": "E3 engine flow regressions without VCL",
+    "passed": true,
+    "checks": 46,
+    "failures": 0,
+    "results": [
+        {
+            "name": "initial_state_and_counters",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "ready_ignores_tick_debug_pause_and_deactivation",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "paddle_clamps_left_and_carries_ready_ball",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "paddle_clamps_right",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "launch_preserves_prepared_position",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "playing_ignores_debug_step_and_repeated_launch",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "immediate_pause_needs_no_timer",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "paused_ignores_launch_move_and_tick",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "debug_step_advances_once_and_preserves_pause",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "resume_preserves_position_and_steps",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "deactivation_is_idempotent_pause",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "restart_from_pause_restores_ready",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "restart_from_play_restores_ready",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "fall_1_loses_exactly_one_life",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "fall_1_terminates_without_extra_motion",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "idle_after_fall_1_does_not_advance",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "fall_2_loses_exactly_one_life",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "fall_2_terminates_without_extra_motion",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "idle_after_fall_2_does_not_advance",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "fall_3_loses_exactly_one_life",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "fall_3_terminates_without_extra_motion",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "idle_after_fall_3_does_not_advance",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "third_fall_enters_game_over",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "game_over_rejects_simulation_commands",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "restart_after_game_over_restores_board",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "hit_deactivates_brick_and_adds_its_points",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "inactive_brick_retains_stable_id_and_slot",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "inactive_brick_cannot_score_again",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "restart_clears_score_and_last_hit",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "last_brick_enters_level_complete_once",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "completion_terminates_the_step",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "level_complete_waits_without_moving_or_scoring",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "continue_loads_next_level_ready_preserving_lives_and_score",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "last_level_enters_victory",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "victory_ignores_launch_pause_and_steps",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "restart_from_victory_resets_level_and_counters",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "debug_completion_keeps_terminal_state",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "restart_from_level_complete_restores_ready",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "same_seed_generates_same_board_and_launch",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "board_has_unique_stable_ids_and_valid_points",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "different_seed_changes_board",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "snapshot_is_detached_from_live_model",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "replay_ignores_global_random_and_external_level_generation",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "restart_repeats_seeded_board",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "full_cardinal_seed_works_with_overflow_checking",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "invalid_configuration_is_rejected",
+            "passed": true,
+            "detail": ""
+        }
+    ]
+}

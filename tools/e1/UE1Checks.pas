@@ -9,7 +9,7 @@ implementation
 uses
   Winapi.Windows, System.SysUtils, System.Classes, System.JSON,
   System.IOUtils, Vcl.ExtCtrls, UMain, UDebug, Breakout.Types, Breakout.Texts,
-  Breakout.TestScenarios;
+  Breakout.TestScenarios, System.Math;
 
 type
   TE1Checks = class
@@ -88,10 +88,11 @@ procedure TE1Checks.Run;
 var
   X, Y, I, Components, WindowLeft, FirstDirection, SecondDirection: Integer;
   ExpectedPlayer, ExpectedBallX, ExpectedBallY: Integer;
+  Before: TGameSnapshot;
 begin
   Reset;
   ExpectedPlayer := (FrmMain.ClientWidth - FrmMain.Player.Width) div 2;
-  ExpectedBallX := ExpectedPlayer + (FrmMain.Player.Width - FrmMain.Ball.Width) div 2;
+  ExpectedBallX := Round(ExpectedPlayer + (FrmMain.Player.Width - FrmMain.Ball.Width) / 2);
   ExpectedBallY := FrmMain.Player.Top - FrmMain.Ball.Height - 8;
   Check('ready_has_96_bricks_and_three_lives',
     (BrickCount = 96) and (FrmMain.VLives.Width = 45));
@@ -100,7 +101,7 @@ begin
   X := FrmMain.Ball.Left;
   Y := FrmMain.Ball.Top;
   Key(VK_F1);
-  FrmMain.Timer1Timer(nil);
+  FrmMain.AdvanceFrame(FixedDeltaSeconds);
   Key(VK_F3);
   Check('ready_ignores_step_tick_and_pause',
     (FrmMain.Ball.Left = X) and (FrmMain.Ball.Top = Y) and
@@ -121,7 +122,7 @@ begin
   FrmMain.FormClick(nil);
   FrmMain.PlayerClick(nil);
   Key(VK_F1);
-  FrmMain.Timer1Timer(nil);
+  FrmMain.AdvanceFrame(FixedDeltaSeconds);
   Check('all_launch_paths_and_ticks_preserve_pause',
     not FrmMain.Timer1.Enabled and FrmMain.MessageLabel.Visible and
     (FrmMain.Ball.Left = X) and (FrmMain.Ball.Top = Y));
@@ -149,14 +150,14 @@ begin
   begin
     StartForStep;
     TGameProbe(FrmMain.Game).PrepareFall;
-    FrmMain.Timer1Timer(nil);
+    FrmMain.AdvanceFrame(FixedDeltaSeconds);
     Check('fall_' + IntToStr(I) + '_removes_one_life',
       FrmMain.VLives.Width = (3 - I) * 15);
     Check('fall_' + IntToStr(I) + '_repositions_without_extra_motion',
       (FrmMain.Player.Left = ExpectedPlayer) and
       (FrmMain.Ball.Left = ExpectedBallX) and (FrmMain.Ball.Top = ExpectedBallY) and
       not FrmMain.Timer1.Enabled);
-    FrmMain.Timer1Timer(nil);
+    FrmMain.AdvanceFrame(FixedDeltaSeconds);
     Check('idle_tick_after_fall_' + IntToStr(I) + '_is_ignored',
       (FrmMain.VLives.Width = (3 - I) * 15) and
       (FrmMain.Ball.Left = ExpectedBallX) and (FrmMain.Ball.Top = ExpectedBallY));
@@ -167,7 +168,7 @@ begin
   FrmMain.PlayerClick(nil);
   Key(VK_SPACE);
   Key(VK_F1);
-  FrmMain.Timer1Timer(nil);
+  FrmMain.AdvanceFrame(FixedDeltaSeconds);
   Check('game_over_ignores_launch_and_step', not FrmMain.Timer1.Enabled and
     (FrmMain.Ball.Left = ExpectedBallX) and (FrmMain.Ball.Top = ExpectedBallY));
   Reset;
@@ -179,8 +180,8 @@ begin
   X := FrmMain.Ball.Left;
   Y := FrmMain.Ball.Top;
   Check('f10_consumes_key', Key(VK_F10) = 0);
-  Check('debug_opens_with_form_owner_and_fifteen_keys', Assigned(FrmDebug) and
-    (FrmDebug.Owner = FrmMain) and (FrmDebug.VLE.Strings.Count = 15));
+  Check('debug_opens_with_form_owner_and_twenty_three_keys', Assigned(FrmDebug) and
+    (FrmDebug.Owner = FrmMain) and (FrmDebug.VLE.Strings.Count = 23));
   Check('debug_toggle_preserves_main_window_position', FrmMain.Left = WindowLeft);
   Key(VK_F1);
   Check('debug_cannot_step_ready', (FrmMain.Ball.Left = X) and (FrmMain.Ball.Top = Y));
@@ -190,14 +191,15 @@ begin
   Key(VK_F1);
   Check('debug_cannot_step_unpaused_game', (FrmMain.Ball.Left = X) and (FrmMain.Ball.Top = Y));
   Key(VK_F3);
+  Before := FrmMain.Game.Snapshot;
   Key(VK_F1);
   Check('debug_can_step_paused_game_once', not FrmMain.Timer1.Enabled and
-    FrmMain.MessageLabel.Visible and (Abs(FrmMain.Ball.Left-X) = 5) and
-    (FrmMain.Ball.Top = Y-5));
+    FrmMain.MessageLabel.Visible and (FrmMain.Ball.Left = Round(Before.Ball.X + Before.Ball.VelocityX * FixedDeltaSeconds)) and
+    (FrmMain.Ball.Top = Round(Before.Ball.Y + Before.Ball.VelocityY * FixedDeltaSeconds)));
   Check('debug_reports_post_step_position_with_stable_keys',
     (FrmDebug.VLE.Values[DebugBallLeft] = IntToStr(FrmMain.Ball.Left)) and
     (FrmDebug.VLE.Values[DebugBallTop] = IntToStr(FrmMain.Ball.Top)) and
-    (FrmDebug.VLE.Values[DebugLives] = '3') and (FrmDebug.VLE.Strings.Count = 15));
+    (FrmDebug.VLE.Values[DebugLives] = '3') and (FrmDebug.VLE.Strings.Count = 23));
   FrmDebug.Close;
   X := FrmMain.Ball.Left;
   Y := FrmMain.Ball.Top;
@@ -208,7 +210,7 @@ begin
   Check('f10_reopens_hidden_debug_with_current_values', FrmDebug.Visible and
     (FrmDebug.VLE.Values[DebugBallLeft] = IntToStr(X)) and
     (FrmDebug.VLE.Values[DebugBallTop] = IntToStr(Y)) and
-    (FrmDebug.VLE.Strings.Count = 15));
+    (FrmDebug.VLE.Strings.Count = 23));
   Key(VK_F10);
   X := FrmMain.Ball.Left;
   Y := FrmMain.Ball.Top;
@@ -230,18 +232,18 @@ begin
   Reset;
   StartForStep;
   TGameProbe(FrmMain.Game).PlaceBall(300, 300);
-  FrmMain.Timer1Timer(nil);
+  FrmMain.AdvanceFrame(FixedDeltaSeconds);
   FirstDirection := FrmMain.Ball.Left - 300;
   FrmMain.Left := 200;
   RandSeed := 12345;
   Reset;
   StartForStep;
   TGameProbe(FrmMain.Game).PlaceBall(300, 300);
-  FrmMain.Timer1Timer(nil);
+  FrmMain.AdvanceFrame(FixedDeltaSeconds);
   SecondDirection := FrmMain.Ball.Left - 300;
   FrmMain.Left := WindowLeft;
   Check('seeded_direction_is_independent_of_window_left',
-    (FirstDirection = SecondDirection) and (Abs(FirstDirection) = 5));
+    (FirstDirection = SecondDirection) and (Abs(FirstDirection) = 1));
   Reset;
   Components := FrmMain.ComponentCount;
   for I := 1 to 50 do

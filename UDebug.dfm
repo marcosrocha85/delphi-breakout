@@ -3,7 +3,7 @@ object FrmDebug: TFrmDebug
   Top = 114
   BorderStyle = bsDialog
   Caption = 'Debug Form'
-  ClientHeight = 446
+  ClientHeight = 552
   ClientWidth = 252
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -19,7 +19,7 @@ object FrmDebug: TFrmDebug
     Left = 0
     Top = 0
     Width = 252
-    Height = 446
+    Height = 552
     TabStop = False
     Align = alClient
     Color = clWindow

@@ -52,7 +52,7 @@ begin
         (FrmMain.Ball.Left = Round(Before.Ball.X)) and
         (FrmMain.Player.Left = Round(Before.Paddle.X)) and BrickView.Visible);
       FrmMain.Timer1.Enabled := True;
-      FrmMain.Timer1Timer(nil);
+      FrmMain.AdvanceFrame(FixedDeltaSeconds);
       After := FrmMain.Game.Snapshot;
       Check('timer_cannot_advance_ready_model', (After.State = gsReady) and
         (After.Ball.X = Before.Ball.X) and (After.Ball.Y = Before.Ball.Y) and
@@ -67,7 +67,7 @@ begin
       After := FrmMain.Game.Snapshot;
       Check('opening_debug_preserves_engine_state', (After.State = Before.State) and
         (After.Ball.X = Before.Ball.X) and (After.Ball.Y = Before.Ball.Y) and
-        (After.Ball.StepX = Before.Ball.StepX));
+        (After.Ball.VelocityX = Before.Ball.VelocityX));
       Key := VK_F10;
       FrmMain.FormKeyDown(nil, Key, []);
       TGameProbe(FrmMain.Game).Fixture;
@@ -75,8 +75,8 @@ begin
       BrickView := TImage(FrmMain.FindComponent('Bar0'));
       Components := FrmMain.ComponentCount;
       FrmMain.PlayerClick(nil);
-      TGameProbe(FrmMain.Game).SetBall(310, 84, 5, 5);
-      FrmMain.Timer1Timer(nil);
+      TGameProbe(FrmMain.Game).SetBall(310, 82, 120, 240);
+      FrmMain.AdvanceFrame(FixedDeltaSeconds);
       Check('hit_hides_view_without_destroying_control_or_id',
         (FrmMain.FindComponent('Bar0') = BrickView) and not BrickView.Visible and
         (FrmMain.ComponentCount = Components) and (FrmMain.Game.Snapshot.LastHitBrickId = 0));
@@ -91,8 +91,8 @@ begin
       FrmMain.FormKeyDown(nil, Key, []);
       FrmMain.PlayerClick(nil);
       TGameProbe(FrmMain.Game).Fixture(True);
-      TGameProbe(FrmMain.Game).SetBall(310, 84, 5, 5);
-      FrmMain.Timer1Timer(nil);
+      TGameProbe(FrmMain.Game).SetBall(310, 82, 120, 240);
+      FrmMain.AdvanceFrame(FixedDeltaSeconds);
       Check('victory_snapshot_updates_message_and_stops_timer',
         (FrmMain.Game.Snapshot.State = gsVictory) and not FrmMain.Timer1.Enabled and
         FrmMain.MessageLabel.Visible and (FrmMain.MessageLabel.Caption = SVictory));

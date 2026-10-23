@@ -2,7 +2,7 @@
 
 Data: 22/10/2026. Ambiente de execução informado: Delphi 13, Windows.
 
-Status: implementação incremental; **E0, E1 e E2 concluídas em 22/10/2026**. O diagnóstico e a referência estão no [relatório da E0](e0-referencia.md); as correções de fluxo, no [resultado da E1](e1-resultados.md). O [resultado da E2](e2-resultados.md) registra o motor independente, os estados, a preparação dos textos para tradução e os testes do motor/adaptador. Próxima etapa: E3, tempo e física.
+Status: implementação incremental; **E0, E1, E2 e E3 concluídas em 22/10/2026**. O diagnóstico e a referência estão no [relatório da E0](e0-referencia.md); as correções de fluxo, no [resultado da E1](e1-resultados.md). O [resultado da E2](e2-resultados.md) registra o motor independente, os estados, a preparação dos textos para tradução e os testes do motor/adaptador. O [resultado da E3](e3-resultados.md) registra o passo fixo, as colisões contínuas, a bola circular, a raquete arredondada e a validação em quatro configurações. Próxima etapa: E4, renderização.
 
 ## 1. Objetivo e direção
 
@@ -21,7 +21,7 @@ Premissas de escopo:
 
 ## 2. Diagnóstico com evidências
 
-As linhas abaixo se referem aos fontes legados do diagnóstico inicial. Os resultados de E1 e E2 registram os itens já tratados; os defeitos de física continuam na E3. O relato lateral acrescentado pelo usuário permanece identificado separadamente.
+As linhas abaixo se referem aos fontes legados do diagnóstico inicial. O diagnóstico abaixo descreve o legado. Os resultados de E1, E2 e E3 registram as correções; os relatos de ricochete lateral e superior receberam regressões dirigidas na E3.
 
 | Prioridade | Evidência local | Consequência e ação proposta |
 | --- | --- | --- |
@@ -30,7 +30,7 @@ As linhas abaixo se referem aos fontes legados do diagnóstico inicial. Os resul
 | Alta | `UMain.pas:111` a `UMain.pas:126`, resposta da raquete | Nas três regiões, os módulos dos deslocamentos X/Y são iguais: 15/15 nas pontas e 5/5 no centro. A inclinação permanece em 45°; mudam a velocidade e, nas pontas, o sentido horizontal. Calcular a proporção X/Y a partir do ponto de impacto para obter o ângulo proporcional desejado. |
 | Alta | `UMain.pas:153` e `UMain.pas:166` | A interseção é examinada antes do deslocamento, e a face atingida depende de condições sobrepostas, sem instante de impacto nem posição anterior. Corrigir faces, cantos, penetração e atravessamento em alta velocidade. |
 | Alta | `UMain.pas:166` a `UMain.pas:184`, seleção da face do bloco | A condição vertical do primeiro ramo já é garantida pelo teste externo de interseção; as condições horizontais são iguais às do `else if`. Assim, o ramo `bY := Up` é inacessível nesse fluxo: uma bola descendo pode continuar descendo e destruir o bloco sem refletir. O segundo ramo lateral também repete condições já satisfeitas e não distingue o lado atingido. Corrigir a seleção da face e testar cada sentido de aproximação. |
-| Alta | Relato do usuário em 22/10/2026: colisão na lateral do bloco | Às vezes a bola destrói o bloco sem ricochetear horizontalmente, continuando no mesmo sentido. Registrar e reproduzir separadamente os impactos nas faces esquerda e direita; corrigir na E3 para inverter a velocidade horizontal, preservando a vertical em contatos isolados de face e pontuando o bloco uma única vez. Este caso foi relatado pelo usuário; ainda falta uma reprodução dirigida específica. |
+| Alta | Relato do usuário em 22/10/2026: colisão na lateral do bloco | Às vezes a bola destrói o bloco sem ricochetear horizontalmente, continuando no mesmo sentido. Registrar e reproduzir separadamente os impactos nas faces esquerda e direita; corrigir na E3 para inverter a velocidade horizontal, preservando a vertical em contatos isolados de face e pontuando o bloco uma única vez. Corrigido na E3: regressões dirigidas para as duas laterais, subindo e descendo, com inversão de X, preservação de Y e pontuação única. |
 | Alta | `UMain.pas:104` e `UMain.pas:130` | A raquete usa a borda esquerda da bola e margens fixas; a perda de vida depende também da posição horizontal relativa à raquete. Definir geometria coerente e uma linha inferior de perda independente da raquete. |
 | Alta | `UMain.pas:132` e fim de `Timer1Timer` | Depois de `Reposition` na perda de vida, a chamada continua e desloca a bola novamente. Encerrar o passo assim que houver transição de estado. |
 | Alta | `UMain.pas:30`, `PlayerClick`, `Pause`, `FormKeyDown` | Estado espalhado entre dois booleanos e `Timer1.Enabled`. Espaço durante pausa passa por `PlayerClick`, que reposiciona; F1 chama a atualização diretamente em qualquer estado. Centralizar as transições e as permissões de cada comando. |
@@ -57,7 +57,8 @@ Extrair poucas units com responsabilidades claras. Não criar hierarquias de obj
 | `src/Breakout.Game.pas` | `TGame`, registros da bola/raquete/blocos, configuração, estados, vidas, pontos, fase e comandos. Sem dependência de formulários ou controles VCL. |
 | `src/Breakout.Types.pas` | Tipos de entidades, configuração, estados/comandos e fotografia; extraídos na E2 para compartilhamento sem VCL. |
 | `src/Breakout.Texts.pas` | Textos da interface em `resourcestring`, preservando a intenção de internacionalização sem acoplar idiomas ao motor. |
-| `src/Breakout.Physics.pas` | Funções de colisão, instante de impacto, normal e reflexão; sem pontuação, labels ou desenho. Extrair junto com a revisão da física. |
+| `src/Breakout.Physics.pas` | Geometria contínua, instante de impacto, normais, reflexão e ângulo da raquete; extraída na E3, sem pontuação ou desenho. |
+| `src/Breakout.Loop.pas` | Acumulador de tempo, passos fixos, comandos e diagnóstico de atrasos; extraída na E3, sem relógio do sistema ou VCL. |
 | `src/Breakout.Levels.pas` | Definições e geração de fases a partir de dados e semente explícita. Extrair quando a progressão justificar. |
 | `src/Breakout.Renderer.Vcl.pas` | Recursos gráficos, buffer, desenho do cenário, blocos, bola, raquete, HUD e sobreposições. |
 | `UDebug.pas` / `UDebug.dfm` | Exibição de diagnóstico e comandos de inspeção, consumindo uma fotografia do motor. |
@@ -109,7 +110,7 @@ Estados propostos: `Ready`, `Playing`, `Paused`, `LevelComplete`, `GameOver` e `
 
 ### Colisões e resposta da raquete
 
-Representar a bola como círculo e os blocos/raquete como retângulos, com geometria independente dos controles.
+Representar a bola como círculo, os blocos como retângulos e a raquete como cápsula horizontal (corpo reto e pontas semicirculares), com geometria independente dos controles. Na E3, o sprite e a execução confirmaram a observação do usuário sobre as pontas arredondadas.
 
 1. Procurar o impacto mais próximo no tempo restante do passo, incluindo paredes, raquete e blocos ativos.
 2. Usar detecção varrida de círculo contra retângulo, cobrindo faces e cantos. A expansão retangular simples produz falsos contatos nos cantos; validar essa região especificamente.
@@ -184,10 +185,13 @@ Cada etapa deve resultar em uma alteração pequena e revisável, com build e ve
 
 ### Etapa 3 — Corrigir o tempo e a física
 
+**Concluída:** ver [resultado e evidências da E3](e3-resultados.md). São 150 casos sem VCL aprovados em Win32/Win64, Debug/Release, e 63 casos do adaptador em Win32 Debug.
+
 - Introduzir passo fixo, relógio medido, acumulador e velocidades por segundo.
 - Extrair as funções geométricas e implementar resolução pelo primeiro impacto, incluindo cantos, contatos simultâneos e tempo restante.
 - Reproduzir e corrigir o caso relatado de destruir um bloco pelo lado sem ricochete horizontal. Cobrir as faces esquerda e direita com aproximações subindo e descendo; distinguir contatos de face dos de canto.
-- Implementar resposta contínua da raquete e limite inferior de perda de vida.
+- Reproduzir e corrigir o impacto superior relatado novamente pelo usuário: bola descendo deve refletir para cima ao atingir o topo do bloco.
+- Implementar resposta contínua da raquete com pontas semicirculares e limite inferior de perda de vida.
 - Acrescentar testes determinísticos para as colisões e para diferentes agendas de atualização do mesmo tempo simulado.
 - Validar o adaptador visual existente antes de trocar a renderização, separando defeitos de mecânica dos de desenho.
 
@@ -267,4 +271,4 @@ A entrega principal corresponde às etapas 0 a 4: código organizado, motor sepa
 - A apresentação preserva os recursos gráficos existentes, com melhorias de fluidez demonstradas por comparação e medição.
 - Builds e testes passam nas configurações declaradas, com evidência registrada e sem sobrescrever alterações locais do usuário.
 
-Com E0, E1 e E2 concluídas, prosseguir pela E3. A migração para canvas deve acontecer depois que estados e física tiverem limites claros, para permitir identificar a origem de qualquer regressão. Os parâmetros de velocidade, ângulo, cadência e dificuldade são pontos de ajuste durante os testes de jogabilidade.
+Com E0, E1, E2 e E3 concluídas, prosseguir pela E4. A migração para canvas deve acontecer depois que estados e física tiverem limites claros, para permitir identificar a origem de qualquer regressão. Os parâmetros de velocidade, ângulo, cadência e dificuldade são pontos de ajuste durante os testes de jogabilidade.

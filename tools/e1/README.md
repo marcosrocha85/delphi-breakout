@@ -1,6 +1,6 @@
 # Regressões de fluxo da E1
 
-A unidade `UE1Checks.pas` usa os mesmos formulários do jogo e está referenciada pelo `BaselineRunner.dproj`, já incluído no grupo `DelphiBlocks.groupproj`. Não é necessário abrir outro projeto. Desde a E2, a preparação dos cenários usa o motor, os labels pertencem diretamente ao formulário e o diagnóstico tem 15 chaves. A evidência histórica da E1 permanece preservada; o [modo `--e2`](../e2/README.md) acrescenta verificações do adaptador.
+A unidade `UE1Checks.pas` usa os mesmos formulários do jogo e está referenciada pelo `BaselineRunner.dproj`, já incluído no grupo `DelphiBlocks.groupproj`. Não é necessário abrir outro projeto. Desde a E2, a preparação dos cenários usa o motor, os labels pertencem diretamente ao formulário e o diagnóstico tem 23 chaves desde a E3. A evidência histórica da E1 permanece preservada; o [modo `--e2`](../e2/README.md) acrescenta verificações do adaptador.
 
 1. Abra o grupo, ative `BaselineRunner.exe` e selecione **Win32 / Debug**.
 2. Use **Build**. Se os fontes tiverem sido editados fora da IDE, aceite sua recarga antes de compilar.
@@ -10,6 +10,6 @@ A unidade `UE1Checks.pas` usa os mesmos formulários do jogo e está referenciad
 
 Os casos cobrem lançamento por clique/espaço, pausa imediata e perda de foco, comandos ignorados nos estados inadequados, três quedas sem movimento extra, game over, F2 em movimento/pausa, F1 restrito ao diagnóstico visível e pausado, F10, valores atuais do diagnóstico, formatação de pontuação, direção independente da posição da janela, ownership e 50 reinícios com contagens estáveis.
 
-Os passos são acionados de forma síncrona pelos handlers públicos existentes. O timer é desabilitado pelo observador nos cenários dirigidos. Isso verifica os resultados do fluxo atual, sem depender da cadência do Windows. A futura E2 poderá executar regras diretamente no motor, sem formulários.
+Os passos são acionados de forma síncrona pelos handlers públicos existentes. O timer é desabilitado pelo observador nos cenários dirigidos. Isso verifica os resultados do fluxo atual, sem depender da cadência do Windows. Desde a E2, o console também executa regras sem formulários; desde a E3, os handlers de regressão recebem tempo explícito.
 
 Esses testes não validam o ângulo contínuo da raquete, faces/cantos dos blocos, alta velocidade, passo fixo, DPI, desempenho de pintura ou ausência de vazamentos em partidas longas. Esses itens permanecem nas etapas correspondentes do plano. A inspeção visual complementa os testes: na E1 ela também detectou e corrigiu o contraste do diagnóstico.

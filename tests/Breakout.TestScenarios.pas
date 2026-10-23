@@ -2,19 +2,25 @@ unit Breakout.TestScenarios;
 
 interface
 
-uses Breakout.Game;
+uses Breakout.Game, Breakout.Types;
 
 type
   { Test-only arrangement. Never linked into Breakout.dpr. No VCL required. }
   TGameProbe = class(TGame)
   public
     procedure PlaceBall(X, Y: Double);
-    procedure SetBall(X, Y, StepX, StepY: Double);
+    procedure SetBall(X, Y, VelocityX, VelocityY: Double);
     procedure Fixture(OnlyOneBrick: Boolean = False);
     procedure PrepareFall;
+    procedure SetBricks(const Bricks: TArray<TBrick>);
   end;
 
 implementation
+
+procedure TGameProbe.SetBricks(const Bricks: TArray<TBrick>);
+begin
+  FBricks := Copy(Bricks);
+end;
 
 procedure TGameProbe.PlaceBall(X, Y: Double);
 begin
@@ -22,11 +28,11 @@ begin
   FBall.Y := Y;
 end;
 
-procedure TGameProbe.SetBall(X, Y, StepX, StepY: Double);
+procedure TGameProbe.SetBall(X, Y, VelocityX, VelocityY: Double);
 begin
   PlaceBall(X, Y);
-  FBall.StepX := StepX;
-  FBall.StepY := StepY;
+  FBall.VelocityX := VelocityX;
+  FBall.VelocityY := VelocityY;
 end;
 
 procedure TGameProbe.Fixture(OnlyOneBrick: Boolean);
@@ -51,7 +57,7 @@ end;
 procedure TGameProbe.PrepareFall;
 begin
   FPaddle.X := 300;
-  PlaceBall(20, FPaddle.Y + 20);
+  SetBall(20, 454, 0, 240);
 end;
 
 end.

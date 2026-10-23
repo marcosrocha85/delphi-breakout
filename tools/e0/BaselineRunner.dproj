@@ -99,10 +99,13 @@
         <DCCReference Include="..\..\UDebug.pas"/>
         <DCCReference Include="..\e1\UE1Checks.pas"/>
         <DCCReference Include="..\e2\UE2ViewChecks.pas"/>
+        <DCCReference Include="..\e3\UE3ViewChecks.pas"/>
         <DCCReference Include="..\..\src\Breakout.Types.pas"/>
         <DCCReference Include="..\..\src\Breakout.Texts.pas"/>
         <DCCReference Include="..\..\src\Breakout.Levels.pas"/>
         <DCCReference Include="..\..\src\Breakout.Game.pas"/>
+        <DCCReference Include="..\..\src\Breakout.Physics.pas"/>
+        <DCCReference Include="..\..\src\Breakout.Loop.pas"/>
         <DCCReference Include="..\..\tests\Breakout.TestScenarios.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>

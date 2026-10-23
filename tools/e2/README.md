@@ -10,6 +10,6 @@ O resultado fica em `build/e2/latest/checks.json`; um segundo argumento escolhe 
 
 São **52 verificações**: os 43 casos de fluxo da E1, adaptados à propriedade dos dados pelo motor, mais nove casos do adaptador. Eles confirmam que mudar posição/visibilidade/Tag de controles não altera as regras, que repintar não move nem pontua, que o timer não avança um motor em `Ready`, que colisões ocultam os controles mantendo seus IDs e que vitória/mensagens/diagnóstico seguem a fotografia do motor.
 
-O diagnóstico mantém as nove chaves anteriores e acrescenta estado, fase, semente, deslocamentos X/Y por tick e quantidade de blocos ativos. O timer ainda usa a cadência legada; esses deslocamentos não são velocidades por segundo. A alteração de unidades e do relógio pertence à E3.
+Desde a E3, o diagnóstico tem 23 chaves e informa velocidades por segundo e tempo acumulado/descartado. As regressões usam passos explícitos de 1/120 s. O [modo `--e3`](../e3/README.md) inclui esta suíte e verifica o relógio e as colisões na interface.
 
 O [executor de console](../../tests/README.md) verifica o motor sem formulários. O modo `--e2` verifica a integração com os controles; nenhum deles substitui a conferência visual, DPI ou testes de duração.
