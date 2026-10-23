@@ -198,7 +198,7 @@ Output: [Canvas/feedback results](e4-results.md), 191 non-VCL cases per configur
 
 Output: a finite three-board match with explicit Ready transitions, lives/score preservation, 5% compounded level speed capped at 300 units/s, localized state feedback, and a level HUD. See [E5 results](e5-results.md) and [progression chapter](study/levels-and-progression.md) for validation and human playtesting limits.
 
-### E6 — Consolidate project and documentation
+### E6 — Consolidate project and documentation (technical work delivered; human matrix open)
 
 - Separate executable/DCU outputs by platform/configuration, e.g. build/Win32/Debug and build/Win64/Release.
 - Review duplicate targets imports/legacy project settings with before/after builds; preserve resources/icon.
@@ -209,6 +209,11 @@ Output: a finite three-board match with explicit Ready transitions, lives/score 
 - Run clean Debug/Release builds on Win32/Win64, engine tests, and the manual matrix; record final settings/measurements.
 
 Output: a project another compatible installation can open, build, test, and understand.
+The four-configuration builds, automated tests, embedded-resource comparison,
+and layout extraction are recorded in [E6 results](e6-results.md). Marcos
+authorized incorporating the preserved IDE/form changes and aligning the
+Delphi Blocks title on 2026-10-23. Prolonged human play and real DPI/monitor
+evaluation remain required before declaring the entire manual matrix complete.
 
 ## 7. Validation for each delivery
 

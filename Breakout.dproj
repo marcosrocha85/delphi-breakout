@@ -1,15 +1,12 @@
-﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
         <ProjectGuid>{9ad2a1d9-4e95-433a-803b-b030be6e9f5f}</ProjectGuid>
         <MainSource>Breakout.dpr</MainSource>
-        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-        <DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
-        <DCC_DependencyCheckOutputName>Breakout.exe</DCC_DependencyCheckOutputName>
         <FrameworkType>VCL</FrameworkType>
         <ProjectVersion>20.3</ProjectVersion>
         <Base>True</Base>
         <Config Condition="'$(Config)'==''">Release</Config>
-        <Platform Condition="'$(Platform)'==''">Win32</Platform>
+        <Platform Condition="'$(Platform)'==''">Win64</Platform>
         <TargetedPlatforms>3</TargetedPlatforms>
         <AppType>Application</AppType>
         <ProjectName Condition="'$(ProjectName)'==''">Breakout</ProjectName>
@@ -62,66 +59,43 @@
         <Base>true</Base>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base)'!=''">
+        <Icon_MainIcon>Breakout_Icon.ico</Icon_MainIcon>
+        <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
+        <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
+        <VerInfo_Keys>CompanyName=Marcos Rocha;FileDescription=Delphi Blocks;FileVersion=1.0.1.0;InternalName=Delphi Blocks;LegalCopyright=;LegalTrademarks=;OriginalFilename=Breakout.exe;ProductName=Delphi Blocks;ProductVersion=1.0.1.0;Comments=More information at https://github.com/marcosrocha85/delphi-breakout;ProgramID=net.marcosrocha.$(MSBuildProjectName)</VerInfo_Keys>
+        <DCC_ExeOutput>build\$(Platform)\$(Config)</DCC_ExeOutput>
+        <DCC_DcuOutput>build\dcu\$(Platform)\$(Config)\game</DCC_DcuOutput>
+        <DCC_DcpOutput>build\dcu\$(Platform)\$(Config)\game</DCC_DcpOutput>
         <SanitizedProjectName>Breakout</SanitizedProjectName>
         <DCC_Namespace>Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;System;Xml;Data;Datasnap;Web;Soap;Winapi;$(DCC_Namespace)</DCC_Namespace>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
-        <VerInfo_Keys>CompanyName=Marcos  Rocha;FileDescription=;FileVersion=1.0.1.0;InternalName=Delphi Breakout;LegalCopyright=;LegalTrademarks=;OriginalFilename=Breakout.exe;ProductName=Delphi Breakout;ProductVersion=1.0.1.0;Comments=More information at https://github.com/marcosrocha85/delphi-breakout</VerInfo_Keys>
         <VerInfo_Release>1</VerInfo_Release>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win32)'!=''">
         <DCC_Namespace>System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;$(DCC_Namespace)</DCC_Namespace>
         <BT_BuildType>Debug</BT_BuildType>
-        <VerInfo_Keys>CompanyName=Marcos Rocha;FileDescription=$(MSBuildProjectName);FileVersion=1.0.1.0;InternalName=Delphi Breakout x86;LegalCopyright=;LegalTrademarks=;OriginalFilename=Breakout_x86.exe;ProductName=$(MSBuildProjectName);ProductVersion=1.0.1.0;Comments=More information at https://github.com/marcosrocha85/delphi-breakout;ProgramID=net.marcosrocha.$(MSBuildProjectName)</VerInfo_Keys>
-        <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
-        <Icon_MainIcon>Breakout_Icon.ico</Icon_MainIcon>
         <UWP_DelphiLogo44>$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_44.png</UWP_DelphiLogo44>
         <UWP_DelphiLogo150>$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_150.png</UWP_DelphiLogo150>
-        <AppDPIAwarenessMode>none</AppDPIAwarenessMode>
-        <DCC_ExeOutput>build\x86</DCC_ExeOutput>
-        <DCC_DcuOutput>DCU</DCC_DcuOutput>
-        <DCC_DcpOutput>DCU</DCC_DcpOutput>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win64)'!=''">
-        <Icon_MainIcon>Breakout_Icon.ico</Icon_MainIcon>
         <UWP_DelphiLogo44>$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_44.png</UWP_DelphiLogo44>
         <UWP_DelphiLogo150>$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_150.png</UWP_DelphiLogo150>
         <DCC_Namespace>System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;$(DCC_Namespace)</DCC_Namespace>
         <BT_BuildType>Debug</BT_BuildType>
-        <VerInfo_Keys>CompanyName=Marcos Rocha;FileDescription=$(MSBuildProjectName);FileVersion=1.0.1.0;InternalName=Delphi Breakout x64;LegalCopyright=;LegalTrademarks=;OriginalFilename=Breakout.exe;ProgramID=net.marcosrocha.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.1.0;Comments=More information at https://github.com/marcosrocha85/delphi-breakout</VerInfo_Keys>
-        <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
-        <AppDPIAwarenessMode>none</AppDPIAwarenessMode>
-        <DCC_ExeOutput>build\x64</DCC_ExeOutput>
-        <DCC_DcpOutput>DCU</DCC_DcpOutput>
-        <DCC_DcuOutput>DCU</DCC_DcuOutput>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1)'!=''">
-        <Version>7.0</Version>
+        <DCC_Optimize>true</DCC_Optimize>
         <DCC_DebugInformation>0</DCC_DebugInformation>
         <DCC_LocalDebugSymbols>False</DCC_LocalDebugSymbols>
         <DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
         <DCC_Define>RELEASE;$(DCC_Define)</DCC_Define>
     </PropertyGroup>
-    <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
-        <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
-        <VerInfo_Keys>CompanyName=Marcos Rocha;FileDescription=$(MSBuildProjectName);FileVersion=1.0.1.0;InternalName=Delphi Breakout x86;LegalCopyright=;LegalTrademarks=;OriginalFilename=Breakout_x86.exe;ProductName=$(MSBuildProjectName);ProductVersion=1.0.1.0;Comments=More information at https://github.com/marcosrocha85/delphi-breakout;ProgramID=net.marcosrocha.$(MSBuildProjectName)</VerInfo_Keys>
-    </PropertyGroup>
-    <PropertyGroup Condition="'$(Cfg_1_Win64)'!=''">
-        <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
-        <VerInfo_Keys>CompanyName=Marcos Rocha;FileDescription=$(MSBuildProjectName);FileVersion=1.0.1.0;InternalName=Delphi Breakout x64;LegalCopyright=;LegalTrademarks=;OriginalFilename=Breakout.exe;ProgramID=net.marcosrocha.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.1.0;Comments=More information at https://github.com/marcosrocha85/delphi-breakout</VerInfo_Keys>
-    </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
-        <Version>7.0</Version>
         <DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
-    </PropertyGroup>
-    <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
-        <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
-        <VerInfo_Locale>1033</VerInfo_Locale>
-        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.1.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=$(MSBuildProjectName);ProductVersion=1.0.1.0;Comments=;ProgramID=com.embarcadero.$(MSBuildProjectName)</VerInfo_Keys>
-    </PropertyGroup>
-    <PropertyGroup Condition="'$(Cfg_2_Win64)'!=''">
-        <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
-        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.1.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.1.0;Comments=</VerInfo_Keys>
+        <DCC_Optimize>false</DCC_Optimize>
+        <DCC_RangeChecking>true</DCC_RangeChecking>
+        <DCC_IntegerOverflowCheck>true</DCC_IntegerOverflowCheck>
     </PropertyGroup>
     <ProjectExtensions>
         <Borland.Personality>Delphi.Personality.12</Borland.Personality>
@@ -164,8 +138,8 @@
                     <Source Name="MainSource">Breakout.dpr</Source>
                 </Source>
                 <Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\dcloffice2k280.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\dclofficexp280.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dcloffice2k370.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dclofficexp370.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
                 </Excluded_Packages>
             </Delphi.Personality>
             <Platforms>
@@ -179,21 +153,21 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="src\Breakout.Bricks.pas"/>
-        <DCCReference Include="src\Breakout.Presentation.pas"/>
-        <DCCReference Include="src\Breakout.Renderer.Vcl.pas"/>
         <DCCReference Include="UMain.pas">
             <Form>FrmMain</Form>
         </DCCReference>
         <DCCReference Include="UDebug.pas">
             <Form>FrmDebug</Form>
         </DCCReference>
+        <DCCReference Include="src\Breakout.Bricks.pas"/>
+        <DCCReference Include="src\Breakout.Presentation.pas"/>
+        <DCCReference Include="src\Breakout.Renderer.Vcl.pas"/>
         <DCCReference Include="src\Breakout.Types.pas"/>
         <DCCReference Include="src\Breakout.Texts.pas"/>
         <DCCReference Include="src\Breakout.Levels.pas"/>
-        <DCCReference Include="src\Breakout.Game.pas"/>
         <DCCReference Include="src\Breakout.Physics.pas"/>
         <DCCReference Include="src\Breakout.Loop.pas"/>
+        <DCCReference Include="src\Breakout.Game.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
@@ -208,6 +182,5 @@
     </ItemGroup>
     <ItemGroup/>
     <Import Project="$(BDS)\Bin\CodeGear.Delphi.Targets"/>
-    <Import Project="$(BDS)\Bin\CodeGear.Delphi.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Delphi.Targets')"/>
     <Import Project="$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj" Condition="Exists('$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj')"/>
 </Project>

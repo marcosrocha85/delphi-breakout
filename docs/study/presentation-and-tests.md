@@ -68,8 +68,8 @@ The VCL runner complements these tests with a real clock, form handlers, and ren
 After building the corresponding configuration through the IDE:
 
 ```powershell
-.\build\tests\Win64\Debug\Breakout.Tests.exe build\study\console
-.\tools\e0\BaselineRunner.exe --e5 build\study\view
+.\build\Win64\Debug\Breakout.Tests.exe build\study\console
+.\build\Win32\Debug\BaselineRunner.exe --e5 build\study\view
 ```
 
 The console has **262 cases**: 117 engine, 104 physics/time, and 41 presentation cases. BaselineRunner has **70 VCL/bitmap checks**. Read the [console instructions](../../tests/README.md), [VCL instructions](../../tools/e5/README.md), and [E5 evidence](../e5-results.md). Console exit code 0 means success; the runner also leaves its window open for evaluation.

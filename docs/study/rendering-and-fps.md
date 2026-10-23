@@ -10,6 +10,28 @@ The form treats `WM_ERASEBKGND` as handled and uses opaque painting. This preven
 
 Engine coordinates remain floating-point logical values. The renderer transforms and rounds destination bounds at drawing time. Making physics depend on that rounding would make trajectory sensitive to scale and window size.
 
+## Named logical layout
+
+`LogicalFieldWidth` and `LogicalFieldHeight` in `Breakout.Types` define the
+default 688 by 453 logical field. `TGameConfig.Default`, the default viewport,
+and the renderer refer to those shared dimensions. They are independent of
+client pixels and DPI; this consolidation does not make the window resizable
+or turn the renderer into a configurable field-size engine.
+
+The renderer's layout constants describe the 18-unit HUD band, five-unit margin,
+text baseline, font, life-icon crop/position/spacing, and 24-unit message band.
+HUD positions derive from the field height. The historical message center stays
+1.5 logical units below the exact field midpoint, retaining the existing pixels.
+`ClientX`/`ClientY` apply the same viewport offset, scale, and final rounding to
+sprites and HUD anchors. Score right alignment still rounds its margin separately,
+preserving the prior result at fractional scales.
+
+The [E6 pixel experiment](../../tools/e6/README.md) compares five complete fixed
+fixture frames and the HUD/message bands at four scales against a pre-extraction
+runner. Random Ready-board colors are excluded. This verifies that naming and
+deriving the parameters kept the sampled appearance; intentional visual changes
+should be evaluated separately.
+
 ## Layers and transparency
 
 Lower **layer 2** contains active blocks, fading residues, the paddle, and ball. Upper **layer 1** contains lives, score, and messages. It is drawn last with opaque backing. The numbering expresses visual priority; execution starts with the lower layer.
@@ -92,7 +114,7 @@ The E4 sample with a 15 ms timer produced about **57.20 paintings/s without diag
 Build BaselineRunner as Win32/Debug, then run from the repository root:
 
 ```powershell
-.\tools\e0\BaselineRunner.exe --benchmark build\study\benchmark 15
+.\build\Win32\Debug\BaselineRunner.exe --benchmark build\study\benchmark 15
 ```
 
 Keep the window active for about 40 s: 20 s without diagnostics, then 20 s with diagnostics. A runner-only controller follows the ball with the paddle. This supports sustained rendering observation, but different seeds do not represent identical workloads.

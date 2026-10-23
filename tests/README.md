@@ -5,10 +5,10 @@ Open DelphiBlocks.groupproj and activate Breakout.Tests.exe in Projects. The con
 After building the corresponding configuration, run from the repository root:
 
 ```powershell
-.\build\tests\Win32\Debug\Breakout.Tests.exe
-.\build\tests\Win32\Release\Breakout.Tests.exe build\e5\win32-release
-.\build\tests\Win64\Debug\Breakout.Tests.exe build\e5\win64-debug
-.\build\tests\Win64\Release\Breakout.Tests.exe build\e5\win64-release
+.\build\Win32\Debug\Breakout.Tests.exe
+.\build\Win32\Release\Breakout.Tests.exe build\e5\win32-release
+.\build\Win64\Debug\Breakout.Tests.exe build\e5\win64-debug
+.\build\Win64\Release\Breakout.Tests.exe build\e5\win64-release
 ```
 
 Exit codes: 0 success, 1 assertion failures, 2 runner error. Default reports: build/e5/latest/engine.json, physics.json, presentation.json. The first argument selects another output directory.

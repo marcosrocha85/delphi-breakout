@@ -1,4 +1,4 @@
-# Delphi Breakout
+# Delphi Blocks
 
 A Breakout inspired by the Arkanoid I played on a 386XT, originally written in Delphi around 2009–2010. Today, it also serves as a study project for developers building a 2D game engine and learning what happens between player input, simulation, and drawing a frame.
 
@@ -31,9 +31,9 @@ The validated environment is **Delphi 13 Community Edition, Windows, VCL**, targ
 
 1. Open [`DelphiBlocks.groupproj`](DelphiBlocks.groupproj) in the IDE.
 2. In **Projects**, activate `Breakout.exe`, select the platform/configuration, and choose **Build**.
-3. Run from the IDE. Game executables go to `build/x86/` or `build/x64/`; sprites are embedded in the executable.
+3. Run from the IDE. Game executables go to `build/<Platform>/<Config>/` (for example `build/Win64/Release/`); sprites are embedded in the executable.
 
-The group also contains `BaselineRunner.exe` for VCL checks and measurements, and `Breakout.Tests.exe` for tests without a UI. See the [engine tests](tests/README.md) and [E4 runner](tools/e4/README.md). Builds in this Community Edition installation were performed through the IDE.
+The group also contains `BaselineRunner.exe` for VCL checks and measurements, and `Breakout.Tests.exe` for tests without a UI. All three executables use `build/<Platform>/<Config>/`; DCUs are additionally separated by project. See the [engine tests](tests/README.md), [VCL runner](tools/e5/README.md), and [build consolidation](tools/e6/README.md). Builds in this Community Edition installation were performed through the IDE. The repository and executable retain the Breakout names; the application title is Delphi Blocks.
 
 | Input | Action |
 | --- | --- |

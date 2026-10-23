@@ -38,7 +38,7 @@
 <h2 class="description">Description</h2>
 <p>
 Owns a copied snapshot, bounded fade slots and a displayed score. Sync/Advance mutate presentation; painting only reads. No VCL or OS clock.</p>
-<p class="source_position">Source: src/Breakout.Presentation.pas (line 46).</p><span id="PasDoc-Hierarchy"></span><h2 class="hierarchy">Hierarchy</h2>
+<p class="source_position">Source: src/Breakout.Presentation.pas (line 47).</p><span id="PasDoc-Hierarchy"></span><h2 class="hierarchy">Hierarchy</h2>
 <ul class="hierarchy"><li class="ancestor">TObject</li>
 <li class="thisitem">TGamePresentation</li></ul><h2 class="overview">Overview</h2>
 <span id="PasDoc-Methods"></span><h3 class="summary">Methods</h3>
@@ -97,7 +97,7 @@ Owns a copied snapshot, bounded fade slots and a displayed score. Sync/Advance m
 <tr><td colspan="2">
 <p>
 Validates positive finite durations and a positive count step. Raises <code>EArgumentException</code> on invalid visual configuration.</p>
-<p class="source_position">Source: src/Breakout.Presentation.pas (line 60).</p></td></tr>
+<p class="source_position">Source: src/Breakout.Presentation.pas (line 61).</p></td></tr>
 </table>
 <table class="detail visibility-public wide_list">
 <tr class="list visibility-public">
@@ -107,7 +107,7 @@ Validates positive finite durations and a positive count step. Raises <code>EArg
 <tr><td colspan="2">
 <p>
 Copies state, clears fades/debt and sets displayed score to actual score.</p>
-<p class="source_position">Source: src/Breakout.Presentation.pas (line 62).</p></td></tr>
+<p class="source_position">Source: src/Breakout.Presentation.pas (line 63).</p></td></tr>
 </table>
 <table class="detail visibility-public wide_list">
 <tr class="list visibility-public">
@@ -117,7 +117,7 @@ Copies state, clears fades/debt and sets displayed score to actual score.</p>
 <tr><td colspan="2">
 <p>
 Copies state and detects active-to-inactive brick transitions. A new board clears old fades while preserving score debt; restart should explicitly call Reset.</p>
-<p class="source_position">Source: src/Breakout.Presentation.pas (line 66).</p></td></tr>
+<p class="source_position">Source: src/Breakout.Presentation.pas (line 67).</p></td></tr>
 </table>
 <table class="detail visibility-public wide_list">
 <tr class="list visibility-public">
@@ -134,7 +134,7 @@ Advances fade ages and score using elapsed time, with arithmetic catch-up bounde
 <dt>Frozen</dt>
 <dd>When True, neither animation nor score advances.</dd>
 </dl>
-<p class="source_position">Source: src/Breakout.Presentation.pas (line 72).</p></td></tr>
+<p class="source_position">Source: src/Breakout.Presentation.pas (line 73).</p></td></tr>
 </table>
 <table class="detail visibility-public wide_list">
 <tr class="list visibility-public">
@@ -144,7 +144,7 @@ Advances fade ages and score using elapsed time, with arithmetic catch-up bounde
 <tr><td colspan="2">
 <p>
 Returns linear opacity in [0,1], or zero for an inactive fade.</p>
-<p class="source_position">Source: src/Breakout.Presentation.pas (line 74).</p></td></tr>
+<p class="source_position">Source: src/Breakout.Presentation.pas (line 75).</p></td></tr>
 </table>
 <h3 class="detail">Properties</h3>
 <table class="detail visibility-public wide_list">
@@ -153,7 +153,7 @@ Returns linear opacity in [0,1], or zero for an inactive fade.</p>
 <td class="itemcode"><span id="Snapshot"></span><code>property <strong>Snapshot</strong>: <a href="Breakout.Types.TGameSnapshot.html">TGameSnapshot</a> read FSnapshot;</code></td>
 </tr>
 <tr><td colspan="2">
-<p class="nodescription">This item has no description.</p><p class="source_position">Source: src/Breakout.Presentation.pas (line 75).</p></td></tr>
+<p class="nodescription">This item has no description.</p><p class="source_position">Source: src/Breakout.Presentation.pas (line 76).</p></td></tr>
 </table>
 <table class="detail visibility-public wide_list">
 <tr class="list visibility-public">
@@ -161,7 +161,7 @@ Returns linear opacity in [0,1], or zero for an inactive fade.</p>
 <td class="itemcode"><span id="DisplayedScore"></span><code>property <strong>DisplayedScore</strong>: Integer read FDisplayedScore;</code></td>
 </tr>
 <tr><td colspan="2">
-<p class="nodescription">This item has no description.</p><p class="source_position">Source: src/Breakout.Presentation.pas (line 76).</p></td></tr>
+<p class="nodescription">This item has no description.</p><p class="source_position">Source: src/Breakout.Presentation.pas (line 77).</p></td></tr>
 </table>
 <table class="detail visibility-public wide_list">
 <tr class="list visibility-public">
@@ -169,7 +169,7 @@ Returns linear opacity in [0,1], or zero for an inactive fade.</p>
 <td class="itemcode"><span id="FadeCapacity"></span><code>property <strong>FadeCapacity</strong>: Integer read GetFadeCount;</code></td>
 </tr>
 <tr><td colspan="2">
-<p class="nodescription">This item has no description.</p><p class="source_position">Source: src/Breakout.Presentation.pas (line 77).</p></td></tr>
+<p class="nodescription">This item has no description.</p><p class="source_position">Source: src/Breakout.Presentation.pas (line 78).</p></td></tr>
 </table>
 <table class="detail visibility-public wide_list">
 <tr class="list visibility-public">
@@ -177,7 +177,7 @@ Returns linear opacity in [0,1], or zero for an inactive fade.</p>
 <td class="itemcode"><span id="Fades"></span><code>property <strong>Fades</strong>[Index: Integer]: <a href="Breakout.Presentation.TBrickFade.html">TBrickFade</a> read GetFade;</code></td>
 </tr>
 <tr><td colspan="2">
-<p class="nodescription">This item has no description.</p><p class="source_position">Source: src/Breakout.Presentation.pas (line 78).</p></td></tr>
+<p class="nodescription">This item has no description.</p><p class="source_position">Source: src/Breakout.Presentation.pas (line 79).</p></td></tr>
 </table>
 <table class="detail visibility-public wide_list">
 <tr class="list visibility-public">
@@ -187,7 +187,7 @@ Returns linear opacity in [0,1], or zero for an inactive fade.</p>
 <tr><td colspan="2">
 <p>
 True while score debt or any active fade still needs visual time.</p>
-<p class="source_position">Source: src/Breakout.Presentation.pas (line 80).</p></td></tr>
+<p class="source_position">Source: src/Breakout.Presentation.pas (line 81).</p></td></tr>
 </table>
 <hr><span class="appinfo"><em>Generated by <a href="https://pasdoc.github.io/">PasDoc 1.0.4</a>. </em>
 </span>

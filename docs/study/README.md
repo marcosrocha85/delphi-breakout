@@ -2,7 +2,7 @@
 
 [Documentation website](https://marcosrocha85.github.io/delphi-breakout/) · [Online API](https://marcosrocha85.github.io/delphi-breakout/api/)
 
-This guide follows the implementation through E5. Find a rule in the code, understand its mathematics, reproduce a scenario, and change a parameter knowing what to measure. Contracts are documented in the [PasDoc API reference](../api/README.md).
+This guide follows the engine through E5 and the E6 build/layout consolidation. Find a rule in the code, understand its mathematics, reproduce a scenario, and change a parameter knowing what to measure. Contracts are documented in the [PasDoc API reference](../api/README.md).
 
 ## Reading path
 
@@ -13,7 +13,7 @@ This guide follows the implementation through E5. Find a rule in the code, under
 
 5. [Levels and progression](levels-and-progression.md): finite maps, explicit transitions, capped speed, and feedback lifetime.
 
-Keep the [project group](../../DelphiBlocks.groupproj) open while reading. The main executable contains the game; the console contains deterministic scenarios; BaselineRunner checks VCL integration. Stage decisions and evidence are recorded in the [plan](../implementation-plan.md) and the E0–E5 reports in the parent directory.
+Keep the [project group](../../DelphiBlocks.groupproj) open while reading. The main executable contains the game; the console contains deterministic scenarios; BaselineRunner checks VCL integration. The [E6 instructions](../../tools/e6/README.md) explain output isolation and pixel comparison. Stage decisions and evidence are recorded in the [plan](../implementation-plan.md) and the stage reports in the parent directory. [E6 results](../e6-results.md) keep the remaining human evaluation visible.
 
 ## Code map
 

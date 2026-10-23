@@ -1,0 +1,86 @@
+{
+  "comparisons": [
+    {
+      "platform": "Win32",
+      "configuration": "Debug",
+      "identical": true,
+      "icon_and_sprite_resources": {
+        "3/1/1033": "b5569da153099a4f8a8a53ad5fc7863bf5b0b877f5aee8a8643d44edcfea7422",
+        "3/2/1033": "3bad2cf9eb61c81b91f028785ac0e38191cb3998bbe61d939832cc53fed96e46",
+        "3/3/1033": "8952dd89d2ec58329220d88e7ef32b19ed516ec9ef1d239c9aadcf2b042df529",
+        "3/4/1033": "9d4eed353ec36821352101a2a176ad65913ab77dbcdfba09f452c37cfd433fac",
+        "3/5/1033": "ae3ede34e641b8670453707a975b5627f7fb5d38201be452b17ff60c61fd386f",
+        "3/6/1033": "48b5f85a2473efc5c9834b053373ec3cc5c8e618bf8b86ec983b6735373fce6b",
+        "10/BO_BALL/1046": "581a3fb72c7199e73f7f785104960d70fcad56f4a5804b267a8787b0fff7147d",
+        "10/BO_BRICKS/1046": "fbcd5c871275aa4cb94c4353e814dc95a2b348e5836fb2c09ee1f2c623032ab2",
+        "10/BO_LIVES/1046": "3eab88ba3a98d82a7328fc17e3bcdb57fa33ae8664f0af13bd45ccecc04d54a8",
+        "10/BO_PADDLE_L/1046": "be3ed4bf9ee43bbbef1378d5a00f26563eb425a7ca2ddc7551366a1f53cef59c",
+        "10/BO_PADDLE_M/1046": "d7dc10a436966071e305727005f61293275ec6ae1494fc1586929ce898980ef4",
+        "10/BO_PADDLE_R/1046": "080ced0eb5aba610d9b3f9f1b65b12e3d5f78e5b3e954b2bee61d054b713a79e",
+        "14/MAINICON/1033": "e6b99edabee8034db1e3776f9f284fe145cee52601ca8d4ec7bc87b9518989f0"
+      }
+    },
+    {
+      "platform": "Win32",
+      "configuration": "Release",
+      "identical": true,
+      "icon_and_sprite_resources": {
+        "3/1/1033": "b5569da153099a4f8a8a53ad5fc7863bf5b0b877f5aee8a8643d44edcfea7422",
+        "3/2/1033": "3bad2cf9eb61c81b91f028785ac0e38191cb3998bbe61d939832cc53fed96e46",
+        "3/3/1033": "8952dd89d2ec58329220d88e7ef32b19ed516ec9ef1d239c9aadcf2b042df529",
+        "3/4/1033": "9d4eed353ec36821352101a2a176ad65913ab77dbcdfba09f452c37cfd433fac",
+        "3/5/1033": "ae3ede34e641b8670453707a975b5627f7fb5d38201be452b17ff60c61fd386f",
+        "3/6/1033": "48b5f85a2473efc5c9834b053373ec3cc5c8e618bf8b86ec983b6735373fce6b",
+        "10/BO_BALL/1046": "581a3fb72c7199e73f7f785104960d70fcad56f4a5804b267a8787b0fff7147d",
+        "10/BO_BRICKS/1046": "fbcd5c871275aa4cb94c4353e814dc95a2b348e5836fb2c09ee1f2c623032ab2",
+        "10/BO_LIVES/1046": "3eab88ba3a98d82a7328fc17e3bcdb57fa33ae8664f0af13bd45ccecc04d54a8",
+        "10/BO_PADDLE_L/1046": "be3ed4bf9ee43bbbef1378d5a00f26563eb425a7ca2ddc7551366a1f53cef59c",
+        "10/BO_PADDLE_M/1046": "d7dc10a436966071e305727005f61293275ec6ae1494fc1586929ce898980ef4",
+        "10/BO_PADDLE_R/1046": "080ced0eb5aba610d9b3f9f1b65b12e3d5f78e5b3e954b2bee61d054b713a79e",
+        "14/MAINICON/1033": "e6b99edabee8034db1e3776f9f284fe145cee52601ca8d4ec7bc87b9518989f0"
+      }
+    },
+    {
+      "platform": "Win64",
+      "configuration": "Debug",
+      "identical": true,
+      "icon_and_sprite_resources": {
+        "3/1/1033": "b5569da153099a4f8a8a53ad5fc7863bf5b0b877f5aee8a8643d44edcfea7422",
+        "3/2/1033": "3bad2cf9eb61c81b91f028785ac0e38191cb3998bbe61d939832cc53fed96e46",
+        "3/3/1033": "8952dd89d2ec58329220d88e7ef32b19ed516ec9ef1d239c9aadcf2b042df529",
+        "3/4/1033": "9d4eed353ec36821352101a2a176ad65913ab77dbcdfba09f452c37cfd433fac",
+        "3/5/1033": "ae3ede34e641b8670453707a975b5627f7fb5d38201be452b17ff60c61fd386f",
+        "3/6/1033": "48b5f85a2473efc5c9834b053373ec3cc5c8e618bf8b86ec983b6735373fce6b",
+        "10/BO_BALL/1046": "581a3fb72c7199e73f7f785104960d70fcad56f4a5804b267a8787b0fff7147d",
+        "10/BO_BRICKS/1046": "fbcd5c871275aa4cb94c4353e814dc95a2b348e5836fb2c09ee1f2c623032ab2",
+        "10/BO_LIVES/1046": "3eab88ba3a98d82a7328fc17e3bcdb57fa33ae8664f0af13bd45ccecc04d54a8",
+        "10/BO_PADDLE_L/1046": "be3ed4bf9ee43bbbef1378d5a00f26563eb425a7ca2ddc7551366a1f53cef59c",
+        "10/BO_PADDLE_M/1046": "d7dc10a436966071e305727005f61293275ec6ae1494fc1586929ce898980ef4",
+        "10/BO_PADDLE_R/1046": "080ced0eb5aba610d9b3f9f1b65b12e3d5f78e5b3e954b2bee61d054b713a79e",
+        "14/MAINICON/1033": "e6b99edabee8034db1e3776f9f284fe145cee52601ca8d4ec7bc87b9518989f0"
+      }
+    },
+    {
+      "platform": "Win64",
+      "configuration": "Release",
+      "identical": true,
+      "icon_and_sprite_resources": {
+        "3/1/1033": "b5569da153099a4f8a8a53ad5fc7863bf5b0b877f5aee8a8643d44edcfea7422",
+        "3/2/1033": "3bad2cf9eb61c81b91f028785ac0e38191cb3998bbe61d939832cc53fed96e46",
+        "3/3/1033": "8952dd89d2ec58329220d88e7ef32b19ed516ec9ef1d239c9aadcf2b042df529",
+        "3/4/1033": "9d4eed353ec36821352101a2a176ad65913ab77dbcdfba09f452c37cfd433fac",
+        "3/5/1033": "ae3ede34e641b8670453707a975b5627f7fb5d38201be452b17ff60c61fd386f",
+        "3/6/1033": "48b5f85a2473efc5c9834b053373ec3cc5c8e618bf8b86ec983b6735373fce6b",
+        "10/BO_BALL/1046": "581a3fb72c7199e73f7f785104960d70fcad56f4a5804b267a8787b0fff7147d",
+        "10/BO_BRICKS/1046": "fbcd5c871275aa4cb94c4353e814dc95a2b348e5836fb2c09ee1f2c623032ab2",
+        "10/BO_LIVES/1046": "3eab88ba3a98d82a7328fc17e3bcdb57fa33ae8664f0af13bd45ccecc04d54a8",
+        "10/BO_PADDLE_L/1046": "be3ed4bf9ee43bbbef1378d5a00f26563eb425a7ca2ddc7551366a1f53cef59c",
+        "10/BO_PADDLE_M/1046": "d7dc10a436966071e305727005f61293275ec6ae1494fc1586929ce898980ef4",
+        "10/BO_PADDLE_R/1046": "080ced0eb5aba610d9b3f9f1b65b12e3d5f78e5b3e954b2bee61d054b713a79e",
+        "14/MAINICON/1033": "e6b99edabee8034db1e3776f9f284fe145cee52601ca8d4ec7bc87b9518989f0"
+      }
+    }
+  ],
+  "checks": 4,
+  "failures": 0
+}

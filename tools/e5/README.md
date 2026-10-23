@@ -5,7 +5,7 @@ through the IDE. The project stays in `tools/e0`; the shared VCL suite stays in
 `tools/e4/UE4ViewChecks.pas` to retain all existing rendering regressions.
 
 ```powershell
-.\tools\e0\BaselineRunner.exe --e5 build\e5\view
+.\build\Win32\Debug\BaselineRunner.exe --e5 build\e5\view
 ```
 
 With no arguments, output is `build/e5/latest`. `--e4` remains an alias.
