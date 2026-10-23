@@ -1,3 +1,4 @@
+{** VCL/GDI backend: cached sprites, persistent back buffer and HUD layering. }
 unit Breakout.Renderer.Vcl;
 
 interface
@@ -5,12 +6,17 @@ interface
 uses System.Classes, Vcl.Graphics, Breakout.Types, Breakout.Presentation;
 
 type
+  {** CPU-side times in ms. IntervalMs spans starts of consecutive Paint
+      calls; PaintCount counts completed presentations, not monitor refreshes.
+      DrawMs measures composition; PresentMs measures the BitBlt call. }
   TRenderMetrics = record
     DrawMs, PresentMs, IntervalMs: Double;
     PaintCount: Int64;
     BufferResizes: Integer;
   end;
 
+  {** Owns all sprite bitmaps and Buffer. Draws field first and opaque HUD
+      last. The supplied presentation remains owned by the caller. }
   TGameRenderer = class
   private
     FBuffer, FBall, FLife: Vcl.Graphics.TBitmap;
@@ -26,14 +32,21 @@ type
   public
     constructor Create;
     destructor Destroy; override;
+    {** Composes a complete frame, resizing the buffer only when needed.
+        Reads presentation without advancing time. Width/Height are client pixels. }
     procedure Compose(const View: TGamePresentation; Width, Height: Integer);
+    {** Composes then presents once to Target and updates paint metrics.
+        This is a CPU/GDI measurement; no monitor/vsync completion is measured. }
     procedure Paint(Target: TCanvas; const View: TGamePresentation; Width, Height: Integer);
+    {** Borrowed bitmap owned by the renderer; valid until it is destroyed. }
     property Buffer: Vcl.Graphics.TBitmap read FBuffer;
     property Viewport: TViewport read FViewport;
     property Metrics: TRenderMetrics read FMetrics;
   end;
 
+{** Formats with at least nine decimal digits; larger values are not truncated. }
 function FormatGameScore(Value: Integer): string;
+{** Returns the localized overlay message, or an empty string for normal play. }
 function GameMessage(State: TGameState): string;
 
 implementation

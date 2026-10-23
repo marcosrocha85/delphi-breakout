@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Delphi Breakout - engine reference: Breakout.Presentation: Class TGamePresentation</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="PasDoc 1.0.4">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rel="StyleSheet" type="text/css" href="bootstrap.min.css">
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body>
+<nav class="navbar d-md-none sticky-top bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">Delphi Breakout - engine reference</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarNav" aria-controls="sidebarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>
+<div class="offcanvas-md offcanvas-start navigation" tabindex="-1" id="sidebarNav" data-bs-scroll="true">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Delphi Breakout - engine reference</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarNav" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body py-2">
+<h2><a href="index.html">Home</a></h2><ul class="nav flex-column px-3"><li class="nav-item"><a class="nav-link px-2 py-1" href="AllUnits.html">Units</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="ClassHierarchy.html">Class Hierarchy</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllClasses.html">Classes, Interfaces, Objects and Records</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllTypes.html">Types</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllVariables.html">Variables</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllConstants.html">Constants</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllFunctions.html">Functions and Procedures</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllIdentifiers.html">Identifiers</a></li></ul></div></div>
+<main class="pasdoc-content content">
+<div class="container-fluid py-3 px-4">
+<span id="TGamePresentation"></span><h1 class="cio">Class TGamePresentation</h1>
+<div class="sections">
+<div class="one_section"><a class="section" href="#PasDoc-Description">Description</a></div><div class="one_section"><a class="section" href="#PasDoc-Hierarchy">Hierarchy</a></div><div class="one_section"><a class="section" href="#PasDoc-Methods">Methods</a></div><div class="one_section"><a class="section" href="#PasDoc-Properties">Properties</a></div></div>
+<span id="PasDoc-Description"></span><h2 class="unit">Unit</h2>
+<p class="unitlink">
+<a href="Breakout.Presentation.html">Breakout.Presentation</a></p>
+<h2 class="declaration">Declaration</h2>
+<p class="declaration">
+<code>type TGamePresentation = class(TObject)</code></p>
+<h2 class="description">Description</h2>
+<p>
+Owns a copied snapshot, bounded fade slots and a displayed score. Sync/Advance mutate presentation; painting only reads. No VCL or OS clock.</p>
+<p class="source_position">Source: src/Breakout.Presentation.pas (line 46).</p><span id="PasDoc-Hierarchy"></span><h2 class="hierarchy">Hierarchy</h2>
+<ul class="hierarchy"><li class="ancestor">TObject</li>
+<li class="thisitem">TGamePresentation</li></ul><h2 class="overview">Overview</h2>
+<span id="PasDoc-Methods"></span><h3 class="summary">Methods</h3>
+<table class="summary wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>constructor <strong><a href="Breakout.Presentation.TGamePresentation.html#Create-TVisualConfig-">Create</a></strong>(const Config: <a href="Breakout.Presentation.TVisualConfig.html">TVisualConfig</a>);</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="Breakout.Presentation.TGamePresentation.html#Reset-TGameSnapshot-">Reset</a></strong>(const Snapshot: <a href="Breakout.Types.TGameSnapshot.html">TGameSnapshot</a>);</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="Breakout.Presentation.TGamePresentation.html#Sync-TGameSnapshot-">Sync</a></strong>(const Snapshot: <a href="Breakout.Types.TGameSnapshot.html">TGameSnapshot</a>);</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>procedure <strong><a href="Breakout.Presentation.TGamePresentation.html#Advance-Double-Boolean-">Advance</a></strong>(ElapsedSeconds: Double; Frozen: Boolean);</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>function <strong><a href="Breakout.Presentation.TGamePresentation.html#FadeOpacity-Integer-">FadeOpacity</a></strong>(Index: Integer): Double;</code></td>
+</tr>
+</table>
+<span id="PasDoc-Properties"></span><h3 class="summary">Properties</h3>
+<table class="summary wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="Breakout.Presentation.TGamePresentation.html#Snapshot">Snapshot</a></strong>: <a href="Breakout.Types.TGameSnapshot.html">TGameSnapshot</a> read FSnapshot;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="Breakout.Presentation.TGamePresentation.html#DisplayedScore">DisplayedScore</a></strong>: Integer read FDisplayedScore;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="Breakout.Presentation.TGamePresentation.html#FadeCapacity">FadeCapacity</a></strong>: Integer read GetFadeCount;</code></td>
+</tr>
+<tr class="list2 visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="Breakout.Presentation.TGamePresentation.html#Fades">Fades</a></strong>[Index: Integer]: <a href="Breakout.Presentation.TBrickFade.html">TBrickFade</a> read GetFade;</code></td>
+</tr>
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><code>property <strong><a href="Breakout.Presentation.TGamePresentation.html#HasPending">HasPending</a></strong>: Boolean read GetPending;</code></td>
+</tr>
+</table>
+<h2 class="description">Description</h2>
+<h3 class="detail">Methods</h3>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Create-TVisualConfig-"></span><code>constructor <strong>Create</strong>(const Config: <a href="Breakout.Presentation.TVisualConfig.html">TVisualConfig</a>);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Validates positive finite durations and a positive count step. Raises <code>EArgumentException</code> on invalid visual configuration.</p>
+<p class="source_position">Source: src/Breakout.Presentation.pas (line 60).</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Reset-TGameSnapshot-"></span><code>procedure <strong>Reset</strong>(const Snapshot: <a href="Breakout.Types.TGameSnapshot.html">TGameSnapshot</a>);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Copies state, clears fades/debt and sets displayed score to actual score.</p>
+<p class="source_position">Source: src/Breakout.Presentation.pas (line 62).</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Sync-TGameSnapshot-"></span><code>procedure <strong>Sync</strong>(const Snapshot: <a href="Breakout.Types.TGameSnapshot.html">TGameSnapshot</a>);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Copies state and detects active-to-inactive brick transitions. A new board clears old fades while preserving score debt; restart should explicitly call Reset.</p>
+<p class="source_position">Source: src/Breakout.Presentation.pas (line 66).</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Advance-Double-Boolean-"></span><code>procedure <strong>Advance</strong>(ElapsedSeconds: Double; Frozen: Boolean);</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Advances fade ages and score using elapsed time, with arithmetic catch-up bounded by the target. The caller applies any elapsed cap.   Raises <code>EArgumentOutOfRangeException</code> on invalid elapsed time.</p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>ElapsedSeconds</dt>
+<dd>Finite, nonnegative elapsed seconds.</dd>
+<dt>Frozen</dt>
+<dd>When True, neither animation nor score advances.</dd>
+</dl>
+<p class="source_position">Source: src/Breakout.Presentation.pas (line 72).</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="FadeOpacity-Integer-"></span><code>function <strong>FadeOpacity</strong>(Index: Integer): Double;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Returns linear opacity in [0,1], or zero for an inactive fade.</p>
+<p class="source_position">Source: src/Breakout.Presentation.pas (line 74).</p></td></tr>
+</table>
+<h3 class="detail">Properties</h3>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Snapshot"></span><code>property <strong>Snapshot</strong>: <a href="Breakout.Types.TGameSnapshot.html">TGameSnapshot</a> read FSnapshot;</code></td>
+</tr>
+<tr><td colspan="2">
+<p class="nodescription">This item has no description.</p><p class="source_position">Source: src/Breakout.Presentation.pas (line 75).</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="DisplayedScore"></span><code>property <strong>DisplayedScore</strong>: Integer read FDisplayedScore;</code></td>
+</tr>
+<tr><td colspan="2">
+<p class="nodescription">This item has no description.</p><p class="source_position">Source: src/Breakout.Presentation.pas (line 76).</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="FadeCapacity"></span><code>property <strong>FadeCapacity</strong>: Integer read GetFadeCount;</code></td>
+</tr>
+<tr><td colspan="2">
+<p class="nodescription">This item has no description.</p><p class="source_position">Source: src/Breakout.Presentation.pas (line 77).</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="Fades"></span><code>property <strong>Fades</strong>[Index: Integer]: <a href="Breakout.Presentation.TBrickFade.html">TBrickFade</a> read GetFade;</code></td>
+</tr>
+<tr><td colspan="2">
+<p class="nodescription">This item has no description.</p><p class="source_position">Source: src/Breakout.Presentation.pas (line 78).</p></td></tr>
+</table>
+<table class="detail visibility-public wide_list">
+<tr class="list visibility-public">
+<td class="visibility"><span class="badge vis-public">Public</span></td>
+<td class="itemcode"><span id="HasPending"></span><code>property <strong>HasPending</strong>: Boolean read GetPending;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+True while score debt or any active fade still needs visual time.</p>
+<p class="source_position">Source: src/Breakout.Presentation.pas (line 80).</p></td></tr>
+</table>
+<hr><span class="appinfo"><em>Generated by <a href="https://pasdoc.github.io/">PasDoc 1.0.4</a>. </em>
+</span>
+</div></main>
+<script src="bootstrap.bundle.min.js"></script>
+</body></html>

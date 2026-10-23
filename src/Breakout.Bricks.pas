@@ -1,3 +1,4 @@
+{** Explicit block classification: identity, original sprite index and points. }
 unit Breakout.Bricks;
 
 interface
@@ -5,11 +6,14 @@ interface
 uses Breakout.Types;
 
 type
+  {** Immutable definition copied into each generated brick instance. }
   TBrickDefinition = record
     Kind: TBrickKind;
     SpriteIndex, Points: Integer;
   end;
 
+{** Returns the central scoring/sprite definition for a valid enum value.
+    Green=100, yellow=150, cyan=200, red=250, silver=400, gold=500. }
 function BrickDefinition(Kind: TBrickKind): TBrickDefinition;
 
 implementation

@@ -1,15 +1,13 @@
-# Verificação do adaptador VCL da E2
+# E2 VCL adapter checks (historical)
 
-O `BaselineRunner.exe` continua no grupo `DelphiBlocks.groupproj`. Ative-o, selecione **Win32 / Debug** e execute **Build**. Em **Run > Parameters**, informe `--e2`, depois execute **Run Without Debugging**. Também é possível rodar o executável já compilado:
+Check out the E2/E3 revision for this control-based mode; E4 no longer links it. Activate BaselineRunner.exe in DelphiBlocks.groupproj, select Win32/Debug, and Build. Set Run > Parameters to `--e2` and Run Without Debugging, or run:
 
 ```powershell
 .\tools\e0\BaselineRunner.exe --e2
 ```
 
-O resultado fica em `build/e2/latest/checks.json`; um segundo argumento escolhe outra pasta. A janela informa `checks passed` ou `checks failed`. A suíte termina com a partida pronta para conferência manual. Feche a janela principal antes de recompilar. Se ocorrer F2039, use o botão direito no projeto que falhou no painel Projects, execute **Clean** somente nele e depois **Build**, conforme a orientação do usuário.
+Results go to `build/e2/latest/checks.json`; a second argument selects another directory. The title reports passed/failed, and the game remains ready for manual evaluation. Close it before rebuilding. For F2039, right-click **only the failed project** in Projects, choose Clean, then Build, as authorized by the user.
 
-São **52 verificações**: os 43 casos de fluxo da E1, adaptados à propriedade dos dados pelo motor, mais nove casos do adaptador. Eles confirmam que mudar posição/visibilidade/Tag de controles não altera as regras, que repintar não move nem pontua, que o timer não avança um motor em `Ready`, que colisões ocultam os controles mantendo seus IDs e que vitória/mensagens/diagnóstico seguem a fotografia do motor.
+There are 52 checks: 43 E1 flow cases adapted to engine ownership plus nine adapter cases. They verify that control position/visibility/Tag do not change rules, repainting does not move/score, timer callbacks do not advance Ready, collisions hide controls while retaining IDs, and messages/victory/diagnostics follow the engine snapshot.
 
-Desde a E3, o diagnóstico tem 23 chaves e informa velocidades por segundo e tempo acumulado/descartado. As regressões usam passos explícitos de 1/120 s. O [modo `--e3`](../e3/README.md) inclui esta suíte e verifica o relógio e as colisões na interface.
-
-O [executor de console](../../tests/README.md) verifica o motor sem formulários. O modo `--e2` verifica a integração com os controles; nenhum deles substitui a conferência visual, DPI ou testes de duração.
+E3 uses 23 diagnostic keys with velocity/second and accumulated/discarded time; fixtures supply 1/120 s steps. Its historical `--e3` mode includes this suite. The [console](../../tests/README.md) checks rules without forms. Neither replaces visual, DPI, or duration evaluation. See [E4](../e4/README.md) for the current runner.

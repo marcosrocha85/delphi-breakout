@@ -1,9 +1,14 @@
+{** Deterministic generation of the legacy 12 by 8 brick grid. }
 unit Breakout.Levels;
 
 interface
 
 uses Breakout.Types;
 
+{** Creates 96 active bricks, with stable IDs and definitions from Breakout.Bricks.
+    The local random stream starts at Seed xor Level. This is one legacy grid
+    recipe, not a template library or endless-level system.
+    @returns(A newly allocated array owned through normal dynamic-array lifetime.) }
 function GenerateLegacyLevel(Seed: Cardinal; Level: Integer): TArray<TBrick>;
 
 implementation

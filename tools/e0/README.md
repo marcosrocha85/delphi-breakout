@@ -1,5 +1,5 @@
 # BaselineRunner
 
-O projeto permanece nesta pasta e no grupo `DelphiBlocks.groupproj`, ao lado do jogo e do console. Desde a E4, a execução padrão verifica a apresentação Canvas; `--benchmark` mede timer, pintura e recursos. Consulte as [instruções atuais](../e4/README.md).
+The project remains here and in `DelphiBlocks.groupproj` beside the game and console. Since E4, its default mode checks Canvas presentation; `--benchmark` measures timer, painting, and resources. See [current instructions](../e4/README.md).
 
-Os antigos modos `--e1`, `--e2` e `--e3` dependiam dos controles removidos na E4 e deixaram de ser ligados ao executor. Seus fontes, relatórios e instruções históricas permanecem nas respectivas pastas; para reproduzir o binário antigo, use a revisão daquela etapa. O script `summarize.py` conserva as expectativas históricas da E0 e não aprova a implementação atual.
+Historical `--e1`, `--e2`, and `--e3` modes depend on controls removed in E4 and are no longer linked into the runner. Their sources/reports/instructions remain in their stage folders; check out that stage's revision to reproduce the old executable. `summarize.py` retains E0 expectations and does not approve current gameplay.

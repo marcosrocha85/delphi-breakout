@@ -1,15 +1,17 @@
-# Regressões de fluxo da E1
+# E1 flow regressions (historical)
 
-A unidade `UE1Checks.pas` usa os mesmos formulários do jogo e está referenciada pelo `BaselineRunner.dproj`, já incluído no grupo `DelphiBlocks.groupproj`. Não é necessário abrir outro projeto. Desde a E2, a preparação dos cenários usa o motor, os labels pertencem diretamente ao formulário e o diagnóstico tem 23 chaves desde a E3. A evidência histórica da E1 permanece preservada; o [modo `--e2`](../e2/README.md) acrescenta verificações do adaptador.
+Use the E1 revision to reproduce this mode; the E4 runner no longer links legacy control-based suites. `UE1Checks.pas` originally referenced the same forms through BaselineRunner.dproj in DelphiBlocks.groupproj. E2 adapted fixtures to the engine; E3 added explicit time and expanded diagnostics.
 
-1. Abra o grupo, ative `BaselineRunner.exe` e selecione **Win32 / Debug**.
-2. Use **Build**. Se os fontes tiverem sido editados fora da IDE, aceite sua recarga antes de compilar.
-3. Em **Run > Parameters**, informe `--e1` e execute **Run Without Debugging**. Alternativamente, após compilar, execute `tools\e0\BaselineRunner.exe --e1` no terminal da raiz do repositório.
-4. O título informa `checks passed` ou `checks failed`. O relatório completo é `build/e1/latest/checks.json`; a cada execução ele é substituído. Para guardar outra execução, use `--e1 "caminho-da-pasta"`.
-5. Confira `passed = true`, `checks = 43` e `failures = 0`. O modo de testes termina deixando a janela pronta para a conferência manual. Feche a janela principal antes de recompilar ou limpar o projeto.
+At the historical revision:
 
-Os casos cobrem lançamento por clique/espaço, pausa imediata e perda de foco, comandos ignorados nos estados inadequados, três quedas sem movimento extra, game over, F2 em movimento/pausa, F1 restrito ao diagnóstico visível e pausado, F10, valores atuais do diagnóstico, formatação de pontuação, direção independente da posição da janela, ownership e 50 reinícios com contagens estáveis.
+1. Activate BaselineRunner.exe, select Win32/Debug, and Build through the IDE.
+2. Reload externally edited sources when appropriate before building.
+3. Set Run > Parameters to `--e1`, then Run Without Debugging; or run `tools/e0/BaselineRunner.exe --e1` after the build.
+4. Read `build/e1/latest/checks.json`. A second argument selects another output folder; the default file is replaced per run.
+5. Expect `passed=true`, `checks=43`, `failures=0`. The window remains open for manual checks; close it before rebuilding.
 
-Os passos são acionados de forma síncrona pelos handlers públicos existentes. O timer é desabilitado pelo observador nos cenários dirigidos. Isso verifica os resultados do fluxo atual, sem depender da cadência do Windows. Desde a E2, o console também executa regras sem formulários; desde a E3, os handlers de regressão recebem tempo explícito.
+Cases cover click/Space launch, immediate pause/focus loss, invalid-state commands, three falls without extra movement, game over, F2 during play/pause, diagnostic-only paused F1, F10, diagnostic values, score formatting, window-position-independent directions, ownership, and fifty stable restarts.
 
-Esses testes não validam o ângulo contínuo da raquete, faces/cantos dos blocos, alta velocidade, passo fixo, DPI, desempenho de pintura ou ausência de vazamentos em partidas longas. Esses itens permanecem nas etapas correspondentes do plano. A inspeção visual complementa os testes: na E1 ela também detectou e corrigiu o contraste do diagnóstico.
+Calls are synchronous public handlers with timer disabled by the observer during fixtures. They do not depend on Windows cadence or inject physical keyboard events. E2 adds console rules without forms; E3 supplies elapsed time explicitly.
+
+This suite does not certify continuous paddle angles, brick faces/corners, high speed, fixed-step timing, DPI, paint performance, or long-session leak absence. Visual checking complemented it and detected/fixed diagnostic contrast in E1. Current integration checks are documented under [E4](../e4/README.md).

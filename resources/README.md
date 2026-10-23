@@ -1,11 +1,11 @@
-# Sprites incorporados
+# Embedded sprites
 
-Os seis streams em `provenance.json` foram extraídos, byte a byte, do `UMain.dfm` da revisão `2611ded`. Os BMPs removem apenas o invólucro de propriedade `TPicture` da VCL; a imagem não foi redesenhada. `Bricks.imagelist` conserva o atlas e a máscara originais do `TImageList`.
+The six streams in `provenance.json` were extracted byte-for-byte from revision `2611ded` of `UMain.dfm`. BMP files remove only the VCL TPicture property wrapper; pixels were not redrawn. `Bricks.imagelist` retains the original TImageList atlas and mask.
 
-`Breakout.Sprites.res` é versionado para compilar um clone sem arquivos externos em tempo de execução. O renderer carrega esses recursos uma vez e prepara alfa a partir da transparência preta original. Para reconstruir o recurso após alterar um sprite, execute dentro desta pasta, com `brcc32` do Delphi no PATH:
+`Breakout.Sprites.res` is versioned so a clone can build without runtime asset files. The renderer loads resources once and prepares alpha from original black transparency. To rebuild after editing a sprite, run here with Delphi's brcc32 on PATH:
 
 ```powershell
 brcc32.exe -fo Breakout.Sprites.res Breakout.Sprites.rc
 ```
 
-A raquete mantém os três BMPs: 7×15, 36×15 e 7×15. A largura fornecida por `TPaddle` estende apenas o centro com linhas horizontais; as extremidades mantêm a proporção. O teste de largura 100 compara os pixels das pontas com os da largura original 50 e verifica cada coluna do centro.
+The paddle retains three BMPs: 7×15, 36×15, and 7×15. TPaddle width extends only the horizontally striped center; caps preserve proportions. Width-100 tests compare cap pixels against original width 50 and verify every center column.

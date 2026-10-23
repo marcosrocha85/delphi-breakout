@@ -107,8 +107,8 @@ begin
       Check('painting_read_only', (FrmMain.Presentation.Fades[0].AgeSeconds = 0) and
         (FrmMain.Game.Snapshot.Ball.X = Before.Ball.X));
       Press(VK_F3);
-      for I := 1 to 10 do FrmMain.AdvanceFrame(0.1);
-      Check('score_reaches_target_after_1_second', FrmMain.Presentation.DisplayedScore = 100);
+      for I := 1 to 5 do FrmMain.AdvanceFrame(0.1);
+      Check('score_reaches_target_after_half_second', FrmMain.Presentation.DisplayedScore = 100);
       Press(VK_F2); Probe.Fixture(True); FrmMain.RefreshView; Press(VK_SPACE);
       Probe.SetBall(310, 82, 120, 600); FrmMain.AdvanceFrame(FixedDeltaSeconds);
       Check('victory_keeps_visual_timer_alive', (FrmMain.Game.State = gsVictory) and FrmMain.Timer1.Enabled);

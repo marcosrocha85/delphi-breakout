@@ -1,3 +1,4 @@
+{** Player-facing resource strings, separated for future localization. }
 unit Breakout.Texts;
 
 interface

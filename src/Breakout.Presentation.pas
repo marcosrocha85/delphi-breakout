@@ -1,3 +1,4 @@
+{** Read model, time-driven feedback and uniform logical/client transform. }
 unit Breakout.Presentation;
 
 interface
@@ -5,32 +6,43 @@ interface
 uses Breakout.Types;
 
 const
+  {** Default duration of the image left by a destroyed brick, in ms. }
   BrickFadeDurationMs = 250;
-  ScoreCountIntervalMs = 10;
+  {** Default interval per score increment, in ms: 5 ms means 200 points/s. }
+  ScoreCountIntervalMs = 5;
+  {** Default number of points per logical score increment. }
   ScoreCountStep = 1;
+  {** Diagnostic refresh period, independent of painting and simulation. }
   DebugRefreshSeconds = 0.2;
 
 type
+  {** Positive finite durations in milliseconds and positive integer step. }
   TVisualConfig = record
     FadeDurationMs, CountIntervalMs: Double;
     CountStep: Integer;
     class function Default: TVisualConfig; static;
   end;
 
+  {** Visual residue only; Brick is no longer a collider. Age is seconds. }
   TBrickFade = record
     Brick: TBrick;
     AgeSeconds: Double;
     Active: Boolean;
   end;
 
+  {** Uniform scale plus centered letterbox offsets in client pixels. }
   TViewport = record
     Scale, OffsetX, OffsetY, Width, Height: Double;
+    {** Fits the logical field without stretching; nonpositive dimensions
+        produce a zero viewport. This does not resize the application window. }
     class function Fit(ClientWidth, ClientHeight: Integer;
       LogicalWidth: Double = 688; LogicalHeight: Double = 453): TViewport; static;
+    {** Inverts horizontal input; a zero viewport safely returns zero. }
     function ToLogicalX(ClientX: Double): Double;
   end;
 
-  { No VCL and no OS clock. Sync/Advance mutate presentation; painting only reads. }
+  {** Owns a copied snapshot, bounded fade slots and a displayed score.
+      Sync/Advance mutate presentation; painting only reads. No VCL or OS clock. }
   TGamePresentation = class
   private
     FConfig: TVisualConfig;
@@ -43,15 +55,28 @@ type
     function GetFadeCount: Integer;
     function GetPending: Boolean;
   public
+    {** Validates positive finite durations and a positive count step.
+        Raises @code(EArgumentException) on invalid visual configuration. }
     constructor Create(const Config: TVisualConfig);
+    {** Copies state, clears fades/debt and sets displayed score to actual score. }
     procedure Reset(const Snapshot: TGameSnapshot);
+    {** Copies state and detects active-to-inactive brick transitions.
+        A new board clears old fades while preserving score debt; restart
+        should explicitly call Reset. }
     procedure Sync(const Snapshot: TGameSnapshot);
+    {** Advances fade ages and score using elapsed time, with arithmetic
+        catch-up bounded by the target. The caller applies any elapsed cap.
+        @param(ElapsedSeconds Finite, nonnegative elapsed seconds.)
+        @param(Frozen When True, neither animation nor score advances.)
+        Raises @code(EArgumentOutOfRangeException) on invalid elapsed time. }
     procedure Advance(ElapsedSeconds: Double; Frozen: Boolean);
+    {** Returns linear opacity in [0,1], or zero for an inactive fade. }
     function FadeOpacity(Index: Integer): Double;
     property Snapshot: TGameSnapshot read FSnapshot;
     property DisplayedScore: Integer read FDisplayedScore;
     property FadeCapacity: Integer read GetFadeCount;
     property Fades[Index: Integer]: TBrickFade read GetFade;
+    {** True while score debt or any active fade still needs visual time. }
     property HasPending: Boolean read GetPending;
   end;
 

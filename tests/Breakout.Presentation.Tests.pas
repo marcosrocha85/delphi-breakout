@@ -65,27 +65,27 @@ begin
     View.Sync(S);
     Check('score_target_immediate_display_deferred', (View.Snapshot.Score = 10250) and
       (View.DisplayedScore = 10150) and View.HasPending);
-    View.Advance(0.009, False);
+    View.Advance(0.004, False);
     Check('score_waits_for_interval', View.DisplayedScore = 10150);
     View.Advance(0.001, False);
     Check('score_increments_by_one', View.DisplayedScore = 10151);
     for I := 2 to 100 do
     begin
       SavedScore := View.DisplayedScore;
-      View.Advance(0.01, False);
+      View.Advance(0.005, False);
       if View.DisplayedScore <> SavedScore + 1 then Inc(Failures);
     end;
     Check('score_reaches_10250_without_overshoot', (View.DisplayedScore = 10250) and not View.HasPending);
     for Rate in Rates do
     begin
       S.Score := 0; View.Reset(S);
-      S.Score := 200; View.Sync(S);
+      S.Score := 400; View.Sync(S);
       for I := 1 to Rate do View.Advance(1.0 / Rate, False);
-      Check('score_rate_' + IntToStr(Rate), View.DisplayedScore = 100);
+      Check('score_rate_' + IntToStr(Rate), View.DisplayedScore = 200);
     end;
     S.Score := 0; View.Reset(S);
-    S.Score := 100; View.Sync(S); View.Advance(0.5, False);
-    S.Score := 700; View.Sync(S); View.Advance(0.5, False);
+    S.Score := 100; View.Sync(S); View.Advance(0.25, False);
+    S.Score := 700; View.Sync(S); View.Advance(0.25, False);
     Check('new_hit_accumulates_target', (View.DisplayedScore = 100) and (View.Snapshot.Score = 700));
     View.Advance(1.0E100, False);
     Check('large_elapsed_bounded_by_target', (View.DisplayedScore = 700) and not View.HasPending);

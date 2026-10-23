@@ -1,16 +1,18 @@
-# Verificação da apresentação E4
+# E4 presentation verification
 
-No grupo `DelphiBlocks.groupproj`, ative `BaselineRunner.exe`, selecione Win32/Debug e faça Build pela IDE. O projeto continua em `tools/e0/` para manter o atalho já integrado. Sem argumentos, executa 47 verificações e deixa o jogo aberto para avaliação. Opcionalmente:
+In DelphiBlocks.groupproj, activate BaselineRunner.exe, choose Win32/Debug, and Build through the IDE. Its project remains in tools/e0 to preserve the integrated shortcut. With no arguments, it runs 47 checks and leaves the game open. Optional commands:
 
 ```powershell
 .\tools\e0\BaselineRunner.exe --e4 build\e4\view
 .\tools\e0\BaselineRunner.exe --benchmark build\e4\after
 ```
 
-`--e4` grava `view.json` e imagens do renderer em tamanho original, raquete ampliada, metade do esmaecimento e escalas 100/125/150/200%. Testa entrada, comandos, perda de foco, relógio real, impactos, vidas, vitória com animação pendente, F2, F1, diagnóstico, camadas, pixels da raquete, transparência e reutilização do buffer. As chamadas diretas aos handlers complementam a verificação manual; não substituem teclado/mouse reais.
+--e4 writes view.json and bitmaps at original size, enlarged paddle, half fade, and 100/125/150/200% scales. It checks input, commands, focus loss, real clock, impacts, lives, victory with pending effects, F2/F1/diagnostics, layers, paddle pixels, transparency, and buffer reuse. Direct handler calls complement real keyboard/mouse checks.
 
-`--benchmark` coleta 20 segundos sem diagnóstico e 20 com ele. Mantenha a janela ativa durante os 40 segundos. O controlador exclusivo do teste acompanha a bola. Grava `timer.csv` (intervalo/custo do handler e simulação), `paint.csv` (intervalo entre inícios de pinturas, composição, apresentação e custo total) e `resources.csv` (CPU acumulada, memória, handles, GDI e USER). O programa permanece aberto ao finalizar. Não há sincronização com o refresh do monitor; callback e pintura são métricas distintas. As partidas têm sementes diferentes e não representam cargas idênticas. Um terceiro argumento opcional, inteiro em milissegundos, substitui o intervalo do timer somente no processo do benchmark; por exemplo, `--benchmark <pasta> 15`.
+--benchmark collects twenty seconds without diagnostics and twenty with them; keep the window active for forty seconds. A runner-only controller follows the ball. timer.csv records interval/handler/simulation cost; paint.csv records paint-start intervals, composition, presentation, total cost; resources.csv records accumulated CPU, memory, handles, GDI, USER. The program remains open afterward. A third optional integer argument overrides timer interval only for this benchmark process, e.g. `--benchmark <directory> 15`.
 
-Os testes não implementam powerups. O probe exclusivo do executor altera a largura da raquete para conferir o contrato do renderer e a centralização/clamp da entrada. O executável de produção desenha `Snapshot.Paddle.Width` usando os três sprites originais.
+There is no monitor-refresh synchronization; callbacks and paintings are separate metrics. Different seeds are not identical workloads. See [FPS calculations and limits](../../docs/study/rendering-and-fps.md).
 
-Os testes de DPI acima compõem bitmaps em tamanhos equivalentes. Isso verifica transformação e rasterização; não representa troca real de monitor ou mudança do DPI do Windows. Consulte [resultados e limites](../../docs/e4-resultados.md).
+Tests do not implement powerups. A runner-only probe changes paddle width to check renderer/input contracts. Production draws Snapshot.Paddle.Width using the three original sprites. Scale tests compose equivalent bitmaps, not actual Windows DPI/monitor transitions. See [results and limits](../../docs/e4-results.md).
+
+For an in-use F2039, close the relevant test window, right-click **only the failed project** in Projects, Clean it, then Build. Do not Clean All as a recovery shortcut.

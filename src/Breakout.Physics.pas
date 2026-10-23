@@ -1,28 +1,56 @@
+{** Continuous circle sweeps and velocity response in logical coordinates. }
 unit Breakout.Physics;
 
 interface
 
 type
+  {** Axis-aligned bounds; screen Y grows downward. }
   TPhysicsRect = record
     Left, Top, Right, Bottom: Double;
     class function Create(X, Y, Width, Height: Double): TPhysicsRect; static;
   end;
 
+  {** Earliest contact: Time in seconds, outward unit normal and initial
+      overlap depth in logical units. Meaningful only on a successful sweep. }
   TCircleHit = record
     Time, NormalX, NormalY, Penetration: Double;
   end;
 
 const
+  {** Spatial tolerance and post-contact separation in logical units. }
   PositionEpsilon = 1.0E-6;
+  {** Temporal tolerance for contact times in seconds. }
   TimeEpsilon = 1.0E-10;
 
-{ Center coordinates, radius and velocity/second. The rounded boundary consists
-  of four face segments and four circular arcs, not an expanded AABB. }
+{** Sweeps a circle against a rectangle over [0, MaxTime]. Tests four face
+    segments and four circular corner arcs, including initial overlap.
+    @param(CX Circle center X in logical units.)
+    @param(CY Circle center Y in logical units.)
+    @param(Radius Positive circle radius.)
+    @param(VX Horizontal velocity in units per second.)
+    @param(VY Vertical velocity in units per second.)
+    @param(MaxTime Nonnegative interval in seconds.)
+    @param(Rect Static solid bounds.)
+    @param(Hit Earliest inward contact, reset to zero if none is found.)
+    @returns(True when contact is found in the interval.) }
 function SweepCircleRect(CX, CY, Radius, VX, VY, MaxTime: Double;
   const Rect: TPhysicsRect; out Hit: TCircleHit): Boolean;
+{** Sweeps against a horizontal capsule with cap radius half its height.
+    Reduces to the center segment dilated by ball radius plus cap radius.
+    Coordinates, velocity, time and Hit follow @link(SweepCircleRect). }
 function SweepCirclePaddle(CX, CY, Radius, VX, VY, MaxTime: Double;
   const Rect: TPhysicsRect; out Hit: TCircleHit): Boolean;
+{** Applies v := v - 2*dot(v,n)*n only when approaching the surface.
+    NX/NY must form an outward unit normal; separating velocity is unchanged. }
 procedure ReflectVelocity(var VX, VY: Double; NX, NY: Double);
+{** Maps normalized horizontal impact offset to an upward velocity.
+    @param(Offset Contact-center offset divided by paddle half-width; clamped to [-1,1].)
+    @param(Speed Preserved velocity magnitude in logical units per second.)
+    @param(IncomingVX Selects left/right at the exact paddle center.)
+    @param(MinAngle Minimum absolute deflection from vertical, in degrees.)
+    @param(MaxAngle Edge deflection from vertical, in degrees.)
+    @param(VX Resulting horizontal velocity.)
+    @param(VY Resulting negative vertical velocity.) }
 procedure PaddleVelocity(Offset, Speed, IncomingVX, MinAngle, MaxAngle: Double;
   out VX, VY: Double);
 
