@@ -141,7 +141,7 @@ var
   Viewport: TViewport;
 begin
   Viewport := TViewport.Fit(ClientWidth, ClientHeight);
-  FGame.MovePaddle(Viewport.ToLogicalX(X));
+  FGame.MovePaddle(Viewport.ToLogicalX(X), Assigned(FrmDebug) and FrmDebug.Visible);
   RefreshView(False);
 end;
 

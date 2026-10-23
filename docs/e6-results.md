@@ -2,7 +2,8 @@
 
 Date: 2026-10-23. Base: integrated E5 `82b7b24`.
 Environment: Delphi 13 Community Edition, Windows, VCL.
-Status: technical consolidation delivered; full human manual matrix remains open.
+Status: Marcos reported the manual route complete except paused diagnostic paddle input;
+the correction is implemented and its focused human retest is pending.
 
 ## Delivered changes
 
@@ -12,8 +13,10 @@ DCU/DCP directories add a final `game`, `tests`, or `view` component under
 each other, and projects cannot share compiled-unit caches across targets.
 BaselineRunner now enables Win64 as well as Win32.
 
-Each project imports `CodeGear.Delphi.Targets` once; the game's duplicate import
-is removed. Legacy forced compiler/dependency-output fields, the conflicting
+Each project imports `CodeGear.Delphi.Targets` once, using the IDE-compatible
+`Exists(...)` condition. This also prevents the IDE from appending another
+conditional import when saving a project that used an unconditional import.
+Legacy forced compiler/dependency-output fields, the conflicting
 `Configuration` default, and old `Version=7.0` compiler settings are removed.
 Modern platform/configuration properties select the compiler. Debug explicitly
 disables optimization and enables range/overflow checks; Release enables
@@ -36,7 +39,7 @@ and derived anchors. Sprite/HUD coordinate conversion shares the same final
 rounding helpers. This extracts the E5 appearance; it introduces no new game
 mechanic, resizable-window behavior, or custom-size renderer contract.
 
-## Validation
+## Initial consolidation validation
 
 The pre-extraction Win32 Debug runner passed 70 checks. The new output/DCU
 directories began empty. Every subsequent target used the IDE's full Build
@@ -85,16 +88,41 @@ and the requirement to verify fresh artifacts and test results. Necessary IDE
 builds remain the fallback; source edits, Git, reports, and image comparisons
 use the terminal/files. No licensing configuration was changed.
 
-## Human evaluation still open
+## Paused diagnostic paddle correction
 
-The automated matrix is complete. The full manual matrix is not:
+Marcos reported completing the requested manual route on 2026-10-23, with one
+issue: after pausing and using F1 with diagnostics open, the paddle could not
+be moved. The engine rejected all paused paddle input. `MovePaddle` now accepts
+an explicit per-call opt-in from the form only while diagnostics is visible.
+Mouse movement repositions the paddle before and after each F1 step, with the
+same field clamps; it does not advance the ball, simulation clock, or effects.
+Closing diagnostics restores the ordinary frozen pause. Terminal states still
+reject paddle input even with the opt-in.
 
-- Human campaign difficulty evaluation, including the 5% growth setting.
-- At least ten minutes of human play with and without diagnostics, with
-  smoothness and CPU/memory/resource observations.
-- Physical DPI/monitor transitions and cursor/paddle correspondence where the
-  equipment is available, plus native minimize/restore and cover/uncover checks.
+The updated suites contain 269 console checks (124 engine, 104 physics/time,
+41 presentation) and 76 VCL/bitmap checks per configuration. The new engine
+checks cover the opt-in, both clamps, frozen normal ticks, one debug quantum,
+movement between steps, and nonpersistent permission. Existing terminal-state
+checks now also reject opted-in movement. The form tests exercise the actual
+mouse/F1/F10 handlers, presentation synchronization, paused timer, and step count.
+Fresh reports are retained separately from the initial consolidation evidence in
+[evidence/e6-debug-paddle-2026-10-23](evidence/e6-debug-paddle-2026-10-23/README.md).
 
-Handler fixtures, hidden runner execution, and four bitmap scales do not satisfy
-these human/native checks. No new FPS/CPU benchmark is claimed; E4 measurements
-remain historical. The E6 PR should remain a draft while this evaluation is pending.
+## Human report and remaining retest
+
+Marcos's report is the acceptance evidence for the other requested manual checks.
+No detailed duration, physical monitor/DPI setup, CPU/memory values, or new
+FPS benchmark was supplied; no such measurements are inferred from it. The
+automated handler and bitmap evidence remains narrower than native human play.
+
+Only this focused human retest is pending:
+
+1. Launch a ball, show diagnostics with F10, and pause with F3.
+2. Move the mouse: the paddle follows and clamps at both edges; the ball stays still.
+3. Press F1 once, then move the mouse again: one simulation step is counted,
+   the paddle follows, and the ball remains still until the next F1.
+4. Hide diagnostics with F10: mouse and F1 leave the paused match frozen.
+5. Resume with F3 and verify normal play.
+
+PR #10 was already marked ready for review when this correction began. Its
+review status is preserved; this record does not authorize merging it.

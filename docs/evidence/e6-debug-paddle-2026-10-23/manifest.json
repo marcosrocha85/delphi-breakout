@@ -1,0 +1,139 @@
+{
+  "date": "2026-10-23",
+  "base_commit": "35a5bbecbc721e791cc26b837e106c11d0dcd5aa",
+  "build_method": "Full IDE Build in the existing DelphiBlocks.groupproj; terminal execution of tests",
+  "human_report": "Marcos reported completing the manual route, except paused diagnostic paddle movement. Focused retest after this fix is pending. No detailed monitor/resource measurements supplied.",
+  "configurations": [
+    {
+      "name": "Win32-Debug",
+      "console": {
+        "engine": 124,
+        "physics": 104,
+        "presentation": 41
+      },
+      "vcl_checks": 76,
+      "pixel_comparisons": 13,
+      "failures": 0,
+      "binaries": [
+        {
+          "path": "build/Win32/Debug/Breakout.exe",
+          "bytes": 2633728,
+          "sha256": "4cec0d77cea950b60f8a75b49a9f654addd0293093bf49e1249e4e22c18b28b9",
+          "machine": "0x14c"
+        },
+        {
+          "path": "build/Win32/Debug/Breakout.Tests.exe",
+          "bytes": 1200640,
+          "sha256": "d1f7a87678b788b9feeaa5a941baf1b46096843d419bbc78f7bd5b542e90fa1f",
+          "machine": "0x14c"
+        },
+        {
+          "path": "build/Win32/Debug/BaselineRunner.exe",
+          "bytes": 2779648,
+          "sha256": "c1d81e092efaa67fd7e37b66df372b1f8e737e597c593fc06363571ed4e5ca92",
+          "machine": "0x14c"
+        }
+      ]
+    },
+    {
+      "name": "Win32-Release",
+      "console": {
+        "engine": 124,
+        "physics": 104,
+        "presentation": 41
+      },
+      "vcl_checks": 76,
+      "pixel_comparisons": 13,
+      "failures": 0,
+      "binaries": [
+        {
+          "path": "build/Win32/Release/Breakout.exe",
+          "bytes": 2628608,
+          "sha256": "b51e0a6afeaca3bb532bc3179dcfe614a24251d9653f1d66917e02ed08235bba",
+          "machine": "0x14c"
+        },
+        {
+          "path": "build/Win32/Release/Breakout.Tests.exe",
+          "bytes": 1193984,
+          "sha256": "5baa0ecf24f1ece5f40e43f0fb313c0f4e7adb9ca53d0898a347c30d2f3e3a91",
+          "machine": "0x14c"
+        },
+        {
+          "path": "build/Win32/Release/BaselineRunner.exe",
+          "bytes": 2772992,
+          "sha256": "116e873867f6412623162d9ce5158b2a1ae3abaa6e49b58cfce42ba4c4b92871",
+          "machine": "0x14c"
+        }
+      ]
+    },
+    {
+      "name": "Win64-Debug",
+      "console": {
+        "engine": 124,
+        "physics": 104,
+        "presentation": 41
+      },
+      "vcl_checks": 76,
+      "pixel_comparisons": 13,
+      "failures": 0,
+      "binaries": [
+        {
+          "path": "build/Win64/Debug/Breakout.exe",
+          "bytes": 4175360,
+          "sha256": "4390b7cfad7f41fb11bac259168b84c3ede38d38dbeb3ac33a10e934d155377c",
+          "machine": "0x8664"
+        },
+        {
+          "path": "build/Win64/Debug/Breakout.Tests.exe",
+          "bytes": 1963008,
+          "sha256": "f4624d38dfd1ea0089ef159b4b47b6088f607a6860cd34415481c6717cbbd6ab",
+          "machine": "0x8664"
+        },
+        {
+          "path": "build/Win64/Debug/BaselineRunner.exe",
+          "bytes": 4456448,
+          "sha256": "ceb1321360bc551b708ffc003676a713c3c2f7802ee3d0a96743f6c1aaf1a716",
+          "machine": "0x8664"
+        }
+      ]
+    },
+    {
+      "name": "Win64-Release",
+      "console": {
+        "engine": 124,
+        "physics": 104,
+        "presentation": 41
+      },
+      "vcl_checks": 76,
+      "pixel_comparisons": 13,
+      "failures": 0,
+      "binaries": [
+        {
+          "path": "build/Win64/Release/Breakout.exe",
+          "bytes": 4169216,
+          "sha256": "a387a83b3cbdaaca5c215760b6905e10e42c51e7fcad157cf28d9f2f752dd2f7",
+          "machine": "0x8664"
+        },
+        {
+          "path": "build/Win64/Release/Breakout.Tests.exe",
+          "bytes": 1953280,
+          "sha256": "220bcc6a1042bb0304dfd67295e8fa854e5e199f02a2b9f55e2a407292ab3574",
+          "machine": "0x8664"
+        },
+        {
+          "path": "build/Win64/Release/BaselineRunner.exe",
+          "bytes": 4448256,
+          "sha256": "c35e0f2f1e153d4cb12bc6df9000886b7a40b4bb027ab99a4098c59d935e3b9a",
+          "machine": "0x8664"
+        }
+      ]
+    }
+  ],
+  "sources": {
+    "src/Breakout.Game.pas": "0c050054bf01a89fe0351b400c461c607613bd85fa2e7976dd91775a9032b4c6",
+    "UMain.pas": "d71122bd9e6ff4286a4dbe2d0624979dca213dc92702134158fdb654e284358e",
+    "tests/Breakout.Game.Tests.pas": "1d290fe05b838bed97273e22687ebc610ede479ddfb2a7e69c8eea371683a4dc",
+    "tools/e4/UE4ViewChecks.pas": "c0c741da7dec38bd3fa34abe009fe8563246cddfa8533d9845aa76b6852b2306",
+    "Breakout.res": "cf2dbea6608c9d1ee868024cd5210953b0136b72065a4b860390f988e2129b33"
+  }
+}

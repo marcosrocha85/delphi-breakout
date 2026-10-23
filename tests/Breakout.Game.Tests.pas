@@ -17,6 +17,7 @@ type
     FFailures: Integer;
     procedure Check(const Name: string; Passed: Boolean; const Detail: string = '');
     procedure States;
+    procedure DebugPaddle;
     procedure LivesAndPoints;
     procedure Completion;
     procedure Determinism;
@@ -116,6 +117,52 @@ begin
   end;
 end;
 
+procedure TEngineTests.DebugPaddle;
+var
+  Game: TGame;
+  Before, After: TGameSnapshot;
+begin
+  Game := TGame.Create(TGameConfig.Default, 12345);
+  try
+    Game.Execute(gcLaunch);
+    Game.Execute(gcTogglePause);
+    Before := Game.Snapshot;
+    Game.MovePaddle(600, True);
+    After := Game.Snapshot;
+    Check('paused_debug_input_repositions_only_paddle',
+      (After.State = gsPaused) and (After.Paddle.X = 575) and
+      (After.Ball.X = Before.Ball.X) and (After.Ball.Y = Before.Ball.Y) and
+      (After.Ball.VelocityX = Before.Ball.VelocityX) and
+      (After.Ball.VelocityY = Before.Ball.VelocityY) and
+      (After.Score = Before.Score) and (After.Lives = Before.Lives) and
+      (After.ActiveBricks = Before.ActiveBricks));
+    Game.MovePaddle(-1000, True);
+    Check('paused_debug_paddle_clamps_left', Game.Snapshot.Paddle.X = 0);
+    Game.MovePaddle(10000, True);
+    Check('paused_debug_paddle_clamps_right', Game.Snapshot.Paddle.X = 638);
+    Game.Step;
+    After := Game.Snapshot;
+    Check('paused_debug_movement_does_not_enable_ticks',
+      (After.Ball.X = Before.Ball.X) and (After.Ball.Y = Before.Ball.Y));
+    Game.Execute(gcDebugStep);
+    After := Game.Snapshot;
+    Check('debug_step_after_paddle_move_advances_one_quantum',
+      (After.State = gsPaused) and (After.Paddle.X = 638) and
+      SameValue(After.Ball.X, Before.Ball.X + Before.Ball.VelocityX * FixedDeltaSeconds, 1.0E-8) and
+      SameValue(After.Ball.Y, Before.Ball.Y + Before.Ball.VelocityY * FixedDeltaSeconds, 1.0E-8));
+    Before := After;
+    Game.MovePaddle(125, True);
+    After := Game.Snapshot;
+    Check('paused_debug_paddle_moves_again_between_steps',
+      (After.Paddle.X = 100) and (After.State = gsPaused) and
+      (After.Ball.X = Before.Ball.X) and (After.Ball.Y = Before.Ball.Y));
+    Game.MovePaddle(600);
+    Check('paused_debug_permission_is_not_retained', Game.Snapshot.Paddle.X = 100);
+  finally
+    Game.Free;
+  end;
+end;
+
 procedure TEngineTests.LivesAndPoints;
 var
   Game: TGameProbe;
@@ -145,10 +192,12 @@ begin
     Game.Execute(gcDeactivate);
     Game.Execute(gcDebugStep);
     Game.MovePaddle(0);
+    Game.MovePaddle(0, True);
     Game.Step;
     View := Game.Snapshot;
     Check('game_over_rejects_simulation_commands', (View.State = gsGameOver) and
-      (View.Lives = 0) and (View.Ball.X = 335.5) and (View.Ball.Y = 395));
+      (View.Lives = 0) and (View.Ball.X = 335.5) and (View.Ball.Y = 395) and
+      (View.Paddle.X = 319));
     Game.Execute(gcRestart);
     View := Game.Snapshot;
     Check('restart_after_game_over_restores_board', (View.State = gsReady) and
@@ -199,10 +248,12 @@ begin
     Game.Execute(gcDebugStep);
     Game.Execute(gcTogglePause);
     Game.MovePaddle(0);
+    Game.MovePaddle(0, True);
     After := Game.Snapshot;
     Check('level_complete_waits_without_moving_or_scoring',
       (After.State = gsLevelComplete) and (After.Score = 100) and
-      (After.Ball.X = Before.Ball.X) and (After.Ball.Y = Before.Ball.Y));
+      (After.Ball.X = Before.Ball.X) and (After.Ball.Y = Before.Ball.Y) and
+      (After.Paddle.X = Before.Paddle.X));
     Game.Execute(gcLaunch);
     After := Game.Snapshot;
     Check('continue_loads_next_level_ready_preserving_lives_and_score',
@@ -219,8 +270,11 @@ begin
     Game.Execute(gcTogglePause);
     Game.Execute(gcDebugStep);
     Game.Step;
+    Before := Game.Snapshot;
+    Game.MovePaddle(0, True);
     Check('victory_ignores_launch_pause_and_steps', (Game.Snapshot.State = gsVictory) and
-      (Game.Snapshot.Score = 200) and (Game.Snapshot.Ball.X = 310));
+      (Game.Snapshot.Score = 200) and (Game.Snapshot.Ball.X = 310) and
+      (Game.Snapshot.Paddle.X = Before.Paddle.X));
     Game.Execute(gcRestart);
     Check('restart_from_victory_resets_level_and_counters',
       (Game.Snapshot.State = gsReady) and (Game.Snapshot.Level = 1) and
@@ -631,6 +685,7 @@ begin
   try
     try
       States;
+      DebugPaddle;
       LivesAndPoints;
       Completion;
       Determinism;

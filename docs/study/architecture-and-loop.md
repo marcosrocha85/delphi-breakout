@@ -27,7 +27,7 @@ Mouse events and commands can also request updates. `Invalidate` requests painti
 | --- | --- |
 | `gsReady` | The paddle moves and carries the ball; launching starts play. |
 | `gsPlaying` | `Step` advances the match; pause or focus loss suspends play. |
-| `gsPaused` | Physics and animations freeze; F1 with diagnostics allows one step. |
+| `gsPaused` | Physics and animations freeze; diagnostics allows mouse positioning of the paddle between single F1 steps. Closing diagnostics freezes the paddle again. |
 | `gsLevelComplete` | Wait for a launch command to load the next level. |
 | `gsGameOver` | No lives remain; restart creates a new match. |
 | `gsVictory` | The last configured level has been completed. |

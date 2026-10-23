@@ -144,9 +144,39 @@ begin
       for I := 1 to 20 do FrmMain.AdvanceFrame(0.05);
       Check('debug_throttled_to_5hz', (FrmMain.DebugUpdates-Updates >= 4) and
         (FrmMain.DebugUpdates-Updates <= 5) and (FrmDebug.VLE.Strings.Count = 30));
-      Press(VK_F3); Count := FrmMain.GameLoop.Diagnostics.TotalSteps; Press(VK_F1);
+      Press(VK_F3); Count := FrmMain.GameLoop.Diagnostics.TotalSteps;
+      Before := FrmMain.Game.Snapshot;
+      FrmMain.FormMouseMove(nil, [], 300, 400);
+      S := FrmMain.Game.Snapshot;
+      Check('paused_debug_mouse_moves_paddle_without_advancing',
+        (S.State = gsPaused) and (S.Paddle.X = 275) and
+        (S.Ball.X = Before.Ball.X) and (S.Ball.Y = Before.Ball.Y) and
+        (S.Score = Before.Score) and (S.Lives = Before.Lives) and
+        (FrmMain.GameLoop.Diagnostics.TotalSteps = Count) and not FrmMain.Timer1.Enabled);
+      Check('paused_debug_mouse_refreshes_presentation',
+        (FrmMain.Presentation.Snapshot.Paddle.X = S.Paddle.X) and
+        (FrmMain.Presentation.Snapshot.Ball.Y = Before.Ball.Y));
+      Press(VK_F1);
       Check('f1_debug_step_only_one_fixed_step', FrmMain.GameLoop.Diagnostics.TotalSteps = Count+1);
-      Press(VK_F10); Press(VK_F2);
+      Before := FrmMain.Game.Snapshot;
+      FrmMain.FormMouseMove(nil, [], 500, 400);
+      S := FrmMain.Game.Snapshot;
+      Check('paused_debug_mouse_moves_again_after_f1',
+        (S.State = gsPaused) and (S.Paddle.X = 475) and
+        (S.Ball.X = Before.Ball.X) and (S.Ball.Y = Before.Ball.Y) and
+        (FrmMain.GameLoop.Diagnostics.TotalSteps = Count+1) and not FrmMain.Timer1.Enabled);
+      FrmMain.FormMouseMove(nil, [], -100, 400);
+      Check('paused_debug_mouse_clamps_left', FrmMain.Game.Snapshot.Paddle.X = 0);
+      FrmMain.FormMouseMove(nil, [], 2000, 400);
+      Check('paused_debug_mouse_clamps_right', FrmMain.Game.Snapshot.Paddle.X = 638);
+      Press(VK_F10); Before := FrmMain.Game.Snapshot;
+      FrmMain.FormMouseMove(nil, [], 300, 400); Press(VK_F1);
+      S := FrmMain.Game.Snapshot;
+      Check('closing_debug_restores_frozen_paddle_and_blocks_f1',
+        (S.State = gsPaused) and (S.Paddle.X = Before.Paddle.X) and
+        (S.Ball.X = Before.Ball.X) and (S.Ball.Y = Before.Ball.Y) and
+        (FrmMain.GameLoop.Diagnostics.TotalSteps = Count+1) and not FrmMain.Timer1.Enabled);
+      Press(VK_F2);
       { E5: drive the real form/loop/presentation across every campaign board.
         Fixture shortens each board to one collision; console tests clear all
         136 real bricks separately. No production skip-level command is added. }
