@@ -260,6 +260,8 @@ Esta etapa estabelece a primeira renderização em canvas VCL, com quadro compos
 
 - Separar saídas, por exemplo `build/Win32/Debug` e `build/Win64/Release`, e DCUs por plataforma/configuração, evitando mistura entre compilações.
 - Revisar os imports duplicados e configurações antigas do `.dproj` com um build antes/depois; preservar recursos necessários como `.res` e ícone.
+- Eliminar números mágicos de layout e comportamento que ainda estejam espalhados pelo código, conforme solicitado por Marcos em 23/10/2026. Começar por `TGameRenderer.DrawHud`: coordenadas da faixa do HUD e dos textos, margens, posição/espaçamento/dimensões dos ícones de vida, tamanho da fonte e limites da faixa de mensagens. Substituir esses literais por constantes com nomes claros ou uma definição de layout/configuração; derivar posições relacionadas a partir da geometria lógica, evitando duplicação entre desenho, viewport e modelo.
+- Conferir a equivalência visual e funcional após essa limpeza, incluindo camadas, alinhamento, escalas e entrada do mouse. Separar a extração dos parâmetros de qualquer mudança intencional de aparência ou mecânica.
 - Manter fontes novos em UTF-8 e evitar alterações de encoding/terminadores em massa nos legados.
 - Atualizar o README com comandos e estrutura efetivamente implementados, incorporando as alterações locais existentes.
 - Executar builds limpos Debug/Release em Win32/Win64, testes do motor e a matriz manual. Registrar a configuração e as medições finais.
