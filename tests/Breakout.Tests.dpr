@@ -5,12 +5,16 @@ program BreakoutTests;
 uses System.SysUtils, System.IOUtils,
   Breakout.Types in '..\src\Breakout.Types.pas',
   Breakout.Levels in '..\src\Breakout.Levels.pas',
+  Breakout.Physics in '..\src\Breakout.Physics.pas',
+  Breakout.Loop in '..\src\Breakout.Loop.pas',
   Breakout.Game in '..\src\Breakout.Game.pas',
   Breakout.TestScenarios in 'Breakout.TestScenarios.pas',
-  Breakout.Game.Tests in 'Breakout.Game.Tests.pas';
+  Breakout.Game.Tests in 'Breakout.Game.Tests.pas',
+  Breakout.Physics.Tests in 'Breakout.Physics.Tests.pas';
 
 var
   Folder, Parent: string;
+  EnginePassed, PhysicsPassed: Boolean;
 begin
   try
     Folder := ParamStr(1);
@@ -23,16 +27,19 @@ begin
         if Parent = Folder then raise Exception.Create('Repository root not found');
         Folder := Parent;
       end;
-      Folder := TPath.Combine(Folder, 'build\e2\latest');
+      Folder := TPath.Combine(Folder, 'build\e3\latest');
     end;
-    if RunEngineTests(Folder) then
+    Folder := ExpandFileName(Folder);
+    EnginePassed := RunEngineTests(Folder);
+    PhysicsPassed := RunPhysicsTests(Folder);
+    if EnginePassed and PhysicsPassed then
     begin
-      Writeln('E2 engine checks passed: ', TPath.Combine(Folder, 'engine.json'));
+      Writeln('E3 engine checks passed: ', TPath.Combine(Folder, 'engine.json'));
       ExitCode := 0;
     end
     else
     begin
-      Writeln('E2 engine checks failed: ', TPath.Combine(Folder, 'engine.json'));
+      Writeln('E3 engine checks failed: ', TPath.Combine(Folder, 'engine.json'));
       ExitCode := 1;
     end;
   except

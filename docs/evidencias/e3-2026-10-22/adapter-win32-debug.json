@@ -1,0 +1,312 @@
+﻿{
+    "results": [
+        {
+            "name": "ready_has_96_bricks_and_three_lives",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "ready_has_no_message_or_running_timer",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "ready_ignores_step_tick_and_pause",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "click_launch_preserves_paddle_and_ball",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "f3_consumes_key_and_pauses_immediately",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "space_consumes_key_while_paused",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "all_launch_paths_and_ticks_preserve_pause",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "resume_preserves_position_and_hides_message",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "deactivation_pauses",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "resume_after_deactivation_preserves_position",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "f2_during_play_returns_to_ready",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "space_launches_from_ready",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "f2_during_pause_clears_pause_message",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "fall_1_removes_one_life",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "fall_1_repositions_without_extra_motion",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "idle_tick_after_fall_1_is_ignored",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "fall_2_removes_one_life",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "fall_2_repositions_without_extra_motion",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "idle_tick_after_fall_2_is_ignored",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "fall_3_removes_one_life",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "fall_3_repositions_without_extra_motion",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "idle_tick_after_fall_3_is_ignored",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "game_over_has_message",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "game_over_ignores_launch_and_step",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "restart_after_game_over_restores_score_lives_and_bricks",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "f10_consumes_key",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "debug_opens_with_form_owner_and_twenty_three_keys",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "debug_toggle_preserves_main_window_position",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "debug_cannot_step_ready",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "debug_cannot_step_unpaused_game",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "debug_can_step_paused_game_once",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "debug_reports_post_step_position_with_stable_keys",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "hidden_debug_disables_manual_step",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "f10_reopens_hidden_debug_with_current_values",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "closing_debug_disables_manual_step",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "score_zero",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "score_42",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "score_nine_digits",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "score_ten_digits",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "score_max_integer",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "hud_labels_have_form_owner",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "seeded_direction_is_independent_of_window_left",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "fifty_restarts_keep_component_and_brick_counts",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "view_changes_cannot_change_model",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "refresh_restores_controls_from_model",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "timer_cannot_advance_ready_model",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "debug_displays_model_state_seed_and_level",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "opening_debug_preserves_engine_state",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "hit_hides_view_without_destroying_control_or_id",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "painting_does_not_score_or_advance_model",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "victory_snapshot_updates_message_and_stops_timer",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "space_cannot_relaunch_after_victory",
+            "passed": true,
+            "detail": ""
+        },
+        {
+            "name": "timer_requests_frames_every_16ms",
+            "passed": true
+        },
+        {
+            "name": "real_timer_uses_elapsed_time_for_multiple_fixed_steps",
+            "passed": true
+        },
+        {
+            "name": "resume_resets_real_timestamp_without_catchup",
+            "passed": true
+        },
+        {
+            "name": "collision_0_updates_sprite_and_score",
+            "passed": true
+        },
+        {
+            "name": "collision_0_renders_reflected_ball",
+            "passed": true
+        },
+        {
+            "name": "collision_1_updates_sprite_and_score",
+            "passed": true
+        },
+        {
+            "name": "collision_1_renders_reflected_ball",
+            "passed": true
+        },
+        {
+            "name": "collision_2_updates_sprite_and_score",
+            "passed": true
+        },
+        {
+            "name": "collision_2_renders_reflected_ball",
+            "passed": true
+        },
+        {
+            "name": "diagnostic_displays_velocity_and_timing_limits",
+            "passed": true
+        },
+        {
+            "name": "diagnostic_step_uses_fixed_seconds",
+            "passed": true
+        }
+    ],
+    "suite": "E3 stopwatch VCL adapter plus E1/E2 regressions",
+    "passed": true,
+    "checks": 63,
+    "failures": 0
+}

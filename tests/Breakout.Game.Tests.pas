@@ -6,7 +6,7 @@ function RunEngineTests(const OutputDirectory: string): Boolean;
 
 implementation
 
-uses System.SysUtils, System.JSON, System.IOUtils,
+uses System.SysUtils, System.JSON, System.IOUtils, System.Math,
   Breakout.Types, Breakout.Game, Breakout.Levels, Breakout.TestScenarios;
 
 type
@@ -57,10 +57,10 @@ begin
     Game.MovePaddle(-1000);
     After := Game.Snapshot;
     Check('paddle_clamps_left_and_carries_ready_ball',
-      (After.Paddle.X = 0) and (After.Ball.X = 16));
+      (After.Paddle.X = 0) and (After.Ball.X = 16.5));
     Game.MovePaddle(10000);
     After := Game.Snapshot;
-    Check('paddle_clamps_right', (After.Paddle.X = 638) and (After.Ball.X = 654));
+    Check('paddle_clamps_right', (After.Paddle.X = 638) and (After.Ball.X = 654.5));
     Game.MovePaddle(125);
     Before := Game.Snapshot;
     Game.Execute(gcLaunch);
@@ -86,14 +86,14 @@ begin
     Game.Execute(gcDebugStep);
     After := Game.Snapshot;
     Check('debug_step_advances_once_and_preserves_pause', (After.State = gsPaused) and
-      (After.Ball.X = Before.Ball.X + Before.Ball.StepX) and
-      (After.Ball.Y = Before.Ball.Y + Before.Ball.StepY));
+      SameValue(After.Ball.X, Before.Ball.X + Before.Ball.VelocityX * FixedDeltaSeconds, 1.0E-8) and
+      SameValue(After.Ball.Y, Before.Ball.Y + Before.Ball.VelocityY * FixedDeltaSeconds, 1.0E-8));
     Before := After;
     Game.Execute(gcTogglePause);
     After := Game.Snapshot;
     Check('resume_preserves_position_and_steps', (After.State = gsPlaying) and
       (After.Ball.X = Before.Ball.X) and (After.Ball.Y = Before.Ball.Y) and
-      (After.Ball.StepX = Before.Ball.StepX) and (After.Ball.StepY = Before.Ball.StepY));
+      (After.Ball.VelocityX = Before.Ball.VelocityX) and (After.Ball.VelocityY = Before.Ball.VelocityY));
     Game.Execute(gcDeactivate);
     Game.Execute(gcDeactivate);
     After := Game.Snapshot;
@@ -127,12 +127,12 @@ begin
       View := Game.Snapshot;
       Check('fall_' + IntToStr(I) + '_loses_exactly_one_life', View.Lives = 3-I);
       Check('fall_' + IntToStr(I) + '_terminates_without_extra_motion',
-        (View.Ball.X = 335) and (View.Ball.Y = 395) and (View.Paddle.X = 319));
+        (View.Ball.X = 335.5) and (View.Ball.Y = 395) and (View.Paddle.X = 319));
       Game.Step;
       Game.Execute(gcDebugStep);
       View := Game.Snapshot;
       Check('idle_after_fall_' + IntToStr(I) + '_does_not_advance',
-        (View.Lives = 3-I) and (View.Ball.X = 335) and (View.Ball.Y = 395));
+        (View.Lives = 3-I) and (View.Ball.X = 335.5) and (View.Ball.Y = 395));
     end;
     Check('third_fall_enters_game_over', View.State = gsGameOver);
     Game.Execute(gcLaunch);
@@ -143,14 +143,14 @@ begin
     Game.Step;
     View := Game.Snapshot;
     Check('game_over_rejects_simulation_commands', (View.State = gsGameOver) and
-      (View.Lives = 0) and (View.Ball.X = 335) and (View.Ball.Y = 395));
+      (View.Lives = 0) and (View.Ball.X = 335.5) and (View.Ball.Y = 395));
     Game.Execute(gcRestart);
     View := Game.Snapshot;
     Check('restart_after_game_over_restores_board', (View.State = gsReady) and
       (View.Lives = 3) and (View.Score = 0) and (View.ActiveBricks = 96));
     Game.Fixture;
     Game.Execute(gcLaunch);
-    Game.SetBall(310, 84, 5, 5);
+    Game.SetBall(310, 82, 0, 240);
     Game.Step;
     View := Game.Snapshot;
     Check('hit_deactivates_brick_and_adds_its_points', (View.Score = 10) and
@@ -158,7 +158,7 @@ begin
       (View.LastHitBrickId = 0));
     Check('inactive_brick_retains_stable_id_and_slot',
       (Length(View.Bricks) = 2) and (View.Bricks[0].Id = 0) and (View.Bricks[1].Id = 1));
-    Game.PlaceBall(310, 84);
+    Game.PlaceBall(310, 82);
     Game.Step;
     Check('inactive_brick_cannot_score_again', Game.Snapshot.Score = 10);
     Game.Execute(gcRestart);
@@ -184,12 +184,12 @@ begin
     Game.Step;
     Game.Execute(gcLaunch);
     Game.Fixture(True);
-    Game.SetBall(310, 84, 5, 5);
+    Game.SetBall(310, 82, 0, 240);
     Game.Step;
     Before := Game.Snapshot;
     Check('last_brick_enters_level_complete_once', (Before.State = gsLevelComplete) and
       (Before.ActiveBricks = 0) and (Before.Score = 10) and (Before.Lives = 2));
-    Check('completion_terminates_the_step', (Before.Ball.X = 310) and (Before.Ball.Y = 84));
+    Check('completion_terminates_the_step', (Before.Ball.X = 310) and SameValue(Before.Ball.Y, 83, 0.00001) and (Before.Ball.VelocityY < 0));
     Game.Step;
     Game.Execute(gcDebugStep);
     Game.Execute(gcTogglePause);
@@ -205,7 +205,7 @@ begin
       (After.Lives = 2) and (After.ActiveBricks = 96));
     Game.Execute(gcLaunch);
     Game.Fixture(True);
-    Game.SetBall(310, 84, 5, 5);
+    Game.SetBall(310, 82, 0, 240);
     Game.Step;
     After := Game.Snapshot;
     Check('last_level_enters_victory', (After.State = gsVictory) and
@@ -222,7 +222,7 @@ begin
       (Game.Snapshot.Score = 0) and (Game.Snapshot.Lives = 3));
     Game.Execute(gcLaunch);
     Game.Fixture(True);
-    Game.SetBall(310, 84, 5, 5);
+    Game.SetBall(310, 82, 0, 240);
     Game.Execute(gcTogglePause);
     Game.Execute(gcDebugStep);
     Check('debug_completion_keeps_terminal_state', Game.Snapshot.State = gsLevelComplete);
@@ -249,7 +249,7 @@ begin
     try
       A := First.Snapshot;
       B := Second.Snapshot;
-      Same := A.Ball.StepX = B.Ball.StepX;
+      Same := A.Ball.VelocityX = B.Ball.VelocityX;
       Valid := Length(A.Bricks) = 96;
       for I := 0 to High(A.Bricks) do
       begin
@@ -270,7 +270,7 @@ begin
       A.Ball.X := -999;
       B := First.Snapshot;
       Check('snapshot_is_detached_from_live_model', B.Bricks[0].Active and
-        (B.Bricks[0].Points < MaxInt) and (B.Ball.X = 335));
+        (B.Bricks[0].Points < MaxInt) and (B.Ball.X = 335.5));
       Same := True;
       for I := 1 to 200 do
       begin
@@ -295,7 +295,7 @@ begin
       A := First.Snapshot;
       B := Second.Snapshot;
       Check('restart_repeats_seeded_board', (A.Seed = 12345) and
-        (A.Ball.StepX = B.Ball.StepX) and (A.Bricks[0].SpriteIndex = B.Bricks[0].SpriteIndex));
+        (A.Ball.VelocityX = B.Ball.VelocityX) and (A.Bricks[0].SpriteIndex = B.Bricks[0].SpriteIndex));
     finally
       Second.Free;
     end;
@@ -336,7 +336,7 @@ begin
       on E: Exception do Check('unhandled_exception', False, E.ClassName + ': ' + E.Message);
     end;
     Result := FFailures = 0;
-    Report.AddPair('suite', 'E2 engine without VCL');
+    Report.AddPair('suite', 'E3 engine flow regressions without VCL');
     Report.AddPair('passed', TJSONBool.Create(Result));
     Report.AddPair('checks', TJSONNumber.Create(FResults.Count));
     Report.AddPair('failures', TJSONNumber.Create(FFailures));

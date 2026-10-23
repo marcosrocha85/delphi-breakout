@@ -10,15 +10,13 @@ type
     FConfig: TGameConfig;
     FSeed: Cardinal;
     FRandom: TSeededRandom;
+    FCollisionLimitCount: Integer;
+    FCollisionDiscardedSeconds: Double;
     procedure StartNewGame;
     procedure LoadLevel;
     procedure ResetPositions;
     procedure Advance;
-    procedure HandleBounds;
-    function HasLostBall: Boolean;
     procedure LoseLife;
-    procedure HandlePaddleCollision;
-    procedure HandleBrickCollisions;
     function CountActiveBricks: Integer;
   protected
     { Scenario probes in the test tools arrange inputs here, without VCL. }
@@ -33,23 +31,37 @@ type
     procedure MovePaddle(CenterX: Double);
     procedure Step;
     function Snapshot: TGameSnapshot;
+    property State: TGameState read FState;
   end;
 
 implementation
 
-uses System.SysUtils, System.Math, Breakout.Levels;
+uses System.SysUtils, System.Math, Breakout.Levels, Breakout.Physics;
+
+function FiniteValues(const Values: array of Double): Boolean;
+var
+  Value: Double;
+begin
+  for Value in Values do
+    if IsNan(Value) or IsInfinite(Value) then Exit(False);
+  Result := True;
+end;
 
 constructor TGame.Create(const Config: TGameConfig; Seed: Cardinal);
 begin
   inherited Create;
-  if (Config.Width < Config.PaddleWidth) or (Config.PaddleWidth < Config.BallSize) or
+  if not FiniteValues([Config.Width, Config.Height, Config.PaddleWidth,
+     Config.PaddleHeight, Config.PaddleY, Config.BallSize, Config.BallGap,
+     Config.BallSpeed, Config.MinPaddleAngle, Config.MaxPaddleAngle]) or
+     (Config.Width < Config.PaddleWidth) or (Config.PaddleWidth < Config.BallSize) or
      (Config.BallSize <= 0) or (Config.PaddleHeight <= 0) or
+     (Config.PaddleWidth < Config.PaddleHeight) or
      (Config.PaddleY < Config.BallSize + Config.BallGap) or
      (Config.PaddleY + Config.PaddleHeight > Config.Height) or
      (Config.InitialLives <= 0) or (Config.LevelCount <= 0) or
-     (Config.InitialStep <= 0) or (Config.EdgeStep <= 0) or
-     (Config.BallGap < 0) or (Config.PaddleTolerance < 0) or
-     (Config.PaddleEdge < 0) or (2 * Config.PaddleEdge > Config.PaddleWidth) then
+     (Config.BallSpeed <= 0) or
+     (Config.BallGap < 0) or (Config.MinPaddleAngle <= 0) or
+     (Config.MaxPaddleAngle < Config.MinPaddleAngle) or (Config.MaxPaddleAngle > 60) then
     raise EArgumentException.Create('Invalid game configuration');
   FConfig := Config;
   FSeed := Seed;
@@ -61,6 +73,8 @@ begin
   FLives := FConfig.InitialLives;
   FScore := 0;
   FLevel := 1;
+  FCollisionLimitCount := 0;
+  FCollisionDiscardedSeconds := 0;
   FRandom.Reset(FSeed xor $A5A5A5A5);
   LoadLevel;
 end;
@@ -78,14 +92,14 @@ begin
   FPaddle.Width := FConfig.PaddleWidth;
   FPaddle.Height := FConfig.PaddleHeight;
   FPaddle.Y := FConfig.PaddleY;
-  FPaddle.X := Trunc((FConfig.Width - FPaddle.Width) / 2);
+  FPaddle.X := (FConfig.Width - FPaddle.Width) / 2;
   FBall.Size := FConfig.BallSize;
-  FBall.X := FPaddle.X + Trunc((FPaddle.Width - FBall.Size) / 2);
+  FBall.X := FPaddle.X + (FPaddle.Width - FBall.Size) / 2;
   FBall.Y := FPaddle.Y - FBall.Size - FConfig.BallGap;
-  FBall.StepX := FConfig.InitialStep;
+  FBall.VelocityX := FConfig.BallSpeed / Sqrt(2);
   if FRandom.Next(2) = 0 then
-    FBall.StepX := -FBall.StepX;
-  FBall.StepY := -FConfig.InitialStep;
+    FBall.VelocityX := -FBall.VelocityX;
+  FBall.VelocityY := -FConfig.BallSpeed / Sqrt(2);
 end;
 
 procedure TGame.Execute(Command: TGameCommand);
@@ -119,7 +133,7 @@ begin
   FPaddle.X := EnsureRange(CenterX - FPaddle.Width / 2, 0.0,
     FConfig.Width - FPaddle.Width);
   if FState = gsReady then
-    FBall.X := FPaddle.X + Trunc((FPaddle.Width - FBall.Size) / 2);
+    FBall.X := FPaddle.X + (FPaddle.Width - FBall.Size) / 2;
 end;
 
 procedure TGame.Step;
@@ -128,50 +142,129 @@ begin
 end;
 
 procedure TGame.Advance;
+type
+  TContactKind = (ckWall, ckPaddle, ckBrick, ckLoss);
+  TContact = record
+    Kind: TContactKind;
+    BrickIndex: Integer;
+    Hit: TCircleHit;
+  end;
+var
+  Contacts: TArray<TContact>;
+  Count, I, J, Iteration: Integer;
+  Remaining, Earliest, Radius, CX, CY, Speed, Offset: Double;
+  Hit: TCircleHit;
+
+  procedure AddContact(Kind: TContactKind; Index: Integer; const Value: TCircleHit);
+  begin
+    if (Value.Time < -TimeEpsilon) or (Value.Time > Remaining + TimeEpsilon) then Exit;
+    Contacts[Count].Kind := Kind;
+    Contacts[Count].BrickIndex := Index;
+    Contacts[Count].Hit := Value;
+    Inc(Count);
+    Earliest := Min(Earliest, Max(0.0, Value.Time));
+  end;
+
+  procedure Plane(Distance, Velocity, NX, NY: Double; Kind: TContactKind);
+  var
+    Value: TCircleHit;
+  begin
+    { Distance is positive on the playable side; velocity points inward. }
+    if (Distance >= 0) and (Velocity >= -TimeEpsilon) then Exit;
+    Value := Default(TCircleHit);
+    Value.NormalX := NX;
+    Value.NormalY := NY;
+    Value.Penetration := Max(0.0, -Distance);
+    if Distance > 0 then Value.Time := -Distance / Velocity;
+    AddContact(Kind, -1, Value);
+  end;
+
 begin
-  HandleBounds;
-  if HasLostBall then
+  if FBall.Y >= FConfig.Height then
   begin
     LoseLife;
     Exit;
   end;
-  HandlePaddleCollision;
-  HandleBrickCollisions;
-  if CountActiveBricks = 0 then
+  Radius := FBall.Size / 2;
+  Remaining := FixedDeltaSeconds;
+  SetLength(Contacts, Length(FBricks) + 5);
+  for Iteration := 1 to MaxImpactsPerStep do
   begin
-    if FLevel = FConfig.LevelCount then FState := gsVictory
-    else FState := gsLevelComplete;
-    Exit;
+    Count := 0;
+    Earliest := Remaining + 1;
+    CX := FBall.X + Radius;
+    CY := FBall.Y + Radius;
+    { Stable tie order: left/right/top wall, paddle, brick collection, loss.
+      All contacts at the earliest time score together. Approaching normals
+      reflect in this order; duplicate seam normals cannot flip twice. }
+    Plane(FBall.X, FBall.VelocityX, 1, 0, ckWall);
+    Plane(FConfig.Width - FBall.Size - FBall.X, -FBall.VelocityX, -1, 0, ckWall);
+    Plane(FBall.Y, FBall.VelocityY, 0, 1, ckWall);
+    if (FBall.VelocityY > 0) and (CY <= FPaddle.Y + FPaddle.Height / 2 + TimeEpsilon) and
+      SweepCirclePaddle(CX, CY, Radius, FBall.VelocityX, FBall.VelocityY,
+        Remaining, TPhysicsRect.Create(FPaddle.X, FPaddle.Y,
+          FPaddle.Width, FPaddle.Height), Hit) and (Hit.NormalY < 0) then
+      AddContact(ckPaddle, -1, Hit);
+    for I := 0 to High(FBricks) do
+      if FBricks[I].Active and
+        SweepCircleRect(CX, CY, Radius, FBall.VelocityX, FBall.VelocityY,
+          Remaining, TPhysicsRect.Create(FBricks[I].X, FBricks[I].Y,
+            FBricks[I].Width, FBricks[I].Height), Hit) then
+        AddContact(ckBrick, I, Hit);
+    Plane(FConfig.Height - FBall.Y, -FBall.VelocityY, 0, -1, ckLoss);
+    if Count = 0 then
+    begin
+      FBall.X := FBall.X + FBall.VelocityX * Remaining;
+      FBall.Y := FBall.Y + FBall.VelocityY * Remaining;
+      Exit;
+    end;
+    FBall.X := FBall.X + FBall.VelocityX * Earliest;
+    FBall.Y := FBall.Y + FBall.VelocityY * Earliest;
+    Remaining := Max(0.0, Remaining - Earliest);
+    for I := 0 to Count - 1 do
+    begin
+      if Abs(Contacts[I].Hit.Time - Earliest) > TimeEpsilon then Continue;
+      Hit := Contacts[I].Hit;
+      case Contacts[I].Kind of
+        ckLoss:
+          begin
+            LoseLife;
+            Exit;
+          end;
+        ckPaddle:
+          begin
+            Speed := Hypot(FBall.VelocityX, FBall.VelocityY);
+            Offset := (FBall.X + Radius - FPaddle.X - FPaddle.Width / 2) /
+              (FPaddle.Width / 2);
+            PaddleVelocity(Offset, Speed, FBall.VelocityX,
+              FConfig.MinPaddleAngle, FConfig.MaxPaddleAngle,
+              FBall.VelocityX, FBall.VelocityY);
+          end;
+      else
+        ReflectVelocity(FBall.VelocityX, FBall.VelocityY, Hit.NormalX, Hit.NormalY);
+      end;
+      FBall.X := FBall.X + Hit.NormalX * (Hit.Penetration + PositionEpsilon);
+      FBall.Y := FBall.Y + Hit.NormalY * (Hit.Penetration + PositionEpsilon);
+      if Contacts[I].Kind = ckBrick then
+      begin
+        J := Contacts[I].BrickIndex;
+        FBricks[J].Active := False;
+        Inc(FScore, FBricks[J].Points);
+        FLastHitBrickId := FBricks[J].Id;
+      end;
+    end;
+    if CountActiveBricks = 0 then
+    begin
+      if FLevel = FConfig.LevelCount then FState := gsVictory
+      else FState := gsLevelComplete;
+      Exit;
+    end;
+    if Remaining <= TimeEpsilon then Exit;
   end;
-  FBall.X := FBall.X + FBall.StepX;
-  FBall.Y := FBall.Y + FBall.StepY;
-end;
-
-procedure TGame.HandleBounds;
-begin
-  if FBall.X <= 0 then
-  begin
-    FBall.X := 0;
-    FBall.StepX := Abs(FBall.StepX);
-  end
-  else if FBall.X >= FConfig.Width - FBall.Size then
-  begin
-    FBall.X := FConfig.Width - FBall.Size;
-    FBall.StepX := -Abs(FBall.StepX);
-  end;
-  if FBall.Y <= 0 then
-  begin
-    FBall.Y := 0;
-    FBall.StepY := Abs(FBall.StepY);
-  end;
-end;
-
-function TGame.HasLostBall: Boolean;
-begin
-  { Preserve the E1 loss geometry until E3 defines the lower boundary. }
-  Result := (FBall.Y > FPaddle.Y) and
-    ((FBall.X < FPaddle.X - FConfig.PaddleTolerance) or
-     (FBall.X > FPaddle.X + FPaddle.Width + FConfig.PaddleTolerance));
+  { Pathological traps stop at the last safe contact. Never advance unchecked
+    through solids when the bounded collision budget has been exhausted. }
+  Inc(FCollisionLimitCount);
+  FCollisionDiscardedSeconds := FCollisionDiscardedSeconds + Remaining;
 end;
 
 procedure TGame.LoseLife;
@@ -179,65 +272,6 @@ begin
   Dec(FLives);
   ResetPositions;
   if FLives = 0 then FState := gsGameOver else FState := gsReady;
-end;
-
-procedure TGame.HandlePaddleCollision;
-begin
-  if (FBall.StepY <= 0) or
-     (FBall.X <= FPaddle.X - FConfig.PaddleTolerance) or
-     (FBall.X >= FPaddle.X + FPaddle.Width + FConfig.PaddleTolerance) or
-     (FBall.Y < FPaddle.Y - FBall.Size - FConfig.PaddleTolerance) then Exit;
-  FBall.StepY := -Abs(FBall.StepY);
-  { Three legacy regions: E3 will replace this with proportional reflection. }
-  if FBall.X < FPaddle.X + FConfig.PaddleEdge then
-  begin
-    FBall.StepX := -FConfig.EdgeStep;
-    FBall.StepY := -FConfig.EdgeStep;
-  end
-  else if FBall.X > FPaddle.X + FPaddle.Width - FConfig.PaddleEdge then
-  begin
-    FBall.StepX := FConfig.EdgeStep;
-    FBall.StepY := -FConfig.EdgeStep;
-  end
-  else
-  begin
-    if FBall.StepX < 0 then FBall.StepX := -FConfig.InitialStep
-    else FBall.StepX := FConfig.InitialStep;
-    FBall.StepY := -FConfig.InitialStep;
-  end;
-end;
-
-procedure TGame.HandleBrickCollisions;
-var
-  I: Integer;
-begin
-  for I := 0 to High(FBricks) do
-  begin
-    if not FBricks[I].Active then Continue;
-    if (FBall.Y > FBricks[I].Y + FBricks[I].Height) or
-       (FBall.Y + FBall.Size < FBricks[I].Y) or
-       (FBall.X > FBricks[I].X + FBricks[I].Width) or
-       (FBall.X + FBall.Size < FBricks[I].X) then Continue;
-    { Legacy face tests, including the known lateral/vertical defects. E3 owns
-      their replacement; extracting the model must not hide that work. }
-    if (FBall.Y <= FBricks[I].Y + FBricks[I].Height) and
-       (FBall.X <= FBricks[I].X + FBricks[I].Width - 5) and
-       (FBall.X + FBall.Size >= FBricks[I].X + 5) then
-      FBall.StepY := Abs(FBall.StepY)
-    else if (FBall.Y + FBall.Size >= FBricks[I].Y) and
-       (FBall.X <= FBricks[I].X + FBricks[I].Width - 5) and
-       (FBall.X + FBall.Size >= FBricks[I].X + 5) then
-      FBall.StepY := -Abs(FBall.StepY);
-    if (FBall.Y + FBall.Size <= FBricks[I].Y + FBricks[I].Height) and
-       (FBall.Y >= FBricks[I].Y) and (FBall.X <= FBricks[I].X + FBricks[I].Width) then
-      FBall.StepX := -Abs(FBall.StepX)
-    else if (FBall.Y + FBall.Size <= FBricks[I].Y + FBricks[I].Height) and
-       (FBall.Y >= FBricks[I].Y) and (FBall.X + FBall.Size >= FBricks[I].X) then
-      FBall.StepX := Abs(FBall.StepX);
-    FBricks[I].Active := False;
-    Inc(FScore, FBricks[I].Points);
-    FLastHitBrickId := FBricks[I].Id;
-  end;
 end;
 
 function TGame.CountActiveBricks: Integer;
@@ -258,6 +292,8 @@ begin
   Result.Seed := FSeed;
   Result.ActiveBricks := CountActiveBricks;
   Result.LastHitBrickId := FLastHitBrickId;
+  Result.CollisionLimitCount := FCollisionLimitCount;
+  Result.CollisionDiscardedSeconds := FCollisionDiscardedSeconds;
   Result.Ball := FBall;
   Result.Paddle := FPaddle;
   { The caller cannot mutate the live board through a shared dynamic array. }

@@ -480,7 +480,7 @@ object FrmMain: TFrmMain
   end
   object Timer1: TTimer
     Enabled = False
-    Interval = 50
+    Interval = 16
     OnTimer = Timer1Timer
     Left = 8
     Top = 8

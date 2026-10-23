@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Grids, ValEdit,
-  Breakout.Types;
+  Breakout.Types, Breakout.Loop;
 
 const
   DebugLives = 'Lives';
@@ -19,9 +19,18 @@ const
   DebugState = 'State';
   DebugLevel = 'Level';
   DebugSeed = 'Seed';
-  DebugStepX = 'Ball Step X';
-  DebugStepY = 'Ball Step Y';
+  DebugVelocityX = 'Velocity X /s';
+  DebugVelocityY = 'Velocity Y /s';
   DebugActiveBricks = 'Active Bricks';
+  DebugFixedStep = 'Fixed step ms';
+  DebugFrameSteps = 'Frame steps';
+  DebugTotalSteps = 'Total steps';
+  DebugAccumulator = 'Accumulator ms';
+  DebugDiscarded = 'Discarded ms';
+  DebugLimited = 'Limited callbacks';
+  DebugCollisionLimit = 'Collision limits';
+  DebugCollisionDiscarded = 'Collision lost ms';
+
 
 type
   TFrmDebug = class(TForm)
@@ -29,7 +38,7 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormShow(Sender: TObject);
   public
-    procedure UpdateFrom(const Snapshot: TGameSnapshot);
+    procedure UpdateFrom(const Snapshot: TGameSnapshot; const Timing: TLoopDiagnostics);
   end;
 
 var
@@ -65,15 +74,24 @@ begin
     VLE.InsertRow(DebugState, '', True);
     VLE.InsertRow(DebugLevel, '', True);
     VLE.InsertRow(DebugSeed, '', True);
-    VLE.InsertRow(DebugStepX, '', True);
-    VLE.InsertRow(DebugStepY, '', True);
+    VLE.InsertRow(DebugVelocityX, '', True);
+    VLE.InsertRow(DebugVelocityY, '', True);
     VLE.InsertRow(DebugActiveBricks, '', True);
+    VLE.InsertRow(DebugFixedStep, '', True);
+    VLE.InsertRow(DebugFrameSteps, '', True);
+    VLE.InsertRow(DebugTotalSteps, '', True);
+    VLE.InsertRow(DebugAccumulator, '', True);
+    VLE.InsertRow(DebugDiscarded, '', True);
+    VLE.InsertRow(DebugLimited, '', True);
+    VLE.InsertRow(DebugCollisionLimit, '', True);
+    VLE.InsertRow(DebugCollisionDiscarded, '', True);
+
   finally
     VLE.Strings.EndUpdate;
   end;
 end;
 
-procedure TFrmDebug.UpdateFrom(const Snapshot: TGameSnapshot);
+procedure TFrmDebug.UpdateFrom(const Snapshot: TGameSnapshot; const Timing: TLoopDiagnostics);
 var
   Brick: TBrick;
 begin
@@ -99,9 +117,17 @@ begin
     VLE.Values[DebugState] := GameStateName(Snapshot.State);
     VLE.Values[DebugLevel] := IntToStr(Snapshot.Level);
     VLE.Values[DebugSeed] := UIntToStr(Snapshot.Seed);
-    VLE.Values[DebugStepX] := FloatToStr(Snapshot.Ball.StepX);
-    VLE.Values[DebugStepY] := FloatToStr(Snapshot.Ball.StepY);
+    VLE.Values[DebugVelocityX] := FloatToStr(Snapshot.Ball.VelocityX);
+    VLE.Values[DebugVelocityY] := FloatToStr(Snapshot.Ball.VelocityY);
     VLE.Values[DebugActiveBricks] := IntToStr(Snapshot.ActiveBricks);
+    VLE.Values[DebugFixedStep] := FloatToStrF(FixedDeltaSeconds * 1000, ffFixed, 12, 3);
+    VLE.Values[DebugFrameSteps] := IntToStr(Timing.LastSteps);
+    VLE.Values[DebugTotalSteps] := IntToStr(Timing.TotalSteps);
+    VLE.Values[DebugAccumulator] := FloatToStrF(Timing.AccumulatorSeconds * 1000, ffFixed, 12, 3);
+    VLE.Values[DebugDiscarded] := FloatToStrF(Timing.DiscardedSeconds * 1000, ffFixed, 12, 3);
+    VLE.Values[DebugLimited] := IntToStr(Timing.LimitedCallbacks);
+    VLE.Values[DebugCollisionLimit] := IntToStr(Snapshot.CollisionLimitCount);
+    VLE.Values[DebugCollisionDiscarded] := FloatToStrF(Snapshot.CollisionDiscardedSeconds * 1000, ffFixed, 12, 3);
   finally
     VLE.Strings.EndUpdate;
   end;

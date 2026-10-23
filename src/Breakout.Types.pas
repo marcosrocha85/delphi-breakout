@@ -8,8 +8,7 @@ type
 
   TBall = record
     X, Y, Size: Double;
-    { Displacement per legacy tick. E3 will introduce velocity per second. }
-    StepX, StepY: Double;
+    VelocityX, VelocityY: Double; // logical units per second
   end;
 
   TPaddle = record
@@ -25,7 +24,7 @@ type
 
   TGameConfig = record
     Width, Height, PaddleWidth, PaddleHeight, PaddleY, BallSize: Double;
-    BallGap, InitialStep, EdgeStep, PaddleEdge, PaddleTolerance: Double;
+    BallGap, BallSpeed, MaxPaddleAngle, MinPaddleAngle: Double;
     InitialLives, LevelCount: Integer;
     class function Default: TGameConfig; static;
   end;
@@ -37,7 +36,17 @@ type
     Ball: TBall;
     Paddle: TPaddle;
     Bricks: TArray<TBrick>;
+    CollisionLimitCount: Integer;
+    CollisionDiscardedSeconds: Double;
   end;
+
+const
+  FixedDeltaSeconds = 1.0 / 120.0;
+  MaxElapsedSeconds = 0.1;
+  MaxStepsPerCallback = 12;
+  MaxImpactsPerStep = 8;
+
+type
 
   TSeededRandom = record
   private
@@ -62,10 +71,9 @@ begin
   Result.PaddleY := 420;
   Result.BallSize := 17;
   Result.BallGap := 8;
-  Result.InitialStep := 5;
-  Result.EdgeStep := 15;
-  Result.PaddleEdge := 17;
-  Result.PaddleTolerance := 5;
+  Result.BallSpeed := 240;
+  Result.MaxPaddleAngle := 60;
+  Result.MinPaddleAngle := 5;
   Result.InitialLives := 3;
   Result.LevelCount := 1;
 end;

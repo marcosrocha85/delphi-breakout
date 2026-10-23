@@ -1,0 +1,71 @@
+{
+  "stage": "E3",
+  "date": "2026-10-22",
+  "base_commit": "3af2531",
+  "compiler": "Delphi 13 Community Edition",
+  "compiler_file_version": "37.0.60542.8024",
+  "build_method": "IDE Build; scoped Clean after F2039",
+  "main_builds": [
+    "Win32 Debug",
+    "Win32 Release",
+    "Win64 Debug",
+    "Win64 Release"
+  ],
+  "console_builds": [
+    "Win32 Debug (range and overflow checks)",
+    "Win32 Release",
+    "Win64 Debug (range and overflow checks)",
+    "Win64 Release"
+  ],
+  "console_checks_per_configuration": 150,
+  "adapter": "Win32 Debug, 63 passed",
+  "physics_hz": 120,
+  "timer_interval_ms": 16,
+  "max_elapsed_ms": 100,
+  "max_steps_per_callback": 12,
+  "max_impacts_per_step": 8,
+  "speed_units_per_second": 240,
+  "paddle_end_radius": 7.5,
+  "source_sha256_normalized_utf8_lf": {
+    "Breakout.dpr": "2c4be795fa0a9cf514f4317493e4977ebea123ee16ffdd5cc631a24a4f27c8ab",
+    "UDebug.dfm": "34e10cc9cfee80693e5fe9bd117663e721bd38b7d92a10e50b6d7836347c0514",
+    "UDebug.pas": "fa52cad44fca01625e97c7e80b8daaf0b98f7cd6d3067122add62f591a31f8cc",
+    "UMain.dfm": "4b372953403e1e38b6444e297b15c610b273a602743c3d68050945d92fe71913",
+    "UMain.pas": "aacd6ebf1cc2db733f4d44c82c606c221a96c72433aee6a6dc87232ff117ee1e",
+    "src/Breakout.Game.pas": "c7ef5cc02d9b9a1fc4fb7d25b2f7fc4afc4d440891c10e8372fe89801a70ec5f",
+    "src/Breakout.Levels.pas": "07b495775262a8a806cba06c7f309a91178fe445bc3f388ddf2dfcba2ba2442b",
+    "src/Breakout.Loop.pas": "31640504b2c5e44beb9eb881576d6d28bb0f64ef655a6496db8534177e1f3637",
+    "src/Breakout.Physics.pas": "865a85ff0a63d40269d7cb44688d3ac4a02a8e71670706a1373f5690538558e4",
+    "src/Breakout.Texts.pas": "0d7f35a0221ef587d69108bb03785e8378cc65f9a9cf1459d96b1e4d5aab9cfd",
+    "src/Breakout.Types.pas": "a7039b5a0cd51b4a25da0e0e1e4f055bb91e12a832af294440f30f62183168b6",
+    "tests/Breakout.Game.Tests.pas": "a89957604b0e4b65e3e8033d18d06ed69814ab770d084fa65a1039f57addefe3",
+    "tests/Breakout.Physics.Tests.pas": "55b1051e94d7f49fd872e8b8026652ec5a0309b2703195ab0df72f701183574e",
+    "tests/Breakout.TestScenarios.pas": "0e2946ee142cf2b676165b28b24d4f7d19b6775d0ce76e324677cc738f9af770",
+    "tests/Breakout.Tests.dpr": "359a0467138dc5d60316bd5c99570f1c5a32c4f813df64ff24e7cddafc6dba22",
+    "tools/e0/BaselineRunner.dpr": "654d97217cd4fdad6620f5dd77e642c2b658cfb1243d41ad91d6b7b322aed1f4",
+    "tools/e1/UE1Checks.pas": "ae658081a7cb952d1307c0baa3ec6fc2a035f48c106175b6a711914842ed92a4",
+    "tools/e2/UE2ViewChecks.pas": "40b4de689928aae5ca2c37e40450c81ab2f8532428952a4c6f88fa7076f6d85d",
+    "tools/e3/UE3ViewChecks.pas": "b189b5bf8c26a806df91e8fde07aafe35b8b53458a95404fe658742a26545a7a"
+  },
+  "binary_sha256": {
+    "build/e3/Breakout-win32-debug.exe": "e7b421d93e30c29852c06108785bfd168bd6394a6dd4588d83ffe7cba6a06c3f",
+    "build/e3/Breakout-win32-release.exe": "f8ab96597ad18e44c809ef9de965646cb385c9fcc4218e0c001d6ed344142708",
+    "build/e3/Breakout-win64-debug.exe": "59fb7ea96bb78129e54adb32c7e5772ad9386b9e695120be59ffb4bfcb5fd76d",
+    "build/e3/Breakout-win64-release.exe": "31a62f8e2f7cde8f2aa8dba64bdeaf8be4cf4eda795230daf34b987ef7ebd09e",
+    "build/tests/Win32/Base/Breakout.Tests.exe": "b3d7a5220c2226722522b13b33940d65a0348bf2c82405b7153d8bc1e3593bae",
+    "build/tests/Win32/Debug/Breakout.Tests.exe": "4d9106e8cceac011b6d508d1d76133486a3bf79359928942cef3e5875ac30356",
+    "build/tests/Win32/Release/Breakout.Tests.exe": "6b53396eada7b545cb9f4a051dd2b9c85ef7abdddaadc0879987f1f14adf8d53",
+    "build/tests/Win64/Debug/Breakout.Tests.exe": "e9a43b455459f5fe19a821c46ccb70c229d743efb83a836ef672c1f2529a6df9",
+    "build/tests/Win64/Release/Breakout.Tests.exe": "f5ca619c3c79bc861d5065d35fd90bca16ad6c2e207a41f4236c1e20f3022634",
+    "tools/e0/BaselineRunner.exe": "879e5f7344c1bef9d91be3c74541adc04e814d23e4911c5a842d0871981b82f0"
+  },
+  "historical_evidence_unchanged": true,
+  "readme_preserved": true,
+  "root_resource_restored": true,
+  "limits": [
+    "No presentation FPS or DPI validation",
+    "Visual integration only Win32 Debug",
+    "30-second replays are simulated time",
+    "Legacy E0 sampling mode adapted and compiled, not used to certify E3"
+  ]
+}

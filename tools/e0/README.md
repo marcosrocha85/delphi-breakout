@@ -1,6 +1,6 @@
 # Executor de observação da E0
 
-Este projeto auxiliar usa os formulários atuais e o motor por referência. Sem parâmetros, observa a versão atual com os cenários criados na E0. Com `--e1`, executa a [suíte de regressões de fluxo](../e1/README.md); com `--e2`, verifica também o [adaptador visual](../e2/README.md). As evidências históricas da E0 continuam em `docs/evidencias/e0-2026-10-22/`.
+Este projeto auxiliar usa os formulários atuais e o motor por referência. Sem parâmetros, observa a versão atual com os cenários criados na E0. Com `--e1`, executa a [suíte de regressões de fluxo](../e1/README.md); com `--e2`, verifica também o [adaptador visual](../e2/README.md). Com `--e3`, executa as [63 verificações atuais de integração e tempo](../e3/README.md). As evidências históricas da E0 continuam em `docs/evidencias/e0-2026-10-22/`.
 
 ## Executar no Delphi 13 Community Edition
 
@@ -28,8 +28,8 @@ Se o arquivo do executor for alterado fora da IDE, confirme a recarga do módulo
 
 O projeto auxiliar habilita `Application.MainFormOnTaskbar` para tornar a janela controlável e tem configuração de projeto própria gerada pela IDE. Essas diferenças devem ser consideradas em testes de foco, aparência e DPI.
 
-As medições incluem o custo do observador, do controlador auxiliar e da VCL. `handler_ms` cobre o handler da versão compilada e suas atualizações, mas não mede separadamente a composição final da tela. A referência da E0 inclui `ProcessMessages`; a E1 remove essa chamada. A frequência registrada é a de atualização da simulação; não é FPS de apresentação. Uma perda de foco pausa a partida e invalida a comparação de cadência; nesse caso, refaça a coleta mantendo o jogo ativo.
+As medições incluem o custo do observador, do controlador auxiliar e da VCL. `handler_ms` cobre o handler da versão compilada e suas atualizações, mas não mede separadamente a composição final da tela. A referência da E0 inclui `ProcessMessages`; a E1 remove essa chamada. Desde a E3, a frequência registrada é a de callbacks do timer, cada qual pode executar vários passos fixos; não é FPS de apresentação nem frequência dos passos de física. Uma perda de foco pausa a partida e invalida a comparação de cadência; nesse caso, refaça a coleta mantendo o jogo ativo.
 
 Os cenários automatizados são chamadas diretas aos handlers, e não injeção de teclado/mouse. Os testes manuais registrados no relatório complementam essa observação. Uma coleta curta não demonstra ausência de vazamentos nem substitui os testes de duração e de plataformas previstos para as próximas etapas.
 
-O resumo caracteriza defeitos conhecidos. As verificações de integridade não significam que o jogo esteja correto; após corrigir a mecânica, parte dessas observações deve mudar e ser substituída por testes das regras desejadas.
+O `summarize.py` mantém as expectativas históricas da E0 (incluindo deslocamentos 5/15 por tick); ele não deve ser usado para aprovar a física da E3. Para a versão atual, use `--e3` e o console. O resumo caracteriza defeitos conhecidos do legado. As verificações de integridade não significam que o jogo esteja correto; após corrigir a mecânica, parte dessas observações deve mudar e ser substituída por testes das regras desejadas.

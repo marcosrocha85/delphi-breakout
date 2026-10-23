@@ -5,7 +5,7 @@ interface
 uses
   Windows, SysUtils, Classes, Graphics, Controls, Forms, ExtCtrls,
   StdCtrls, ImgList, Math, AppEvnts, System.ImageList,
-  Breakout.Types, Breakout.Game;
+  Breakout.Types, Breakout.Game, Breakout.Loop;
 
 type
   TFrmMain = class(TForm)
@@ -27,6 +27,8 @@ type
     procedure ApplicationEvents1Deactivate(Sender: TObject);
   private
     FGame: TGame;
+    FLoop: TGameLoop;
+    FLastTimestamp: Int64;
     FBrickViews: TArray<TImage>;
     FMessageLabel, FScoreLabel, FLivesLabel: TLabel;
     procedure SendCommand(Command: TGameCommand);
@@ -38,6 +40,8 @@ type
     destructor Destroy; override;
     class function FormatScore(Value: Integer): string; static;
     procedure RefreshView;
+    procedure AdvanceFrame(ElapsedSeconds: Double);
+    property GameLoop: TGameLoop read FLoop;
     property Game: TGame read FGame;
     property MessageLabel: TLabel read FMessageLabel;
     property ScoreLabel: TLabel read FScoreLabel;
@@ -49,13 +53,15 @@ var
 
 implementation
 
-uses UDebug, Breakout.Texts;
+uses UDebug, Breakout.Texts, System.Diagnostics;
 
 {$R *.dfm}
 
 procedure TFrmMain.FormCreate(Sender: TObject);
 begin
   FGame := TGame.Create(TGameConfig.Default, GetTickCount);
+  FLoop := TGameLoop.Create(FGame);
+  FLastTimestamp := TStopwatch.GetTimeStamp;
   CreateHud;
   Cursor := crNone;
   ImgPlayerL.Cursor := crNone;
@@ -68,6 +74,7 @@ destructor TFrmMain.Destroy;
 begin
   if Assigned(Timer1) then Timer1.Enabled := False;
   FreeAndNil(FrmDebug);
+  FreeAndNil(FLoop);
   FreeAndNil(FGame);
   inherited;
 end;
@@ -91,8 +98,13 @@ begin
 end;
 
 procedure TFrmMain.SendCommand(Command: TGameCommand);
+var
+  Before: TGameState;
 begin
-  FGame.Execute(Command);
+  Before := FGame.State;
+  FLoop.Execute(Command);
+  if (Before <> FGame.State) or (Command in [gcRestart, gcDebugStep]) then
+    FLastTimestamp := TStopwatch.GetTimeStamp;
   RefreshView;
 end;
 
@@ -133,8 +145,17 @@ begin
 end;
 
 procedure TFrmMain.Timer1Timer(Sender: TObject);
+var
+  NowTimestamp: Int64;
 begin
-  FGame.Step;
+  NowTimestamp := TStopwatch.GetTimeStamp;
+  AdvanceFrame((NowTimestamp - FLastTimestamp) / TStopwatch.Frequency);
+  FLastTimestamp := NowTimestamp;
+end;
+
+procedure TFrmMain.AdvanceFrame(ElapsedSeconds: Double);
+begin
+  FLoop.Advance(ElapsedSeconds);
   RefreshView;
 end;
 
@@ -183,7 +204,7 @@ begin
   SyncBricks(View);
   UpdateHud(View);
   Timer1.Enabled := View.State = gsPlaying;
-  if Assigned(FrmDebug) then FrmDebug.UpdateFrom(View);
+  if Assigned(FrmDebug) then FrmDebug.UpdateFrom(View, FLoop.Diagnostics);
 end;
 
 class function TFrmMain.FormatScore(Value: Integer): string;

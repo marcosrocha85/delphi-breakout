@@ -12,9 +12,12 @@ uses
   Breakout.Types in '..\..\src\Breakout.Types.pas',
   Breakout.Texts in '..\..\src\Breakout.Texts.pas',
   Breakout.Levels in '..\..\src\Breakout.Levels.pas',
+  Breakout.Physics in '..\..\src\Breakout.Physics.pas',
+  Breakout.Loop in '..\..\src\Breakout.Loop.pas',
   Breakout.Game in '..\..\src\Breakout.Game.pas',
   Breakout.TestScenarios in '..\..\tests\Breakout.TestScenarios.pas',
-  UE2ViewChecks in '..\e2\UE2ViewChecks.pas';
+  UE2ViewChecks in '..\e2\UE2ViewChecks.pas',
+  UE3ViewChecks in '..\e3\UE3ViewChecks.pas';
 
 type
   TTickSample = record
@@ -32,7 +35,7 @@ type
     FOutput: string;
     FStart, FLastTick: Int64;
     FPhase: Integer;
-    FE1Only, FE2Only: Boolean;
+    FE1Only, FE2Only, FE3Only: Boolean;
     procedure Key(AKey: Word);
     procedure Reset;
     procedure Fixture;
@@ -71,7 +74,8 @@ begin
   inherited;
   FE1Only := SameText(ParamStr(1), '--e1');
   FE2Only := SameText(ParamStr(1), '--e2');
-  if FE1Only or FE2Only then FOutput := ParamStr(2)
+  FE3Only := SameText(ParamStr(1), '--e3');
+  if FE1Only or FE2Only or FE3Only then FOutput := ParamStr(2)
   else FOutput := ParamStr(1);
   if FOutput = '' then
   begin
@@ -82,7 +86,8 @@ begin
       if Parent = Root then raise Exception.Create('Repository root not found');
       Root := Parent;
     end;
-    if FE2Only then FOutput := Root + '\build\e2\latest'
+    if FE3Only then FOutput := Root + '\build\e3\latest'
+    else if FE2Only then FOutput := Root + '\build\e2\latest'
     else if FE1Only then FOutput := Root + '\build\e1\latest'
     else FOutput := Root + '\build\baseline-runs\' +
       FormatDateTime('yyyymmdd-hhnnsszzz', Now);
@@ -138,8 +143,8 @@ procedure TBaseline.PrimeDown;
 begin
   FrmMain.PlayerClick(nil);
   FrmMain.Timer1.Enabled := False;
-  TGameProbe(FrmMain.Game).PlaceBall(20, -10);
-  FrmMain.Timer1Timer(nil);
+  TGameProbe(FrmMain.Game).SetBall(20, 300, 120, 240);
+  FrmMain.AdvanceFrame(FixedDeltaSeconds);
 end;
 
 procedure TBaseline.Observe(const Name: string; DX, DY: Integer);
@@ -189,7 +194,7 @@ begin
   FrmMain.PlayerClick(nil);
   Observe('launch_click', 0, 0);
   TGameProbe(FrmMain.Game).PlaceBall(500, 300);
-  FrmMain.Timer1Timer(nil);
+  FrmMain.AdvanceFrame(FixedDeltaSeconds);
   Key(VK_F3);
   Observe('pause_f3', 0, 0);
   Key(VK_SPACE);
@@ -200,7 +205,7 @@ begin
   Key(VK_F3);
   Observe('f3_immediately_after_launch', 0, 0);
   Key(VK_F3);
-  FrmMain.Timer1Timer(nil);
+  FrmMain.AdvanceFrame(FixedDeltaSeconds);
   Key(VK_F3);
   Observe('pause_after_first_tick', 0, 0);
   X := FrmMain.Ball.Left;
@@ -215,18 +220,18 @@ begin
   Reset;
   Fixture;
   PrimeDown;
-  TGameProbe(FrmMain.Game).PlaceBall(310, 84);
-  FrmMain.Timer1Timer(nil);
-  Observe('brick_top_downward', FrmMain.Ball.Left-310, FrmMain.Ball.Top-84);
+  TGameProbe(FrmMain.Game).SetBall(310, 82, 120, 240);
+  FrmMain.AdvanceFrame(FixedDeltaSeconds);
+  Observe('brick_top_downward', FrmMain.Ball.Left-310, FrmMain.Ball.Top-82);
   Reset;
   Fixture;
   FrmMain.PlayerClick(nil);
   FrmMain.Timer1.Enabled := False;
-  TGameProbe(FrmMain.Game).PlaceBall(310, 119);
-  FrmMain.Timer1Timer(nil);
-  Observe('brick_bottom_upward', FrmMain.Ball.Left-310, FrmMain.Ball.Top-119);
+  TGameProbe(FrmMain.Game).SetBall(310, 122, 120, -240);
+  FrmMain.AdvanceFrame(FixedDeltaSeconds);
+  Observe('brick_bottom_upward', FrmMain.Ball.Left-310, FrmMain.Ball.Top-122);
   Hits[0] := 296;
-  Hits[1] := 320;
+  Hits[1] := 316;
   Hits[2] := 340;
   for I := 0 to 2 do
   begin
@@ -234,9 +239,9 @@ begin
     Fixture;
     PrimeDown;
     FrmMain.Game.MovePaddle(325);
-    TGameProbe(FrmMain.Game).PlaceBall(Hits[I], 398);
-    FrmMain.Timer1Timer(nil);
-    Observe('paddle_region_' + IntToStr(I), FrmMain.Ball.Left-Hits[I], FrmMain.Ball.Top-398);
+    TGameProbe(FrmMain.Game).SetBall(Hits[I], 402, 0, 600);
+    FrmMain.AdvanceFrame(FixedDeltaSeconds);
+    Observe('paddle_region_' + IntToStr(I), FrmMain.Ball.Left-Hits[I], FrmMain.Ball.Top-402);
   end;
   Reset;
   Fixture;
@@ -245,9 +250,9 @@ begin
   begin
     FrmMain.PlayerClick(nil);
     FrmMain.Timer1.Enabled := False;
-    TGameProbe(FrmMain.Game).PlaceBall(20, 440);
-    FrmMain.Timer1Timer(nil);
-    Observe('lose_life_' + IntToStr(I), FrmMain.Ball.Left-335, FrmMain.Ball.Top-395);
+    TGameProbe(FrmMain.Game).PrepareFall;
+    FrmMain.AdvanceFrame(FixedDeltaSeconds);
+    Observe('lose_life_' + IntToStr(I), FrmMain.Ball.Left-336, FrmMain.Ball.Top-395);
   end;
   FrmMain.PlayerClick(nil);
   Observe('click_at_game_over', 0, 0);
@@ -300,10 +305,16 @@ begin
   if FPhase = -1 then
   begin
     FControl.Enabled := False;
-    if FE1Only or FE2Only then
+    if FE1Only or FE2Only or FE3Only then
     begin
       FPhase := 2;
-      if FE2Only then
+      if FE3Only then
+      begin
+        if RunE3ViewChecks(FOutput) then
+          FrmMain.Caption := 'Breakout E3 checks PASSED'
+        else FrmMain.Caption := 'Breakout E3 checks FAILED';
+      end
+      else if FE2Only then
       begin
         if RunE2ViewChecks(FOutput) then
           FrmMain.Caption := 'Breakout E2 - checks passed'
