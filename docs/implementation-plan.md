@@ -189,7 +189,7 @@ Output: [Canvas/feedback results](e4-results.md), 191 non-VCL cases per configur
 
 ### E5 — Complete progression and feedback (completed)
 
-- Preserve the current generator as level 1 and add two small data-defined levels with understandable layouts.
+- Preserve the legacy geometry as level 1 and add two small data-defined formations. Marcos authorized height-weighted class balance in all three on 2026-10-23: cheaper classes favor lower rows; silver/gold favor upper rows, cannot be horizontal/vertical neighbors, and may be diagonal neighbors. Retain the historical generator as a reference.
 - Complete LevelComplete/Victory progression and load levels through explicit transitions.
 - Propose an initial 5% speed increase per level, capped by configuration and revised after playtesting.
 - Preserve lives/score across levels; F2 resets everything.
@@ -226,7 +226,7 @@ Test rules/geometry rather than duplicating handler internals or mechanically te
 | Blocks | Descending top hit exits upward; ascending bottom hit exits downward. Left/right contacts reverse horizontal motion only, preserve Y, score once; repeat ascending/descending. Cover corners, seams, high speed, overlaps, and inactive blocks. |
 | Paddle | Center/intermediate/edge offsets give proportional mirrored angles with constant speed. Cover ascending ball and ball below paddle to reject inappropriate rebounds. |
 | Time | Same seed/configuration/per-step inputs at 30/60/144 callbacks/s yield equivalent states for equal steps; excessive delays follow discard policy. |
-| Levels | Same seed regenerates board; final brick completes once; progression preserves lives/score; final level wins. |
+| Levels | Same seed regenerates each balanced board; approved formations stay fixed; sample height-weighted classes and check silver/gold side separation with diagonals allowed; final brick completes once; progression preserves lives/score; final level wins. |
 | Resources | Repeated restart/debug toggles show no continuous handle/object growth; closing frees game/resources. |
 
 Inject elapsed time for temporal tests and call Step with known inputs for rules. Compare floating-point values with explicit tolerance. Reproduction needs configuration/seed/input sequence, not seed alone.

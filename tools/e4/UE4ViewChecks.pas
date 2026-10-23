@@ -156,6 +156,17 @@ begin
         Check('campaign_ready_board_' + IntToStr(Level), (S.State = gsReady) and
           (S.Level = Level) and (S.LevelCount = 3) and
           (((Level = 1) and (S.ActiveBricks = 96)) or ((Level > 1) and (S.ActiveBricks = 20))));
+        Passed := True;
+        for I := 0 to High(S.Bricks) do
+          if S.Bricks[I].Kind in [bkSilver, bkGold] then
+            for J := 0 to I - 1 do
+              if S.Bricks[J].Kind in [bkSilver, bkGold] then
+                Passed := Passed and not
+                  (((S.Bricks[I].Y = S.Bricks[J].Y) and
+                    (Abs(S.Bricks[I].X - S.Bricks[J].X) = 56)) or
+                   ((S.Bricks[I].X = S.Bricks[J].X) and
+                    (Abs(S.Bricks[I].Y - S.Bricks[J].Y) = 24)));
+        Check('campaign_premium_spacing_' + IntToStr(Level), Passed);
         V.Reset(S); R.Compose(V,688,453); SaveFrame('level-' + IntToStr(Level) + '-ready');
         Check('ready_message_and_level_feedback_' + IntToStr(Level),
           (GameMessage(S.State) <> '') and (Pos('Space', GameMessage(S.State)) > 0));

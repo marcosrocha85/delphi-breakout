@@ -13,6 +13,7 @@ type
   TEngineTests = class
   private
     FResults: TJSONArray;
+    FBalance: TJSONArray;
     FFailures: Integer;
     procedure Check(const Name: string; Passed: Boolean; const Detail: string = '');
     procedure States;
@@ -21,6 +22,7 @@ type
     procedure Determinism;
     procedure Campaign;
     procedure LevelDefinitions;
+    procedure ClassBalance;
     procedure SpeedPolicy;
   public
     function Run(const OutputDirectory: string): Boolean;
@@ -265,7 +267,7 @@ begin
       end;
       Check('same_seed_generates_same_board_and_launch', Same);
       Check('board_has_unique_stable_ids_and_valid_points', Valid);
-      Other := GenerateLegacyLevel(54321, 1);
+      Other := GenerateLevel(54321, 1);
       Different := False;
       for I := 0 to High(Other) do
         Different := Different or (Other[I].SpriteIndex <> A.Bricks[I].SpriteIndex);
@@ -326,23 +328,29 @@ begin
 end;
 
 procedure TEngineTests.LevelDefinitions;
+const
+  ExpectedMaps: array[2..3, 0..4] of string = (
+    ('.##......##.', '.##......##.', '.##..##..##.', '.##..##..##.', '............'),
+    ('.....##.....', '....####....', '..########..', '....####....', '.....##.....'));
 var
-  A, B: TArray<TBrick>;
-  I, J, Level: Integer;
-  Valid, Same, Raised: Boolean;
+  A, B, Geometry, Other: TArray<TBrick>;
+  I, J, Row, Col, Slot, Level: Integer;
+  Valid, Same, Raised, SameGeometry, Different: Boolean;
   Definition: TBrickDefinition;
 begin
   for Level := 1 to CampaignLevelCount do
   begin
     A := GenerateLevel(12345, Level);
-    if Level = 1 then B := GenerateLegacyLevel(12345, 1)
-    else B := GenerateLevel(54321, Level);
+    B := GenerateLevel(12345, Level);
+    Other := GenerateLevel(54321, Level);
+    Different := False;
     Same := Length(A) = Length(B);
     Valid := ((Level = 1) and (Length(A) = 96)) or
       ((Level > 1) and (Length(A) = 20));
     for I := 0 to High(A) do
     begin
       Definition := BrickDefinition(A[I].Kind);
+      Different := Different or (A[I].Kind <> Other[I].Kind);
       Same := Same and (A[I].X = B[I].X) and (A[I].Y = B[I].Y) and
         (A[I].Kind = B[I].Kind) and (A[I].Points = B[I].Points) and
         (A[I].SpriteIndex = B[I].SpriteIndex) and (A[I].Id = B[I].Id) and
@@ -357,8 +365,35 @@ begin
           (A[I].X + A[I].Width <= B[J].X) or (A[I].Y >= B[J].Y + B[J].Height) or
           (A[I].Y + A[I].Height <= B[J].Y));
     end;
-    Check('level_' + IntToStr(Level) + '_deterministic_or_legacy_equivalent', Same);
+    Check('level_' + IntToStr(Level) + '_same_seed_repeats_classes_and_geometry', Same);
     Check('level_' + IntToStr(Level) + '_geometry_ids_rewards', Valid);
+    Check('level_' + IntToStr(Level) + '_different_seed_changes_classes', Different);
+    SameGeometry := True;
+    if Level = 1 then
+    begin
+      Geometry := GenerateLegacyLevel(12345, 1);
+      for I := 0 to High(A) do
+        SameGeometry := SameGeometry and (A[I].X = Geometry[I].X) and
+          (A[I].Y = Geometry[I].Y) and (A[I].Width = Geometry[I].Width) and
+          (A[I].Height = Geometry[I].Height) and (A[I].Id = Geometry[I].Id);
+    end
+    else
+    begin
+      Slot := 0;
+      for Row := 0 to 4 do
+        for Col := 1 to 12 do
+          if ExpectedMaps[Level, Row][Col] = '#' then
+          begin
+            SameGeometry := SameGeometry and (Slot < Length(A));
+            if Slot < Length(A) then
+              SameGeometry := SameGeometry and (A[Slot].X = 10 + (Col - 1) * 56) and
+                (A[Slot].Y = 40 + Row * 24) and (A[Slot].Width = 50) and
+                (A[Slot].Height = 20) and (A[Slot].Id = Slot);
+            Inc(Slot);
+          end;
+      SameGeometry := SameGeometry and (Slot = Length(A));
+    end;
+    Check('level_' + IntToStr(Level) + '_preserves_approved_formation', SameGeometry);
     A[0].Active := False;
     A := GenerateLevel(12345, Level);
     Check('level_' + IntToStr(Level) + '_fresh_array', A[0].Active and B[0].Active);
@@ -371,6 +406,102 @@ begin
       except on E: EArgumentOutOfRangeException do Raised := True; end;
       Check('unsupported_level_' + IntToStr(Level) + '_rejected', Raised);
     end;
+end;
+
+procedure TEngineTests.ClassBalance;
+const
+  SeedCount = 1024;
+  BandNames: array[0..2] of string = ('top', 'middle', 'bottom');
+type
+  TBandCounts = record
+    Count, Points, LowValue, MiddleValue, Premium: Integer;
+    Classes: array[TBrickKind] of Integer;
+  end;
+var
+  Counts: array[0..2] of TBandCounts;
+  A: TArray<TBrick>;
+  Seed, Level, I, J, Band: Integer;
+  Kind: TBrickKind;
+  Top, Bottom, DX, DY: Double;
+  SideSafe, MixedDiagonal, AllClasses: Boolean;
+  PremiumRates: array[0..2] of Double;
+  LevelReport, BandReport, ClassReport: TJSONObject;
+  Bands: TJSONArray;
+begin
+  for Level := 1 to CampaignLevelCount do
+  begin
+    FillChar(Counts, SizeOf(Counts), 0);
+    SideSafe := True;
+    MixedDiagonal := False;
+    for Seed := 0 to SeedCount - 1 do
+    begin
+      A := GenerateLevel(Cardinal(Seed), Level);
+      Top := A[0].Y;
+      Bottom := A[High(A)].Y;
+      for I := 0 to High(A) do
+      begin
+        { Independent row-center classification over occupied rows. }
+        Band := Trunc(3 * (A[I].Y - Top + 12) / (Bottom - Top + 24));
+        Inc(Counts[Band].Count);
+        Inc(Counts[Band].Points, A[I].Points);
+        Inc(Counts[Band].Classes[A[I].Kind]);
+        if A[I].Kind in [bkGreen, bkYellow] then Inc(Counts[Band].LowValue);
+        if A[I].Kind in [bkYellow, bkCyan, bkRed] then Inc(Counts[Band].MiddleValue);
+        if not (A[I].Kind in [bkSilver, bkGold]) then Continue;
+        Inc(Counts[Band].Premium);
+        for J := 0 to I - 1 do
+          if A[J].Kind in [bkSilver, bkGold] then
+          begin
+            DX := Abs(A[I].X - A[J].X);
+            DY := Abs(A[I].Y - A[J].Y);
+            SideSafe := SideSafe and not (((DX = 56) and (DY = 0)) or
+              ((DX = 0) and (DY = 24)));
+            if (DX = 56) and (DY = 24) and (A[I].Kind <> A[J].Kind) then
+              MixedDiagonal := True;
+          end;
+      end;
+    end;
+    Check('balance_' + IntToStr(Level) + '_1024_seeds_no_premium_side_neighbors', SideSafe);
+    Check('balance_' + IntToStr(Level) + '_allows_silver_gold_diagonals', MixedDiagonal);
+    AllClasses := True;
+    for Band := 0 to 2 do
+    begin
+      PremiumRates[Band] := Counts[Band].Premium / Counts[Band].Count;
+      for Kind := Low(TBrickKind) to High(TBrickKind) do
+        AllClasses := AllClasses and (Counts[Band].Classes[Kind] > 0);
+    end;
+    Check('balance_' + IntToStr(Level) + '_all_classes_possible_in_each_band', AllClasses);
+    Check('balance_' + IntToStr(Level) + '_bottom_predominantly_green_yellow',
+      Counts[2].LowValue / Counts[2].Count > 0.85);
+    Check('balance_' + IntToStr(Level) + '_bottom_cheaper_than_top',
+      Counts[2].LowValue / Counts[2].Count > Counts[0].LowValue / Counts[0].Count + 0.3);
+    Check('balance_' + IntToStr(Level) + '_premium_more_likely_at_top',
+      (PremiumRates[0] > 2 * PremiumRates[1]) and (PremiumRates[0] > 3 * PremiumRates[2]));
+    Check('balance_' + IntToStr(Level) + '_middle_predominantly_yellow_cyan_red',
+      Counts[1].MiddleValue / Counts[1].Count > 0.7);
+    Check('balance_' + IntToStr(Level) + '_mean_reward_increases_upwards',
+      (Counts[0].Points / Counts[0].Count > Counts[1].Points / Counts[1].Count + 15) and
+      (Counts[1].Points / Counts[1].Count > Counts[2].Points / Counts[2].Count + 15));
+    LevelReport := TJSONObject.Create;
+    LevelReport.AddPair('level', TJSONNumber.Create(Level));
+    LevelReport.AddPair('seeds', TJSONNumber.Create(SeedCount));
+    Bands := TJSONArray.Create;
+    LevelReport.AddPair('bands', Bands);
+    FBalance.AddElement(LevelReport);
+    for Band := 0 to 2 do
+    begin
+      BandReport := TJSONObject.Create;
+      BandReport.AddPair('band', BandNames[Band]);
+      BandReport.AddPair('bricks', TJSONNumber.Create(Counts[Band].Count));
+      BandReport.AddPair('mean_points', TJSONNumber.Create(Counts[Band].Points / Counts[Band].Count));
+      BandReport.AddPair('premium_fraction', TJSONNumber.Create(PremiumRates[Band]));
+      ClassReport := TJSONObject.Create;
+      BandReport.AddPair('class_counts_green_yellow_cyan_red_silver_gold', ClassReport);
+      for Kind := Low(TBrickKind) to High(TBrickKind) do
+        ClassReport.AddPair(IntToStr(Ord(Kind)), TJSONNumber.Create(Counts[Band].Classes[Kind]));
+      Bands.AddElement(BandReport);
+    end;
+  end;
 end;
 
 procedure TEngineTests.Campaign;
@@ -495,6 +626,7 @@ var
   Report: TJSONObject;
 begin
   FResults := TJSONArray.Create;
+  FBalance := TJSONArray.Create;
   Report := TJSONObject.Create;
   try
     try
@@ -503,6 +635,7 @@ begin
       Completion;
       Determinism;
       LevelDefinitions;
+      ClassBalance;
       Campaign;
       SpeedPolicy;
     except
@@ -515,10 +648,13 @@ begin
     Report.AddPair('failures', TJSONNumber.Create(FFailures));
     Report.AddPair('results', FResults);
     FResults := nil;
+    Report.AddPair('class_balance', FBalance);
+    FBalance := nil;
     ForceDirectories(OutputDirectory);
     TFile.WriteAllText(TPath.Combine(OutputDirectory, 'engine.json'), Report.Format, TEncoding.UTF8);
   finally
     FResults.Free;
+    FBalance.Free;
     Report.Free;
   end;
 end;

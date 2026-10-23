@@ -1,0 +1,107 @@
+{
+  "date": "2026-10-23",
+  "parent_commit": "9d85f438fb3c03f613a8bb455d797874d2490c47",
+  "build_method": "Delphi 13 Community Edition IDE, DelphiBlocks.groupproj",
+  "console": {
+    "Win32 Debug": 262,
+    "Win64 Debug": 262
+  },
+  "vcl": {
+    "Win32 Debug": 70
+  },
+  "game_builds": [
+    "Win32 Debug",
+    "Win64 Release"
+  ],
+  "recovery": "F2039 on Win64 Release game output; Clean only Breakout, then Build succeeded; group kept open.",
+  "sample": {
+    "seeds_per_level": 1024,
+    "seed_range": [
+      0,
+      1023
+    ],
+    "bricks_per_console_run": 139264,
+    "premium_side_neighbors": 0,
+    "mixed_silver_gold_diagonals_in_all_levels": true
+  },
+  "sources": {
+    "Breakout.dpr": "f0a74fc72347a5261992e65a1e3a48e819571deddea18468fc93e5cdf758abad",
+    "src/Breakout.Bricks.pas": "bdb85a220c9a047eeaf34983cabf8e3b4f5ca97450a6fdb01627fc8a6e1e985e",
+    "src/Breakout.Game.pas": "ff0589d9427c37509c5d79abef431c19a946e1b13a73982138a98f093668fec7",
+    "src/Breakout.Levels.pas": "5c7d1900827a63c18b847efd0e9446a5ea2ebd762bf2958152ccecf936dcabc4",
+    "src/Breakout.Loop.pas": "fac6c18a402c6495dba81918f85be8aee31789f182ea982723106e2269cb4c99",
+    "src/Breakout.Physics.pas": "0281c52ec873fa8a632ffc030ec32ff169a0ea93474961f1633fb6485de8ff6f",
+    "src/Breakout.Presentation.pas": "de8ec632f5ad62f03fea102b856b5fba900d003d35c5f895ccc6158a6d474599",
+    "src/Breakout.Renderer.Vcl.pas": "b7182785a7f5ec36a9735c5cd5fab7d5ad2465037887b61b9b7b4d552a73f3c7",
+    "src/Breakout.Texts.pas": "739044301260b52ac34a37a2d1ea9f4de898dff03f4db6eb0a72b880a161534c",
+    "src/Breakout.Types.pas": "adcac008063917d76439767a43615b77f49ec48113c41218beb87523d55c906e",
+    "tests/Breakout.Game.Tests.pas": "0d5475fb164516e9752b3a0403d2682f7021eef9de70b4045873116900e5aa7d",
+    "tests/Breakout.Physics.Tests.pas": "841b59154abaf877d2b0217befe242ed65defffe6fb42246d70f92bdc79556b4",
+    "tests/Breakout.Presentation.Tests.pas": "a04817061b5715f610d1bf51d335485ea316e850a6ea2e2805ed88e31f91f72b",
+    "tests/Breakout.Tests.dpr": "c9df25b7fcbbe79ad1baa16304ff02fba6fd98fa74b9c1bfe23c6787cbcf03db",
+    "tests/Breakout.TestScenarios.pas": "c413adb88b67055d6004e55188e46590fbb8636423133a371ef91f9a08faa9d7",
+    "tools/e0/BaselineRunner.dpr": "94f3219d8aa35f3566bc0c626e4b5702f245265c7185e9e9d37ec6565c7b99fb",
+    "tools/e4/UE4ViewChecks.pas": "ca92e743373dd10a6ac048c175569d05e62ed6e7a14d528aee331ecf13c1946c",
+    "UMain.pas": "b87504ca8dddd2237fa12cb8b29c02a1ebe867b07df3b26c1f20cf3edd568ee1"
+  },
+  "executables": {
+    "build/tests/Win32/Debug/Breakout.Tests.exe": {
+      "sha256": "89a77a4e1ad2a637c477b6d1ef6c89da64126663d712105bf09a82eefa116cf6",
+      "bytes": 1199104
+    },
+    "build/tests/Win64/Debug/Breakout.Tests.exe": {
+      "sha256": "d3bcf1fae5c0c430277452a7b77bc98e6605e37c2931dbc2c46302e574515e31",
+      "bytes": 1959936
+    },
+    "tools/e0/BaselineRunner.exe": {
+      "sha256": "99e23b11f0436788858758ce4aa211508940c08e374ace4540fa79d478c603d2",
+      "bytes": 2778112
+    },
+    "build/x86/Breakout.exe": {
+      "sha256": "2538e8c7b3db21e5b82753b816e56af1f407d504dacca400a6c4620c33bd2724",
+      "bytes": 2628096
+    },
+    "build/x64/Breakout.exe": {
+      "sha256": "e4b29e98529c56463b8bb478dc64688239d9614480db03d96a4b0751014105bb",
+      "bytes": 4169216
+    }
+  },
+  "artifacts": {
+    "level-1-complete.png": "a216c1cc55ace30d975de7998403b5b79ce964eca1fb31a260ebd3533bb277c9",
+    "level-1-ready.png": "a209583c0c87cd491e7f69e97f3631f9e4addcad83d1bdc3aad3fcc99814e704",
+    "level-2-complete.png": "f2c08f6789959f8104f96df830cb7ca3b44f88f10ab52f777d46291cd8a0440b",
+    "level-2-ready.png": "da098af30438f9e344410ec7b78a7a0efa3627a0c572a3ae4f3e6d2d72c8486f",
+    "level-3-complete.png": "eca734e54de103755782673e3ed25a308aadae51af1958ea5e8d520213708a2a",
+    "level-3-ready.png": "15a9abc4c3f98e1974e3f791b279c9458766150dc1b5a13be48d69acd69dec00",
+    "README.md": "c2c30074bcd75595ebf0c685ca21d11673c1b50647ce0c7e79563b4e4b9e103a",
+    "view.json": "b5ddbcfb13b4640a0da6730ee7dc9c51a3bf421183342daf3d069712ed49ce21",
+    "win32-debug-engine.json": "3053d7818eb1c2bdeea80f4cfb6364f853c69fb2ff59a123c65ba9f8b3f70631",
+    "win32-debug-physics.json": "0fb62d39a17472915187904556c84637a831f392a1427ea1c79a9cccc07c3171",
+    "win32-debug-presentation.json": "10e1dae47e1e8a415c6024cadb22b16efdb4b8908333434da2ac28369e03adfc",
+    "win64-debug-engine.json": "3053d7818eb1c2bdeea80f4cfb6364f853c69fb2ff59a123c65ba9f8b3f70631",
+    "win64-debug-physics.json": "0fb62d39a17472915187904556c84637a831f392a1427ea1c79a9cccc07c3171",
+    "win64-debug-presentation.json": "10e1dae47e1e8a415c6024cadb22b16efdb4b8908333434da2ac28369e03adfc"
+  },
+  "preserved_local_files": {
+    "Breakout.dproj": {
+      "sha256": "d8fe221bbba3d564673775d0b84eabb78b821778a1d4ee2559467f549edd5253",
+      "unchanged_from_initial_backup": true,
+      "included_in_commit": false
+    },
+    "UMain.dfm": {
+      "sha256": "bd6fb50fee104f78322b53af2bf88753b16599535d9f94b2c8fcec8a8580b5cf",
+      "unchanged_from_initial_backup": true,
+      "included_in_commit": false
+    },
+    "tests/Breakout.Tests.dproj": {
+      "sha256": "72d4640f8f0b39f5c94e4d3a1213aa7dabc29e77dfe60e8a1815ad23dfeaf972",
+      "unchanged_from_initial_backup": true,
+      "included_in_commit": false
+    }
+  },
+  "limitations": [
+    "Fixture-driven progression is not a human campaign playthrough.",
+    "No new FPS or CPU measurements.",
+    "Height weights are probabilities, not quotas for individual boards."
+  ]
+}

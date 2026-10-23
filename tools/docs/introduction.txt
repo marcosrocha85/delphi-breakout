@@ -11,7 +11,8 @@ For geometry, read @link(Breakout.Physics). For feedback and drawing, read
 @link(Breakout.Presentation) and @link(TGameRenderer).
 @link(Breakout.Bricks) and @link(Breakout.Levels) define brick classes and the finite three-board campaign.
 Read docs/study/levels-and-progression.md for explicit level transitions and
-capped difficulty; the first board preserves the original seeded grid.
+capped difficulty; all boards preserve their formations while drawing seeded height-weighted
+classes. Silver/gold cannot be horizontal/vertical neighbors; diagonals are allowed.
 
 @section(1 units Conventions)
 Positions: logical units, X rightward and Y downward.

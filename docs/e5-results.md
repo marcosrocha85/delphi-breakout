@@ -5,9 +5,15 @@ Base: integrated E4 (`dd4c50b`); branch: `codex/e5-progression`.
 
 ## Delivered behavior
 
-The default match has three boards: the unchanged seeded 96-brick legacy grid,
-20-brick twin gates, and a 20-brick diamond. Added maps are source data with
-explicit class cells and no random draws. Generation keeps stable row-major
+The default match has three boards: the legacy 96-brick grid formation,
+20-brick twin gates, and a 20-brick diamond. The formations keep their original
+geometry, with source data describing occupied cells only. Following Marcos's
+authorized balance adjustment on 2026-10-23, all three use seeded classes
+weighted by relative formation height: green/yellow dominate below, while
+silver/gold are more likely above. Premium classes cannot be horizontal or
+vertical neighbors, including mixed pairs; diagonals are allowed. A conflicting
+premium draw is replaced using that band's nonpremium weights. The historical
+`GenerateLegacyLevel` remains unchanged as a reference. Generation keeps stable row-major
 IDs, centralized rewards, and independent arrays. Configured matches may use a
 prefix of 1..3 boards; unsupported counts/numbers raise an argument exception.
 
@@ -37,23 +43,27 @@ The command-line compiler was not used as evidence of a successful build.
 
 | Target | Result |
 | --- | --- |
-| Console, Win32 Debug | 232 checks, zero failures |
-| Console, Win64 Debug | 232 checks, zero failures |
-| BaselineRunner, Win32 Debug | 67 VCL/bitmap checks, zero failures |
+| Console, Win32 Debug | 262 checks, zero failures |
+| Console, Win64 Debug | 262 checks, zero failures |
+| BaselineRunner, Win32 Debug | 70 VCL/bitmap checks, zero failures |
 | Breakout, Win32 Debug | Build succeeded |
 | Breakout, Win64 Release | Build succeeded |
 | PasDoc 1.0.4 | Regenerated checked-in HTML, no warnings/errors |
 
-The console includes 87 engine, 104 physics/time, and 41 presentation cases.
+The console includes 117 engine, 104 physics/time, and 41 presentation cases.
 New engine coverage clears every real campaign brick by controlled isolated
 impacts, loses a life between boards, checks score/life/speed preservation,
-terminal victory, and restart. Map checks compare level 1 against the original
-generator and check fixed-board bounds/nonoverlap/IDs/rewards. Speed cases cover
+terminal victory, and restart. Map checks compare level-1 geometry against the original generator, lock the
+approved gate/diamond occupancy, and check seeded classes, bounds/nonoverlap,
+IDs/rewards. Balance checks sample 1,024 seeds per level, reject every premium
+side-neighbor pair, require mixed silver/gold diagonals, and compare class
+frequencies/mean rewards by band. Observations are included in `engine.json`. Speed cases cover
 caps, zero growth, a very large finite increase, and invalid settings. Existing
 final-board tests explicitly configure one level rather than weakening their
 victory assertions after the default became three.
 
-The shared VCL suite retains all 47 E4 checks and adds 20 progression checks.
+The shared VCL suite retains all 47 E4 checks and adds 20 progression checks plus three
+checks of premium spacing in the actual loaded campaign boards.
 These drive form handlers, loop, and presentation through three one-brick
 fixtures, independently checking actual generated board sizes at each load.
 They exercise separate continuation/launch, pending score, new-board fade
@@ -62,13 +72,17 @@ and F2 cleanup. Ready/completed bitmap exports were visually inspected for
 new layouts, messages, and the level HUD.
 
 Evidence and source/executable hashes are in
-[evidence/e5-2026-10-23](evidence/e5-2026-10-23/README.md).
+[evidence/e5-balance-2026-10-23](evidence/e5-balance-2026-10-23/README.md).
+The [original E5 evidence](evidence/e5-2026-10-23/README.md) remains historical;
+it precedes the authorized class-balance adjustment and its recolored boards.
 See the [console](../tests/README.md), [VCL runner](../tools/e5/README.md), and
 [study chapter](study/levels-and-progression.md) to reproduce these contracts.
 
 An F2039 while rebuilding BaselineRunner was resolved with Clean on **only
 BaselineRunner** in Projects, followed by Build. No Clean All was used.
 IDE source caches were synchronized while keeping the group open.
+The balance follow-up also encountered F2039 on the Win64 Release game build;
+Clean on **only Breakout**, then Build, succeeded without closing the group.
 
 ## Scope and remaining evaluation
 
@@ -84,5 +98,6 @@ continuous template-based levels remain later work.
 
 The pre-existing local edits in `Breakout.dproj`, `UMain.dfm`, and
 `tests/Breakout.Tests.dproj` remain outside this delivery. Their original bytes
-were backed up under ignored `build/e5/preserved-local` and checked by SHA-256.
+were backed up under ignored `build/e5/preserved-local`, checked again against
+`build/e5-balance/preserved-local` for this follow-up, and verified by SHA-256.
 The existing release 1.0.1.0 was not replaced; its binaries precede this campaign.

@@ -55,6 +55,7 @@ The cursor is hidden over the game, but the mouse can still leave the window. Lo
 - Canvas composition, cached sprites, transparency, and a HUD drawn above the field.
 - A three-part paddle with a stretchable center for a future size powerup.
 - Immediate gameplay scoring and a visual counter at **200 points/s**; block fading over **250 ms**.
+- Seeded class balance by formation height: cheaper blocks are more likely below; silver/gold are more likely above and never occupy side-neighboring cells. Diagonals are allowed.
 - A finite three-level campaign: the legacy grid, twin gates, and diamond; lives/score carry over, and the HUD identifies the current level.
 - Initial speeds of **240 / 252 / 264.6 units/s**: 5% compounded per level, capped by configuration at 300 units/s.
 - Tests that control elapsed time and measurements that distinguish simulation, callbacks, and painting.
