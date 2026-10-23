@@ -1,0 +1,324 @@
+{
+  "before": {
+    "without_debug": {
+      "duration_seconds": 20.007672200000002,
+      "timer_interval_ms": {
+        "count": 799,
+        "median": 29.8754,
+        "p95": 31.7081,
+        "max": 45.5691
+      },
+      "handler_ms": {
+        "count": 800,
+        "median": 0.15425,
+        "p95": 0.9694,
+        "max": 1.342
+      },
+      "cpu_percent_one_core": 4.217132265891481,
+      "resources_start": {
+        "phase": "without_debug_start",
+        "time_ms": "1.0870",
+        "cpu_ms": "156.2500",
+        "working_set_bytes": "20123648",
+        "private_bytes": "5783552",
+        "handles": "249",
+        "gdi_objects": "155",
+        "user_objects": "53"
+      },
+      "resources_end": {
+        "phase": "without_debug_end",
+        "time_ms": "20008.7592",
+        "cpu_ms": "1000.0000",
+        "working_set_bytes": "20230144",
+        "private_bytes": "5783552",
+        "handles": "249",
+        "gdi_objects": "155",
+        "user_objects": "53"
+      }
+    },
+    "with_debug": {
+      "duration_seconds": 19.9957214,
+      "timer_interval_ms": {
+        "count": 797,
+        "median": 29.904,
+        "p95": 31.5878,
+        "max": 45.3506
+      },
+      "handler_ms": {
+        "count": 798,
+        "median": 0.23305,
+        "p95": 1.1216,
+        "max": 1.8513
+      },
+      "cpu_percent_one_core": 12.893383281485407,
+      "resources_start": {
+        "phase": "with_debug_start",
+        "time_ms": "20030.9994",
+        "cpu_ms": "1000.0000",
+        "working_set_bytes": "20357120",
+        "private_bytes": "5787648",
+        "handles": "249",
+        "gdi_objects": "157",
+        "user_objects": "57"
+      },
+      "resources_end": {
+        "phase": "with_debug_end",
+        "time_ms": "40026.7208",
+        "cpu_ms": "3578.1250",
+        "working_set_bytes": "20533248",
+        "private_bytes": "6926336",
+        "handles": "253",
+        "gdi_objects": "159",
+        "user_objects": "58"
+      }
+    }
+  },
+  "after": {
+    "without_debug": {
+      "duration_seconds": 20.0217965,
+      "timer_interval_ms": {
+        "count": 799,
+        "median": 29.9034,
+        "p95": 36.2081,
+        "max": 45.7509
+      },
+      "handler_ms": {
+        "count": 800,
+        "median": 0.08925,
+        "p95": 0.1378,
+        "max": 0.3563
+      },
+      "cpu_percent_one_core": 8.038114861471097,
+      "resources_start": {
+        "phase": "without_debug_start",
+        "time_ms": "0.3658",
+        "cpu_ms": "62.5000",
+        "working_set_bytes": "19316736",
+        "private_bytes": "5562368",
+        "handles": "240",
+        "gdi_objects": "48",
+        "user_objects": "34"
+      },
+      "resources_end": {
+        "phase": "without_debug_end",
+        "time_ms": "20022.1623",
+        "cpu_ms": "1671.8750",
+        "working_set_bytes": "19767296",
+        "private_bytes": "5693440",
+        "handles": "246",
+        "gdi_objects": "48",
+        "user_objects": "51"
+      },
+      "paints_per_second": 40.00640002509265,
+      "paint_interval_ms": {
+        "count": 800,
+        "median": 29.9005,
+        "p95": 35.6763,
+        "max": 46.014
+      },
+      "paint_draw_ms": {
+        "count": 801,
+        "median": 1.2841,
+        "p95": 1.7187,
+        "max": 3.2754
+      },
+      "paint_present_ms": {
+        "count": 801,
+        "median": 0.1546,
+        "p95": 0.2002,
+        "max": 0.496
+      },
+      "paint_total_ms": {
+        "count": 801,
+        "median": 1.4494,
+        "p95": 1.9166,
+        "max": 3.4382
+      }
+    },
+    "with_debug": {
+      "duration_seconds": 19.9922066,
+      "timer_interval_ms": {
+        "count": 798,
+        "median": 29.88775,
+        "p95": 30.5366,
+        "max": 45.4881
+      },
+      "handler_ms": {
+        "count": 799,
+        "median": 0.0909,
+        "p95": 0.2065,
+        "max": 0.4865
+      },
+      "cpu_percent_one_core": 8.284478212625114,
+      "resources_start": {
+        "phase": "with_debug_start",
+        "time_ms": "20044.6210",
+        "cpu_ms": "1687.5000",
+        "working_set_bytes": "19931136",
+        "private_bytes": "5693440",
+        "handles": "246",
+        "gdi_objects": "50",
+        "user_objects": "55"
+      },
+      "resources_end": {
+        "phase": "with_debug_end",
+        "time_ms": "40036.8276",
+        "cpu_ms": "3343.7500",
+        "working_set_bytes": "20119552",
+        "private_bytes": "6832128",
+        "handles": "250",
+        "gdi_objects": "52",
+        "user_objects": "56"
+      },
+      "paints_per_second": 40.01559287607602,
+      "paint_interval_ms": {
+        "count": 799,
+        "median": 29.7516,
+        "p95": 33.4846,
+        "max": 48.7319
+      },
+      "paint_draw_ms": {
+        "count": 800,
+        "median": 1.26315,
+        "p95": 1.6389,
+        "max": 2.5296
+      },
+      "paint_present_ms": {
+        "count": 800,
+        "median": 0.15205000000000002,
+        "p95": 0.2,
+        "max": 0.6772
+      },
+      "paint_total_ms": {
+        "count": 800,
+        "median": 1.4224,
+        "p95": 1.8308,
+        "max": 2.6855
+      }
+    }
+  },
+  "timer15": {
+    "without_debug": {
+      "duration_seconds": 20.018428800000002,
+      "timer_interval_ms": {
+        "count": 1143,
+        "median": 15.1089,
+        "p95": 30.0498,
+        "max": 45.08
+      },
+      "handler_ms": {
+        "count": 1144,
+        "median": 0.0644,
+        "p95": 0.1116,
+        "max": 0.3882
+      },
+      "cpu_percent_one_core": 9.990794082700434,
+      "resources_start": {
+        "phase": "without_debug_start",
+        "time_ms": "0.2156",
+        "cpu_ms": "31.2500",
+        "working_set_bytes": "19378176",
+        "private_bytes": "5693440",
+        "handles": "242",
+        "gdi_objects": "48",
+        "user_objects": "50"
+      },
+      "resources_end": {
+        "phase": "without_debug_end",
+        "time_ms": "20018.6444",
+        "cpu_ms": "2031.2500",
+        "working_set_bytes": "19664896",
+        "private_bytes": "5693440",
+        "handles": "242",
+        "gdi_objects": "48",
+        "user_objects": "51"
+      },
+      "paints_per_second": 57.19729612345999,
+      "paint_interval_ms": {
+        "count": 1144,
+        "median": 15.106449999999999,
+        "p95": 30.1021,
+        "max": 45.18
+      },
+      "paint_draw_ms": {
+        "count": 1145,
+        "median": 1.2574,
+        "p95": 1.6726,
+        "max": 2.2122
+      },
+      "paint_present_ms": {
+        "count": 1145,
+        "median": 0.1504,
+        "p95": 0.1983,
+        "max": 0.5702
+      },
+      "paint_total_ms": {
+        "count": 1145,
+        "median": 1.4213,
+        "p95": 1.8592,
+        "max": 2.7384
+      }
+    },
+    "with_debug": {
+      "duration_seconds": 19.983279100000004,
+      "timer_interval_ms": {
+        "count": 1118,
+        "median": 15.10585,
+        "p95": 30.0693,
+        "max": 45.1939
+      },
+      "handler_ms": {
+        "count": 1119,
+        "median": 0.0649,
+        "p95": 0.1708,
+        "max": 0.4258
+      },
+      "cpu_percent_one_core": 11.181223005587704,
+      "resources_start": {
+        "phase": "with_debug_start",
+        "time_ms": "20040.5327",
+        "cpu_ms": "2031.2500",
+        "working_set_bytes": "19816448",
+        "private_bytes": "5693440",
+        "handles": "242",
+        "gdi_objects": "50",
+        "user_objects": "55"
+      },
+      "resources_end": {
+        "phase": "with_debug_end",
+        "time_ms": "40023.8118",
+        "cpu_ms": "4265.6250",
+        "working_set_bytes": "20078592",
+        "private_bytes": "6848512",
+        "handles": "246",
+        "gdi_objects": "52",
+        "user_objects": "56"
+      },
+      "paints_per_second": 56.046857695141725,
+      "paint_interval_ms": {
+        "count": 1119,
+        "median": 15.1109,
+        "p95": 30.2062,
+        "max": 47.7244
+      },
+      "paint_draw_ms": {
+        "count": 1120,
+        "median": 1.2386,
+        "p95": 1.6517,
+        "max": 2.2598
+      },
+      "paint_present_ms": {
+        "count": 1120,
+        "median": 0.14665,
+        "p95": 0.1917,
+        "max": 1.7453
+      },
+      "paint_total_ms": {
+        "count": 1120,
+        "median": 1.3971,
+        "p95": 1.8511,
+        "max": 2.775
+      }
+    }
+  }
+}

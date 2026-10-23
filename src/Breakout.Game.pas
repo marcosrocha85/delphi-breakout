@@ -1,3 +1,4 @@
+{** Game rules and earliest-contact resolution, without VCL or OS clocks. }
 unit Breakout.Game;
 
 interface
@@ -5,6 +6,8 @@ interface
 uses Breakout.Types;
 
 type
+  {** Owns the mutable match state. The caller owns this object.
+      Use @link(Snapshot) to read state without exposing the live brick array. }
   TGame = class
   private
     FConfig: TGameConfig;
@@ -26,10 +29,23 @@ type
     FBricks: TArray<TBrick>;
     FLives, FScore, FLevel, FLastHitBrickId: Integer;
   public
+    {** Starts a ready match with deterministic generation.
+        @param(Config Valid logical dimensions, positive speed/lives/level count.)
+        @param(Seed Reused on restart to reproduce the board and launch sequence.)
+        Raises @code(EArgumentException) on invalid configuration. }
     constructor Create(const Config: TGameConfig; Seed: Cardinal);
+    {** Applies one lifecycle command. DebugStep advances once only when paused;
+        it can change state after a loss or final brick. }
     procedure Execute(Command: TGameCommand);
+    {** Moves the paddle in Ready/Playing and carries the ready ball.
+        @param(CenterX Requested center in logical units, clamped to the field.) }
     procedure MovePaddle(CenterX: Double);
+    {** Advances one FixedDeltaSeconds quantum only while Playing.
+        Earliest impacts consume time, reflect velocity and continue the
+        remaining interval, up to MaxImpactsPerStep. }
     procedure Step;
+    {** Returns values and a copy of the brick array. Painting this snapshot
+        must not call Step or modify the live engine. }
     function Snapshot: TGameSnapshot;
     property State: TGameState read FState;
   end;

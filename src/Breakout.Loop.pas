@@ -1,3 +1,4 @@
+{** Fixed-step accumulator with bounded catch-up and explicit diagnostics. }
 unit Breakout.Loop;
 
 interface
@@ -5,21 +6,31 @@ interface
 uses Breakout.Types, Breakout.Game;
 
 type
+  {** Times are seconds; TotalSteps is cumulative. ResetClock clears the
+      accumulator and LastSteps, preserving cumulative diagnostics. }
   TLoopDiagnostics = record
     AccumulatorSeconds, DiscardedSeconds: Double;
     LastSteps, LimitedCallbacks: Integer;
     TotalSteps: Int64;
   end;
 
-  { Caller owns Game and supplies measured elapsed time. No OS clock or VCL here. }
+  {** Caller owns Game and supplies measured elapsed time. No OS clock or VCL.
+      Game must outlive this loop; destroying the loop does not free Game. }
   TGameLoop = class
   private
     FGame: TGame;
     FDiagnostics: TLoopDiagnostics;
   public
     constructor Create(Game: TGame);
+    {** Drops pending fractional time, e.g. across pause/resume. }
     procedure ResetClock;
+    {** Forwards intent and resets pending time on lifecycle transitions. }
     procedure Execute(Command: TGameCommand);
+    {** Accumulates measured time and executes complete 1/120 s quanta.
+        Time above MaxElapsedSeconds and excess complete steps are recorded
+        as discarded; a fractional remainder survives for the next callback.
+        @param(ElapsedSeconds Finite, nonnegative real elapsed seconds.)
+        Raises @code(EArgumentOutOfRangeException) on invalid elapsed time. }
     procedure Advance(ElapsedSeconds: Double);
     property Diagnostics: TLoopDiagnostics read FDiagnostics;
   end;

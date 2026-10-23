@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Delphi Breakout - engine reference: All Identifiers</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="PasDoc 1.0.4">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rel="StyleSheet" type="text/css" href="bootstrap.min.css">
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body>
+<nav class="navbar d-md-none sticky-top bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">Delphi Breakout - engine reference</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarNav" aria-controls="sidebarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>
+<div class="offcanvas-md offcanvas-start navigation" tabindex="-1" id="sidebarNav" data-bs-scroll="true">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Delphi Breakout - engine reference</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarNav" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body py-2">
+<h2><a href="index.html">Home</a></h2><ul class="nav flex-column px-3"><li class="nav-item"><a class="nav-link px-2 py-1" href="AllUnits.html">Units</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="ClassHierarchy.html">Class Hierarchy</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllClasses.html">Classes, Interfaces, Objects and Records</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllTypes.html">Types</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllVariables.html">Variables</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllConstants.html">Constants</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllFunctions.html">Functions and Procedures</a></li><li class="nav-item"><a class="nav-link px-2 py-1" href="AllIdentifiers.html">Identifiers</a></li></ul></div></div>
+<main class="pasdoc-content content">
+<div class="container-fluid py-3 px-4">
+<h1 class="allitems">All Identifiers</h1>
+<table class="itemstable wide_list">
+<tr class="listheader">
+<th class="itemname">Name</th>
+<th class="itemunit">Unit</th>
+<th class="itemdesc">Description</th>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold" href="Breakout.Bricks.html#BrickDefinition-TBrickKind-">BrickDefinition</a></td>
+<td class="itemunit"><a class="bold" href="Breakout.Bricks.html">Breakout.Bricks</a></td>
+<td class="itemdesc"><p>Returns the central scoring/sprite definition for a valid enum value.</p></td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold" href="Breakout.Presentation.html#BrickFadeDurationMs">BrickFadeDurationMs</a></td>
+<td class="itemunit"><a class="bold" href="Breakout.Presentation.html">Breakout.Presentation</a></td>
+<td class="itemdesc"><p>Default duration of the image left by a destroyed brick, in ms.</p></td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold" href="Breakout.Presentation.html#DebugRefreshSeconds">DebugRefreshSeconds</a></td>
+<td class="itemunit"><a class="bold" href="Breakout.Presentation.html">Breakout.Presentation</a></td>
+<td class="itemdesc"><p>Diagnostic refresh period, independent of painting and simulation.</p></td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold" href="Breakout.Types.html#FixedDeltaSeconds">FixedDeltaSeconds</a></td>
+<td class="itemunit"><a class="bold" href="Breakout.Types.html">Breakout.Types</a></td>
+<td class="itemdesc"><p>Simulation quantum: 120 steps per simulated second.</p></td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold" href="Breakout.Renderer.Vcl.html#FormatGameScore-Integer-">FormatGameScore</a></td>
+<td class="itemunit"><a class="bold" href="Breakout.Renderer.Vcl.html">Breakout.Renderer.Vcl</a></td>
+<td class="itemdesc"><p>Formats with at least nine decimal digits; larger values are not truncated.</p></td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold" href="Breakout.Renderer.Vcl.html#GameMessage-TGameState-">GameMessage</a></td>
+<td class="itemunit"><a class="bold" href="Breakout.Renderer.Vcl.html">Breakout.Renderer.Vcl</a></td>
+<td class="itemdesc"><p>Returns the localized overlay message, or an empty string for normal play.</p></td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold" href="Breakout.Types.html#GameStateName-TGameState-">GameStateName</a></td>
+<td class="itemunit"><a class="bold" href="Breakout.Types.html">Breakout.Types</a></td>
+<td class="itemdesc"><p>Stable diagnostic name, independent of player-facing translations.</p></td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold" href="Breakout.Levels.html#GenerateLegacyLevel-Cardinal-Integer-">GenerateLegacyLevel</a></td>
+<td class="itemunit"><a class="bold" href="Breakout.Levels.html">Breakout.Levels</a></td>
+<td class="itemdesc"><p>Creates 96 active bricks, with stable IDs and definitions from Breakout.Bricks.</p></td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold" href="Breakout.Types.html#MaxElapsedSeconds">MaxElapsedSeconds</a></td>
+<td class="itemunit"><a class="bold" href="Breakout.Types.html">Breakout.Types</a></td>
+<td class="itemdesc"><p>Maximum elapsed time accepted by one loop callback; excess is recorded.</p></td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold" href="Breakout.Types.html#MaxImpactsPerStep">MaxImpactsPerStep</a></td>
+<td class="itemunit"><a class="bold" href="Breakout.Types.html">Breakout.Types</a></td>
+<td class="itemdesc"><p>Collision-iteration budget; unresolved remaining time is discarded.</p></td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold" href="Breakout.Types.html#MaxStepsPerCallback">MaxStepsPerCallback</a></td>
+<td class="itemunit"><a class="bold" href="Breakout.Types.html">Breakout.Types</a></td>
+<td class="itemdesc"><p>Work budget against unbounded catch-up after a stalled callback.</p></td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold" href="Breakout.Physics.html#PaddleVelocity-Double-Double-Double-Double-Double-Double-Double-">PaddleVelocity</a></td>
+<td class="itemunit"><a class="bold" href="Breakout.Physics.html">Breakout.Physics</a></td>
+<td class="itemdesc"><p>Maps normalized horizontal impact offset to an upward velocity.</p></td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold" href="Breakout.Physics.html#PositionEpsilon">PositionEpsilon</a></td>
+<td class="itemunit"><a class="bold" href="Breakout.Physics.html">Breakout.Physics</a></td>
+<td class="itemdesc"><p>Spatial tolerance and post-contact separation in logical units.</p></td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold" href="Breakout.Physics.html#ReflectVelocity-Double-Double-Double-Double-">ReflectVelocity</a></td>
+<td class="itemunit"><a class="bold" href="Breakout.Physics.html">Breakout.Physics</a></td>
+<td class="itemdesc"><p>Applies v := v - 2*dot(v,n)*n only when approaching the surface.</p></td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold" href="Breakout.Presentation.html#ScoreCountIntervalMs">ScoreCountIntervalMs</a></td>
+<td class="itemunit"><a class="bold" href="Breakout.Presentation.html">Breakout.Presentation</a></td>
+<td class="itemdesc"><p>Default interval per score increment, in ms: 5 ms means 200 points/s.</p></td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold" href="Breakout.Presentation.html#ScoreCountStep">ScoreCountStep</a></td>
+<td class="itemunit"><a class="bold" href="Breakout.Presentation.html">Breakout.Presentation</a></td>
+<td class="itemdesc"><p>Default number of points per logical score increment.</p></td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold" href="Breakout.Texts.html#SGameOver">SGameOver</a></td>
+<td class="itemunit"><a class="bold" href="Breakout.Texts.html">Breakout.Texts</a></td>
+<td class="itemdesc"><p>&nbsp;</p></td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold" href="Breakout.Texts.html#SLevelComplete">SLevelComplete</a></td>
+<td class="itemunit"><a class="bold" href="Breakout.Texts.html">Breakout.Texts</a></td>
+<td class="itemdesc"><p>&nbsp;</p></td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold" href="Breakout.Texts.html#SLives">SLives</a></td>
+<td class="itemunit"><a class="bold" href="Breakout.Texts.html">Breakout.Texts</a></td>
+<td class="itemdesc"><p>&nbsp;</p></td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold" href="Breakout.Texts.html#SPaused">SPaused</a></td>
+<td class="itemunit"><a class="bold" href="Breakout.Texts.html">Breakout.Texts</a></td>
+<td class="itemdesc"><p>&nbsp;</p></td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold" href="Breakout.Texts.html#SScore">SScore</a></td>
+<td class="itemunit"><a class="bold" href="Breakout.Texts.html">Breakout.Texts</a></td>
+<td class="itemdesc"><p>&nbsp;</p></td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold" href="Breakout.Texts.html#SVictory">SVictory</a></td>
+<td class="itemunit"><a class="bold" href="Breakout.Texts.html">Breakout.Texts</a></td>
+<td class="itemdesc"><p>&nbsp;</p></td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold" href="Breakout.Physics.html#SweepCirclePaddle-Double-Double-Double-Double-Double-Double-TPhysicsRect-TCircleHit-">SweepCirclePaddle</a></td>
+<td class="itemunit"><a class="bold" href="Breakout.Physics.html">Breakout.Physics</a></td>
+<td class="itemdesc"><p>Sweeps against a horizontal capsule with cap radius half its height.</p></td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold" href="Breakout.Physics.html#SweepCircleRect-Double-Double-Double-Double-Double-Double-TPhysicsRect-TCircleHit-">SweepCircleRect</a></td>
+<td class="itemunit"><a class="bold" href="Breakout.Physics.html">Breakout.Physics</a></td>
+<td class="itemdesc"><p>Sweeps a circle against a rectangle over [0, MaxTime].</p></td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold" href="Breakout.Types.TBall.html">TBall</a></td>
+<td class="itemunit"><a class="bold" href="Breakout.Types.html">Breakout.Types</a></td>
+<td class="itemdesc"><p>X/Y are the top-left of the bounding square; Size is the diameter.</p></td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold" href="Breakout.Types.TBrick.html">TBrick</a></td>
+<td class="itemunit"><a class="bold" href="Breakout.Types.html">Breakout.Types</a></td>
+<td class="itemdesc"><p>One axis-aligned solid.</p></td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold" href="Breakout.Bricks.TBrickDefinition.html">TBrickDefinition</a></td>
+<td class="itemunit"><a class="bold" href="Breakout.Bricks.html">Breakout.Bricks</a></td>
+<td class="itemdesc"><p>Immutable definition copied into each generated brick instance.</p></td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold" href="Breakout.Presentation.TBrickFade.html">TBrickFade</a></td>
+<td class="itemunit"><a class="bold" href="Breakout.Presentation.html">Breakout.Presentation</a></td>
+<td class="itemdesc"><p>Visual residue only; Brick is no longer a collider.</p></td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold" href="Breakout.Types.html#TBrickKind">TBrickKind</a></td>
+<td class="itemunit"><a class="bold" href="Breakout.Types.html">Breakout.Types</a></td>
+<td class="itemdesc"><p>Stable identities; scoring and sprite selection live in Breakout.Bricks.</p></td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold" href="Breakout.Physics.TCircleHit.html">TCircleHit</a></td>
+<td class="itemunit"><a class="bold" href="Breakout.Physics.html">Breakout.Physics</a></td>
+<td class="itemdesc"><p>Earliest contact: Time in seconds, outward unit normal and initial overlap depth in logical units.</p></td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold" href="Breakout.Game.TGame.html">TGame</a></td>
+<td class="itemunit"><a class="bold" href="Breakout.Game.html">Breakout.Game</a></td>
+<td class="itemdesc"><p>Owns the mutable match state.</p></td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold" href="Breakout.Types.html#TGameCommand">TGameCommand</a></td>
+<td class="itemunit"><a class="bold" href="Breakout.Types.html">Breakout.Types</a></td>
+<td class="itemdesc"><p>Input intent, independent of keyboard bindings or VCL events.</p></td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold" href="Breakout.Types.TGameConfig.html">TGameConfig</a></td>
+<td class="itemunit"><a class="bold" href="Breakout.Types.html">Breakout.Types</a></td>
+<td class="itemdesc"><p>Physical dimensions/speed in logical units and seconds; paddle angles in degrees.</p></td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold" href="Breakout.Loop.TGameLoop.html">TGameLoop</a></td>
+<td class="itemunit"><a class="bold" href="Breakout.Loop.html">Breakout.Loop</a></td>
+<td class="itemdesc"><p>Caller owns Game and supplies measured elapsed time.</p></td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold" href="Breakout.Presentation.TGamePresentation.html">TGamePresentation</a></td>
+<td class="itemunit"><a class="bold" href="Breakout.Presentation.html">Breakout.Presentation</a></td>
+<td class="itemdesc"><p>Owns a copied snapshot, bounded fade slots and a displayed score.</p></td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold" href="Breakout.Renderer.Vcl.TGameRenderer.html">TGameRenderer</a></td>
+<td class="itemunit"><a class="bold" href="Breakout.Renderer.Vcl.html">Breakout.Renderer.Vcl</a></td>
+<td class="itemdesc"><p>Owns all sprite bitmaps and Buffer.</p></td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold" href="Breakout.Types.TGameSnapshot.html">TGameSnapshot</a></td>
+<td class="itemunit"><a class="bold" href="Breakout.Types.html">Breakout.Types</a></td>
+<td class="itemdesc"><p>Detached state returned by TGame.Snapshot.</p></td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold" href="Breakout.Types.html#TGameState">TGameState</a></td>
+<td class="itemunit"><a class="bold" href="Breakout.Types.html">Breakout.Types</a></td>
+<td class="itemdesc"><p>Explicit lifecycle; only gsPlaying advances through normal Step calls.</p></td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold" href="Breakout.Physics.html#TimeEpsilon">TimeEpsilon</a></td>
+<td class="itemunit"><a class="bold" href="Breakout.Physics.html">Breakout.Physics</a></td>
+<td class="itemdesc"><p>Temporal tolerance for contact times in seconds.</p></td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold" href="Breakout.Loop.TLoopDiagnostics.html">TLoopDiagnostics</a></td>
+<td class="itemunit"><a class="bold" href="Breakout.Loop.html">Breakout.Loop</a></td>
+<td class="itemdesc"><p>Times are seconds; TotalSteps is cumulative.</p></td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold" href="Breakout.Types.TPaddle.html">TPaddle</a></td>
+<td class="itemunit"><a class="bold" href="Breakout.Types.html">Breakout.Types</a></td>
+<td class="itemdesc"><p>Logical bounds of a horizontal capsule.</p></td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold" href="Breakout.Physics.TPhysicsRect.html">TPhysicsRect</a></td>
+<td class="itemunit"><a class="bold" href="Breakout.Physics.html">Breakout.Physics</a></td>
+<td class="itemdesc"><p>Axis-aligned bounds; screen Y grows downward.</p></td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold" href="Breakout.Renderer.Vcl.TRenderMetrics.html">TRenderMetrics</a></td>
+<td class="itemunit"><a class="bold" href="Breakout.Renderer.Vcl.html">Breakout.Renderer.Vcl</a></td>
+<td class="itemdesc"><p>CPU-side times in ms.</p></td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold" href="Breakout.Types.TSeededRandom.html">TSeededRandom</a></td>
+<td class="itemunit"><a class="bold" href="Breakout.Types.html">Breakout.Types</a></td>
+<td class="itemdesc"><p>Local deterministic LCG, independent of the global Random state.</p></td>
+</tr>
+<tr class="list">
+<td class="itemname"><a class="bold" href="Breakout.Presentation.TViewport.html">TViewport</a></td>
+<td class="itemunit"><a class="bold" href="Breakout.Presentation.html">Breakout.Presentation</a></td>
+<td class="itemdesc"><p>Uniform scale plus centered letterbox offsets in client pixels.</p></td>
+</tr>
+<tr class="list2">
+<td class="itemname"><a class="bold" href="Breakout.Presentation.TVisualConfig.html">TVisualConfig</a></td>
+<td class="itemunit"><a class="bold" href="Breakout.Presentation.html">Breakout.Presentation</a></td>
+<td class="itemdesc"><p>Positive finite durations in milliseconds and positive integer step.</p></td>
+</tr>
+</table>
+<hr><span class="appinfo"><em>Generated by <a href="https://pasdoc.github.io/">PasDoc 1.0.4</a>. </em>
+</span>
+</div></main>
+<script src="bootstrap.bundle.min.js"></script>
+</body></html>

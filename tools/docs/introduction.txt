@@ -1,0 +1,22 @@
+@title(Delphi Breakout - engine API)
+@shortTitle(Home)
+
+This reference is generated from Pascal interface comments. Contracts describe
+units, ownership, preconditions and observable effects. The study guide in
+docs/study/README.md explains the mathematics and experiments.
+
+@section(1 reading Reading order)
+Start with @link(Breakout.Types), @link(Breakout.Game) and @link(Breakout.Loop).
+For geometry, read @link(Breakout.Physics). For feedback and drawing, read
+@link(Breakout.Presentation) and @link(TGameRenderer).
+@link(Breakout.Bricks) and @link(Breakout.Levels) define bricks and the grid.
+
+@section(1 units Conventions)
+Positions: logical units, X rightward and Y downward.
+Velocities: logical units per second. Simulation time: seconds.
+Visual configuration: milliseconds. Configurable angles: degrees.
+API comments use ASCII to preserve existing Pascal source encoding.
+
+@section(1 generation Generation)
+Run python tools/docs/generate.py with PasDoc 1.0.4. Do not edit generated HTML
+manually: edit Pascal comments or this introduction and regenerate.

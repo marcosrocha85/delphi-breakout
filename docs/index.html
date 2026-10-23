@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Study a Delphi Breakout engine: fixed-step simulation, continuous collision, paddle response, Canvas rendering, and deterministic tests.">
+  <title>Delphi Breakout — Engine documentation</title>
+  <style>
+    :root { color-scheme: light; font: 16px/1.6 system-ui, sans-serif; color: #18252d; background: #f5f8f7; }
+    * { box-sizing: border-box; }
+    body { max-width: 1080px; margin: 0 auto; padding: 28px 24px; }
+    a { color: #086440; text-underline-offset: 3px; }
+    a:hover { color: #03482d; }
+    a:focus-visible { outline: 3px solid #e6ad14; outline-offset: 5px; }
+    nav, footer { display: flex; flex-wrap: wrap; gap: 12px 24px; }
+    nav { align-items: center; justify-content: space-between; }
+    nav strong { color: #086440; }
+    .links { display: flex; flex-wrap: wrap; gap: 20px; }
+    header { padding: 58px 0 36px; max-width: 780px; }
+    .eyebrow { font: 600 0.8rem/1.5 ui-monospace, monospace; letter-spacing: 0.1em; text-transform: uppercase; color: #086440; }
+    h1 { font-size: clamp(2.5rem, 7vw, 4.2rem); line-height: 1.1; letter-spacing: -0.04em; margin: 16px 0 24px; }
+    header p { font-size: 1.15rem; color: #43545e; }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+    .button { display: inline-block; padding: 12px 20px; border: 1px solid #086440; border-radius: 7px; text-decoration: none; font-weight: 600; }
+    .primary { background: #086440; color: white; }
+    .primary:hover { background: #03482d; color: white; }
+    h2 { font-size: 1.45rem; margin: 24px 0 16px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 270px), 1fr)); gap: 18px; }
+    article { background: white; border: 1px solid #d9e3de; border-top: 3px solid #15805a; border-radius: 8px; padding: 24px; }
+    h3 { font-size: 1.1rem; margin: 0 0 12px; }
+    article p { color: #43545e; margin: 0 0 16px; }
+    .note { margin: 32px 0; padding: 20px 24px; background: #e8f1ec; border-radius: 8px; }
+    .note p { margin: 0; }
+    footer { margin-top: 38px; padding-top: 20px; border-top: 1px solid #d9e3de; font-size: 0.9rem; color: #52616b; }
+    @media (max-width: 480px) { body { padding: 20px; } header { padding-top: 40px; } .actions { flex-direction: column; } .button { text-align: center; } }
+  </style>
+</head>
+<body>
+  <nav aria-label="Project">
+    <strong>Delphi Breakout / Documentation</strong>
+    <div class="links">
+      <a href="https://github.com/marcosrocha85/delphi-breakout">Source</a>
+      <a href="https://github.com/marcosrocha85/delphi-breakout/releases/latest">Downloads</a>
+    </div>
+  </nav>
+  <header>
+    <div class="eyebrow">A study project for building a 2D engine</div>
+    <h1>Delphi Breakout</h1>
+    <p>Explore the rules, mathematics, and rendering behind a Breakout inspired by Arkanoid. Follow a small Delphi engine from player input through simulation to a complete Canvas frame.</p>
+    <div class="actions">
+      <a class="button primary" href="api/index.html">Explore the API reference</a>
+      <a class="button" href="https://github.com/marcosrocha85/delphi-breakout/blob/main/docs/study/README.md">Read the study guide</a>
+    </div>
+  </header>
+  <main>
+    <section aria-labelledby="topics">
+      <h2 id="topics">Study the implementation</h2>
+      <div class="grid">
+        <article>
+          <h3>Architecture and time</h3>
+          <p>State ownership, commands, detached snapshots, a 120 Hz fixed step, and bounded catch-up after delayed callbacks.</p>
+          <a href="https://github.com/marcosrocha85/delphi-breakout/blob/main/docs/study/architecture-and-loop.md">Read the architecture chapter</a>
+        </article>
+        <article>
+          <h3>Trajectory and collision</h3>
+          <p>Proportional paddle angles, circle sweeps against block faces and corners, capsule geometry, and remaining-time resolution.</p>
+          <a href="https://github.com/marcosrocha85/delphi-breakout/blob/main/docs/study/physics-and-collisions.md">Read the physics chapter</a>
+        </article>
+        <article>
+          <h3>Rendering and measurement</h3>
+          <p>Persistent buffering, cached sprites, HUD layers, viewport transforms, FPS calculations, and frame interval measurements.</p>
+          <a href="https://github.com/marcosrocha85/delphi-breakout/blob/main/docs/study/rendering-and-fps.md">Read the rendering chapter</a>
+        </article>
+      </div>
+    </section>
+    <aside class="note" aria-label="Presentation and testing">
+      <p><strong>Feedback you can test.</strong> Learn how score counting and brick fading use elapsed time, and how deterministic fixtures verify gameplay without waiting for a Windows timer. <a href="https://github.com/marcosrocha85/delphi-breakout/blob/main/docs/study/presentation-and-tests.md">Read about presentation and tests</a>.</p>
+    </aside>
+    <section aria-labelledby="reference">
+      <h2 id="reference">Navigate the engine API</h2>
+      <p>The PasDoc reference describes public classes, records, functions, parameters, units, and ownership contracts directly from the Pascal interfaces.</p>
+      <div class="links">
+        <a href="api/Breakout.Game.TGame.html">Game rules</a>
+        <a href="api/Breakout.Physics.html">Collision functions</a>
+        <a href="api/Breakout.Loop.TGameLoop.html">Fixed-step loop</a>
+        <a href="api/Breakout.Renderer.Vcl.TGameRenderer.html">Canvas renderer</a>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <span>Created by Marcos Rocha</span>
+    <a href="https://github.com/marcosrocha85/delphi-breakout/blob/main/README.md">Project README</a>
+    <a href="https://github.com/marcosrocha85/delphi-breakout/blob/main/docs/implementation-plan.md">Implementation plan</a>
+    <a href="https://github.com/marcosrocha85/delphi-breakout/blob/main/LICENSE">MIT license</a>
+  </footer>
+</body>
+</html>

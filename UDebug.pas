@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Grids, ValEdit,
-  Breakout.Types, Breakout.Loop;
+  Breakout.Types, Breakout.Loop, Breakout.Renderer.Vcl;
 
 const
   DebugLives = 'Lives';
@@ -30,6 +30,14 @@ const
   DebugLimited = 'Limited callbacks';
   DebugCollisionLimit = 'Collision limits';
   DebugCollisionDiscarded = 'Collision lost ms';
+  DebugDisplayedScore = 'Displayed score';
+  DebugVisualPending = 'Visual pending';
+  DebugSimulationMs = 'Simulation ms';
+  DebugDrawMs = 'Draw ms';
+  DebugPresentMs = 'Present ms';
+  DebugPaintInterval = 'Paint interval ms';
+  DebugPaintCount = 'Paint count';
+
 
 
 type
@@ -38,7 +46,9 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormShow(Sender: TObject);
   public
-    procedure UpdateFrom(const Snapshot: TGameSnapshot; const Timing: TLoopDiagnostics);
+    procedure UpdateFrom(const Snapshot: TGameSnapshot; const Timing: TLoopDiagnostics;
+      DisplayedScore: Integer; VisualPending: Boolean; SimulationMs: Double;
+      const Rendering: TRenderMetrics);
   end;
 
 var
@@ -85,13 +95,23 @@ begin
     VLE.InsertRow(DebugLimited, '', True);
     VLE.InsertRow(DebugCollisionLimit, '', True);
     VLE.InsertRow(DebugCollisionDiscarded, '', True);
+    VLE.InsertRow(DebugDisplayedScore, '', True);
+    VLE.InsertRow(DebugVisualPending, '', True);
+    VLE.InsertRow(DebugSimulationMs, '', True);
+    VLE.InsertRow(DebugDrawMs, '', True);
+    VLE.InsertRow(DebugPresentMs, '', True);
+    VLE.InsertRow(DebugPaintInterval, '', True);
+    VLE.InsertRow(DebugPaintCount, '', True);
+
 
   finally
     VLE.Strings.EndUpdate;
   end;
 end;
 
-procedure TFrmDebug.UpdateFrom(const Snapshot: TGameSnapshot; const Timing: TLoopDiagnostics);
+procedure TFrmDebug.UpdateFrom(const Snapshot: TGameSnapshot; const Timing: TLoopDiagnostics;
+      DisplayedScore: Integer; VisualPending: Boolean; SimulationMs: Double;
+      const Rendering: TRenderMetrics);
 var
   Brick: TBrick;
 begin
@@ -128,6 +148,13 @@ begin
     VLE.Values[DebugLimited] := IntToStr(Timing.LimitedCallbacks);
     VLE.Values[DebugCollisionLimit] := IntToStr(Snapshot.CollisionLimitCount);
     VLE.Values[DebugCollisionDiscarded] := FloatToStrF(Snapshot.CollisionDiscardedSeconds * 1000, ffFixed, 12, 3);
+    VLE.Values[DebugDisplayedScore] := IntToStr(DisplayedScore);
+    VLE.Values[DebugVisualPending] := BoolToStr(VisualPending, True);
+    VLE.Values[DebugSimulationMs] := FloatToStrF(SimulationMs, ffFixed, 12, 3);
+    VLE.Values[DebugDrawMs] := FloatToStrF(Rendering.DrawMs, ffFixed, 12, 3);
+    VLE.Values[DebugPresentMs] := FloatToStrF(Rendering.PresentMs, ffFixed, 12, 3);
+    VLE.Values[DebugPaintInterval] := FloatToStrF(Rendering.IntervalMs, ffFixed, 12, 3);
+    VLE.Values[DebugPaintCount] := IntToStr(Rendering.PaintCount);
   finally
     VLE.Strings.EndUpdate;
   end;

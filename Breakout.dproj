@@ -66,12 +66,13 @@
         <DCC_Namespace>Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;System;Xml;Data;Datasnap;Web;Soap;Winapi;$(DCC_Namespace)</DCC_Namespace>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
-        <VerInfo_Keys>CompanyName=Marcos  Rocha;FileDescription=;FileVersion=1.0.0.0;InternalName=Delphi Breakout;LegalCopyright=;LegalTrademarks=;OriginalFilename=Breakout.exe;ProductName=Delphi Breakout;ProductVersion=1.0.0.0;Comments=More information at https://github.com/marcosrocha85/delphi-breakout</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=Marcos  Rocha;FileDescription=;FileVersion=1.0.1.0;InternalName=Delphi Breakout;LegalCopyright=;LegalTrademarks=;OriginalFilename=Breakout.exe;ProductName=Delphi Breakout;ProductVersion=1.0.1.0;Comments=More information at https://github.com/marcosrocha85/delphi-breakout</VerInfo_Keys>
+        <VerInfo_Release>1</VerInfo_Release>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win32)'!=''">
         <DCC_Namespace>System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;$(DCC_Namespace)</DCC_Namespace>
         <BT_BuildType>Debug</BT_BuildType>
-        <VerInfo_Keys>CompanyName=Marcos Rocha;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=Delphi Breakout x86;LegalCopyright=;LegalTrademarks=;OriginalFilename=Breakout_x86.exe;ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=More information at https://github.com/marcosrocha85/delphi-breakout;ProgramID=net.marcosrocha.$(MSBuildProjectName)</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=Marcos Rocha;FileDescription=$(MSBuildProjectName);FileVersion=1.0.1.0;InternalName=Delphi Breakout x86;LegalCopyright=;LegalTrademarks=;OriginalFilename=Breakout_x86.exe;ProductName=$(MSBuildProjectName);ProductVersion=1.0.1.0;Comments=More information at https://github.com/marcosrocha85/delphi-breakout;ProgramID=net.marcosrocha.$(MSBuildProjectName)</VerInfo_Keys>
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
         <Icon_MainIcon>Breakout_Icon.ico</Icon_MainIcon>
         <UWP_DelphiLogo44>$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_44.png</UWP_DelphiLogo44>
@@ -87,7 +88,7 @@
         <UWP_DelphiLogo150>$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_150.png</UWP_DelphiLogo150>
         <DCC_Namespace>System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;$(DCC_Namespace)</DCC_Namespace>
         <BT_BuildType>Debug</BT_BuildType>
-        <VerInfo_Keys>CompanyName=Marcos Rocha;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=Delphi Breakout x64;LegalCopyright=;LegalTrademarks=;OriginalFilename=Breakout.exe;ProgramID=net.marcosrocha.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=More information at https://github.com/marcosrocha85/delphi-breakout</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=Marcos Rocha;FileDescription=$(MSBuildProjectName);FileVersion=1.0.1.0;InternalName=Delphi Breakout x64;LegalCopyright=;LegalTrademarks=;OriginalFilename=Breakout.exe;ProgramID=net.marcosrocha.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.1.0;Comments=More information at https://github.com/marcosrocha85/delphi-breakout</VerInfo_Keys>
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
         <AppDPIAwarenessMode>none</AppDPIAwarenessMode>
         <DCC_ExeOutput>build\x64</DCC_ExeOutput>
@@ -103,9 +104,11 @@
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
+        <VerInfo_Keys>CompanyName=Marcos Rocha;FileDescription=$(MSBuildProjectName);FileVersion=1.0.1.0;InternalName=Delphi Breakout x86;LegalCopyright=;LegalTrademarks=;OriginalFilename=Breakout_x86.exe;ProductName=$(MSBuildProjectName);ProductVersion=1.0.1.0;Comments=More information at https://github.com/marcosrocha85/delphi-breakout;ProgramID=net.marcosrocha.$(MSBuildProjectName)</VerInfo_Keys>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win64)'!=''">
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
+        <VerInfo_Keys>CompanyName=Marcos Rocha;FileDescription=$(MSBuildProjectName);FileVersion=1.0.1.0;InternalName=Delphi Breakout x64;LegalCopyright=;LegalTrademarks=;OriginalFilename=Breakout.exe;ProgramID=net.marcosrocha.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.1.0;Comments=More information at https://github.com/marcosrocha85/delphi-breakout</VerInfo_Keys>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <Version>7.0</Version>
@@ -114,11 +117,11 @@
     <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
         <VerInfo_Locale>1033</VerInfo_Locale>
-        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=;ProgramID=com.embarcadero.$(MSBuildProjectName)</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.1.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=$(MSBuildProjectName);ProductVersion=1.0.1.0;Comments=;ProgramID=com.embarcadero.$(MSBuildProjectName)</VerInfo_Keys>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Win64)'!=''">
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
-        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.1.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.1.0;Comments=</VerInfo_Keys>
     </PropertyGroup>
     <ProjectExtensions>
         <Borland.Personality>Delphi.Personality.12</Borland.Personality>
@@ -176,6 +179,9 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
+        <DCCReference Include="src\Breakout.Bricks.pas"/>
+        <DCCReference Include="src\Breakout.Presentation.pas"/>
+        <DCCReference Include="src\Breakout.Renderer.Vcl.pas"/>
         <DCCReference Include="UMain.pas">
             <Form>FrmMain</Form>
         </DCCReference>

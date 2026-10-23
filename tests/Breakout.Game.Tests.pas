@@ -153,14 +153,14 @@ begin
     Game.SetBall(310, 82, 0, 240);
     Game.Step;
     View := Game.Snapshot;
-    Check('hit_deactivates_brick_and_adds_its_points', (View.Score = 10) and
+    Check('hit_deactivates_brick_and_adds_its_points', (View.Score = 100) and
       (View.ActiveBricks = 1) and not View.Bricks[0].Active and
       (View.LastHitBrickId = 0));
     Check('inactive_brick_retains_stable_id_and_slot',
       (Length(View.Bricks) = 2) and (View.Bricks[0].Id = 0) and (View.Bricks[1].Id = 1));
     Game.PlaceBall(310, 82);
     Game.Step;
-    Check('inactive_brick_cannot_score_again', Game.Snapshot.Score = 10);
+    Check('inactive_brick_cannot_score_again', Game.Snapshot.Score = 100);
     Game.Execute(gcRestart);
     Check('restart_clears_score_and_last_hit', (Game.Snapshot.Score = 0) and
       (Game.Snapshot.LastHitBrickId = -1));
@@ -188,7 +188,7 @@ begin
     Game.Step;
     Before := Game.Snapshot;
     Check('last_brick_enters_level_complete_once', (Before.State = gsLevelComplete) and
-      (Before.ActiveBricks = 0) and (Before.Score = 10) and (Before.Lives = 2));
+      (Before.ActiveBricks = 0) and (Before.Score = 100) and (Before.Lives = 2));
     Check('completion_terminates_the_step', (Before.Ball.X = 310) and SameValue(Before.Ball.Y, 83, 0.00001) and (Before.Ball.VelocityY < 0));
     Game.Step;
     Game.Execute(gcDebugStep);
@@ -196,12 +196,12 @@ begin
     Game.MovePaddle(0);
     After := Game.Snapshot;
     Check('level_complete_waits_without_moving_or_scoring',
-      (After.State = gsLevelComplete) and (After.Score = 10) and
+      (After.State = gsLevelComplete) and (After.Score = 100) and
       (After.Ball.X = Before.Ball.X) and (After.Ball.Y = Before.Ball.Y));
     Game.Execute(gcLaunch);
     After := Game.Snapshot;
     Check('continue_loads_next_level_ready_preserving_lives_and_score',
-      (After.State = gsReady) and (After.Level = 2) and (After.Score = 10) and
+      (After.State = gsReady) and (After.Level = 2) and (After.Score = 100) and
       (After.Lives = 2) and (After.ActiveBricks = 96));
     Game.Execute(gcLaunch);
     Game.Fixture(True);
@@ -209,13 +209,13 @@ begin
     Game.Step;
     After := Game.Snapshot;
     Check('last_level_enters_victory', (After.State = gsVictory) and
-      (After.Score = 20) and (After.Lives = 2) and (After.Level = 2));
+      (After.Score = 200) and (After.Lives = 2) and (After.Level = 2));
     Game.Execute(gcLaunch);
     Game.Execute(gcTogglePause);
     Game.Execute(gcDebugStep);
     Game.Step;
     Check('victory_ignores_launch_pause_and_steps', (Game.Snapshot.State = gsVictory) and
-      (Game.Snapshot.Score = 20) and (Game.Snapshot.Ball.X = 310));
+      (Game.Snapshot.Score = 200) and (Game.Snapshot.Ball.X = 310));
     Game.Execute(gcRestart);
     Check('restart_from_victory_resets_level_and_counters',
       (Game.Snapshot.State = gsReady) and (Game.Snapshot.Level = 1) and
@@ -234,6 +234,8 @@ begin
 end;
 
 procedure TEngineTests.Determinism;
+const
+  ExpectedPoints: array[TBrickKind] of Integer = (100, 150, 200, 250, 400, 500);
 var
   First, Second: TGame;
   A, B: TGameSnapshot;
@@ -256,7 +258,7 @@ begin
         Same := Same and (A.Bricks[I].SpriteIndex = B.Bricks[I].SpriteIndex);
         Valid := Valid and (A.Bricks[I].Id = I) and A.Bricks[I].Active and
           (A.Bricks[I].SpriteIndex >= 0) and (A.Bricks[I].SpriteIndex <= 5) and
-          (A.Bricks[I].Points = (A.Bricks[I].SpriteIndex + 1) * 10);
+          (A.Bricks[I].Points = ExpectedPoints[A.Bricks[I].Kind]);
       end;
       Check('same_seed_generates_same_board_and_launch', Same);
       Check('board_has_unique_stable_ids_and_valid_points', Valid);

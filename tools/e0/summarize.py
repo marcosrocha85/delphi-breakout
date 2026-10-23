@@ -82,5 +82,5 @@ def summarize(folder):
 
 
 if __name__ == "__main__":
-    folder = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(__file__).resolve().parents[2] / "docs/evidencias/e0-2026-10-22"
+    folder = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(__file__).resolve().parents[2] / "docs/evidence/e0-2026-10-22"
     summarize(folder)

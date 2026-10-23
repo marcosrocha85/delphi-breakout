@@ -1,0 +1,9 @@
+format=html
+title=Delphi Breakout - engine reference
+language=en
+staronly
+visible-members=public,published
+write-uses-list
+show-source-position
+source-root=.
+introduction=tools/docs/introduction.txt

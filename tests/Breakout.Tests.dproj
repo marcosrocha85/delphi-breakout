@@ -42,6 +42,9 @@
     </PropertyGroup>
     <ItemGroup>
         <DelphiCompile Include="$(MainSource)"><MainSource>MainSource</MainSource></DelphiCompile>
+        <DCCReference Include="..\src\Breakout.Bricks.pas"/>
+        <DCCReference Include="..\src\Breakout.Presentation.pas"/>
+        <DCCReference Include="Breakout.Presentation.Tests.pas"/>
         <DCCReference Include="..\src\Breakout.Types.pas"/>
         <DCCReference Include="..\src\Breakout.Levels.pas"/>
         <DCCReference Include="..\src\Breakout.Physics.pas"/>

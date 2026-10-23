@@ -1,0 +1,195 @@
+﻿{
+    "suite": "E4 VCL and bitmap",
+    "checks": 47,
+    "failures": 0,
+    "results": [
+        {
+            "name": "single_surface_no_entity_controls",
+            "passed": true
+        },
+        {
+            "name": "timer_15ms_and_idle_ready",
+            "passed": true
+        },
+        {
+            "name": "f1_without_debug_does_not_launch",
+            "passed": true
+        },
+        {
+            "name": "click_launch",
+            "passed": true
+        },
+        {
+            "name": "real_stopwatch_drives_fixed_steps",
+            "passed": true
+        },
+        {
+            "name": "pause_freezes_launch_and_movement",
+            "passed": true
+        },
+        {
+            "name": "resume_resets_timestamp",
+            "passed": true
+        },
+        {
+            "name": "deactivate_pauses_and_disables_timer",
+            "passed": true
+        },
+        {
+            "name": "explicit_resume_after_activate",
+            "passed": true
+        },
+        {
+            "name": "impact_0_inactive_and_scored",
+            "passed": true
+        },
+        {
+            "name": "impact_0_fade_and_deferred_score",
+            "passed": true
+        },
+        {
+            "name": "impact_0_reflected",
+            "passed": true
+        },
+        {
+            "name": "impact_1_inactive_and_scored",
+            "passed": true
+        },
+        {
+            "name": "impact_1_fade_and_deferred_score",
+            "passed": true
+        },
+        {
+            "name": "impact_1_reflected",
+            "passed": true
+        },
+        {
+            "name": "impact_2_inactive_and_scored",
+            "passed": true
+        },
+        {
+            "name": "impact_2_fade_and_deferred_score",
+            "passed": true
+        },
+        {
+            "name": "impact_2_reflected",
+            "passed": true
+        },
+        {
+            "name": "paused_visual_age_frozen",
+            "passed": true
+        },
+        {
+            "name": "painting_read_only",
+            "passed": true
+        },
+        {
+            "name": "score_reaches_target_after_1_second",
+            "passed": true
+        },
+        {
+            "name": "victory_keeps_visual_timer_alive",
+            "passed": true
+        },
+        {
+            "name": "victory_stops_timer_when_effects_finish",
+            "passed": true
+        },
+        {
+            "name": "f2_clears_pending",
+            "passed": true
+        },
+        {
+            "name": "one_life_per_fall_1",
+            "passed": true
+        },
+        {
+            "name": "one_life_per_fall_2",
+            "passed": true
+        },
+        {
+            "name": "one_life_per_fall_3",
+            "passed": true
+        },
+        {
+            "name": "game_over_cannot_launch",
+            "passed": true
+        },
+        {
+            "name": "wide_paddle_centered_on_input",
+            "passed": true
+        },
+        {
+            "name": "wide_paddle_clamps_left",
+            "passed": true
+        },
+        {
+            "name": "wide_paddle_clamps_right",
+            "passed": true
+        },
+        {
+            "name": "50_restarts_and_debug_toggles_stable_gdi",
+            "passed": true
+        },
+        {
+            "name": "50_restarts_and_debug_toggles_stable_user",
+            "passed": true
+        },
+        {
+            "name": "debug_throttled_to_5hz",
+            "passed": true
+        },
+        {
+            "name": "f1_debug_step_only_one_fixed_step",
+            "passed": true
+        },
+        {
+            "name": "wide_paddle_caps_preserve_original_pixels",
+            "passed": true
+        },
+        {
+            "name": "wide_paddle_stripes_extend_without_seams",
+            "passed": true
+        },
+        {
+            "name": "hud_above_all_field_objects",
+            "passed": true
+        },
+        {
+            "name": "fade_start_same_pixels_as_active",
+            "passed": true
+        },
+        {
+            "name": "fade_half_darker",
+            "passed": true
+        },
+        {
+            "name": "fade_end_restores_background",
+            "passed": true
+        },
+        {
+            "name": "dpi_buffer_0",
+            "passed": true
+        },
+        {
+            "name": "dpi_buffer_1",
+            "passed": true
+        },
+        {
+            "name": "dpi_buffer_2",
+            "passed": true
+        },
+        {
+            "name": "dpi_buffer_3",
+            "passed": true
+        },
+        {
+            "name": "1000_frames_reuse_buffer",
+            "passed": true
+        },
+        {
+            "name": "score_format_long_values",
+            "passed": true
+        }
+    ]
+}
