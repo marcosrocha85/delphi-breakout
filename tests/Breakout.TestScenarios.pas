@@ -48,7 +48,8 @@ begin
     FBricks[I].Width := 50;
     FBricks[I].Height := 20;
     FBricks[I].SpriteIndex := 0;
-    FBricks[I].Points := 10;
+    FBricks[I].Kind := bkGreen;
+    FBricks[I].Points := 100;
     FBricks[I].Active := True;
   end;
   FLastHitBrickId := -1;

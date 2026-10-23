@@ -95,11 +95,12 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
+        <DCCReference Include="..\..\src\Breakout.Bricks.pas"/>
+        <DCCReference Include="..\..\src\Breakout.Presentation.pas"/>
+        <DCCReference Include="..\..\src\Breakout.Renderer.Vcl.pas"/>
+        <DCCReference Include="..\e4\UE4ViewChecks.pas"/>
         <DCCReference Include="..\..\UMain.pas"/>
         <DCCReference Include="..\..\UDebug.pas"/>
-        <DCCReference Include="..\e1\UE1Checks.pas"/>
-        <DCCReference Include="..\e2\UE2ViewChecks.pas"/>
-        <DCCReference Include="..\e3\UE3ViewChecks.pas"/>
         <DCCReference Include="..\..\src\Breakout.Types.pas"/>
         <DCCReference Include="..\..\src\Breakout.Texts.pas"/>
         <DCCReference Include="..\..\src\Breakout.Levels.pas"/>

@@ -141,7 +141,7 @@ begin
       Game.Step;
       View := Game.Snapshot;
       Check('brick_face_' + IntToStr(I) + '_scores_once',
-        (View.Score = 10) and (View.ActiveBricks = 1) and not View.Bricks[0].Active);
+        (View.Score = 100) and (View.ActiveBricks = 1) and not View.Bricks[0].Active);
       case I of
         0: Check('descending_ball_bounces_up_from_top', Near(View.Ball.VelocityX, 120) and
           Near(View.Ball.VelocityY, -600) and (View.Ball.Y < 83));
@@ -156,7 +156,7 @@ begin
       Game.SetBall(310, 82, 0, 600);
       Game.Step;
       Check('removed_brick_' + IntToStr(I) + '_cannot_score_or_bounce_again',
-        (Game.Snapshot.Score = 10) and Near(Game.Snapshot.Ball.VelocityY, 600));
+        (Game.Snapshot.Score = 100) and Near(Game.Snapshot.Ball.VelocityY, 600));
     end;
     Game.Execute(gcRestart);
     Game.Fixture;
@@ -164,7 +164,7 @@ begin
     Game.SetBall(310, 30, 0, 12000);
     Game.Step;
     View := Game.Snapshot;
-    Check('high_speed_top_hit_does_not_tunnel', (View.Score = 10) and
+    Check('high_speed_top_hit_does_not_tunnel', (View.Score = 100) and
       (View.Ball.VelocityY < 0) and (View.Ball.Y < 83));
     Game.Execute(gcRestart);
     Game.Fixture;
@@ -172,7 +172,7 @@ begin
     Game.SetBall(200, 100, 20000, 0);
     Game.Step;
     Check('high_speed_side_hit_uses_remaining_time_after_bounce',
-      (Game.Snapshot.Score = 10) and Near(Game.Snapshot.Ball.VelocityX, -20000) and
+      (Game.Snapshot.Score = 100) and Near(Game.Snapshot.Ball.VelocityX, -20000) and
       (Game.Snapshot.Ball.X < 283));
     Game.Execute(gcRestart);
     Game.Fixture;
@@ -180,7 +180,7 @@ begin
     Game.SetBall(310, 84, 0, -240);
     Game.Step;
     Check('initial_overlap_separates_without_inverting_outward_ball',
-      (Game.Snapshot.Score = 10) and (Game.Snapshot.Ball.Y < 83) and
+      (Game.Snapshot.Score = 100) and (Game.Snapshot.Ball.Y < 83) and
       Near(Game.Snapshot.Ball.VelocityY, -240));
     Game.Execute(gcRestart);
     Game.Fixture;
@@ -196,7 +196,7 @@ begin
     Game.SetBall(341.5, 82, 0, 600);
     Game.Step;
     View := Game.Snapshot;
-    Check('seam_hits_both_bricks_but_reflects_once', (View.Score = 20) and
+    Check('seam_hits_both_bricks_but_reflects_once', (View.Score = 200) and
       (View.ActiveBricks = 1) and Near(View.Ball.VelocityY, -600) and
       (View.LastHitBrickId = 1));
     Game.Execute(gcRestart);
@@ -377,7 +377,7 @@ begin
     Count := Loop.Diagnostics.TotalSteps;
     Loop.Advance(0.1);
     Check('victory_stops_catchup_and_clears_accumulator',
-      (Game.State = gsVictory) and (Game.Snapshot.Score = 10) and
+      (Game.State = gsVictory) and (Game.Snapshot.Score = 100) and
       (Loop.Diagnostics.TotalSteps = Count + 1) and Near(Loop.Diagnostics.AccumulatorSeconds, 0));
     Loop.Execute(gcRestart);
     Loop.Execute(gcLaunch);

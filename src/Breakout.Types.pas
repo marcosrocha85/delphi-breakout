@@ -5,6 +5,7 @@ interface
 type
   TGameState = (gsReady, gsPlaying, gsPaused, gsLevelComplete, gsGameOver, gsVictory);
   TGameCommand = (gcLaunch, gcRestart, gcTogglePause, gcDeactivate, gcDebugStep);
+  TBrickKind = (bkGreen, bkYellow, bkCyan, bkRed, bkSilver, bkGold);
 
   TBall = record
     X, Y, Size: Double;
@@ -17,6 +18,7 @@ type
 
   TBrick = record
     Id: Integer;
+    Kind: TBrickKind;
     X, Y, Width, Height: Double;
     SpriteIndex, Points: Integer;
     Active: Boolean;

@@ -176,6 +176,9 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
+        <DCCReference Include="src\Breakout.Bricks.pas"/>
+        <DCCReference Include="src\Breakout.Presentation.pas"/>
+        <DCCReference Include="src\Breakout.Renderer.Vcl.pas"/>
         <DCCReference Include="UMain.pas">
             <Form>FrmMain</Form>
         </DCCReference>

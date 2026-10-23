@@ -1,0 +1,36 @@
+{
+  "source_commit": "2611ded",
+  "source": "UMain.dfm",
+  "assets": {
+    "Ball.bmp": {
+      "bytes": 938,
+      "sha256": "581a3fb72c7199e73f7f785104960d70fcad56f4a5804b267a8787b0fff7147d",
+      "exact_dfm_match": true
+    },
+    "VLives.bmp": {
+      "bytes": 9054,
+      "sha256": "3eab88ba3a98d82a7328fc17e3bcdb57fa33ae8664f0af13bd45ccecc04d54a8",
+      "exact_dfm_match": true
+    },
+    "ImgPlayerL.bmp": {
+      "bytes": 414,
+      "sha256": "be3ed4bf9ee43bbbef1378d5a00f26563eb425a7ca2ddc7551366a1f53cef59c",
+      "exact_dfm_match": true
+    },
+    "ImgPlayerM.bmp": {
+      "bytes": 1674,
+      "sha256": "d7dc10a436966071e305727005f61293275ec6ae1494fc1586929ce898980ef4",
+      "exact_dfm_match": true
+    },
+    "ImgPlayerR.bmp": {
+      "bytes": 414,
+      "sha256": "080ced0eb5aba610d9b3f9f1b65b12e3d5f78e5b3e954b2bee61d054b713a79e",
+      "exact_dfm_match": true
+    },
+    "Bricks.imagelist": {
+      "bytes": 33286,
+      "sha256": "fbcd5c871275aa4cb94c4353e814dc95a2b348e5836fb2c09ee1f2c623032ab2",
+      "exact_dfm_match": true
+    }
+  }
+}

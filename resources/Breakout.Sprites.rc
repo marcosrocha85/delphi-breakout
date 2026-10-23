@@ -1,0 +1,6 @@
+BO_BALL RCDATA "Ball.bmp"
+BO_LIVES RCDATA "VLives.bmp"
+BO_PADDLE_L RCDATA "ImgPlayerL.bmp"
+BO_PADDLE_M RCDATA "ImgPlayerM.bmp"
+BO_PADDLE_R RCDATA "ImgPlayerR.bmp"
+BO_BRICKS RCDATA "Bricks.imagelist"

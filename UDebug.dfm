@@ -3,8 +3,8 @@ object FrmDebug: TFrmDebug
   Top = 114
   BorderStyle = bsDialog
   Caption = 'Debug Form'
-  ClientHeight = 552
-  ClientWidth = 252
+  ClientHeight = 686
+  ClientWidth = 300
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,8 +18,8 @@ object FrmDebug: TFrmDebug
   object VLE: TValueListEditor
     Left = 0
     Top = 0
-    Width = 252
-    Height = 552
+    Width = 300
+    Height = 686
     TabStop = False
     Align = alClient
     Color = clWindow
@@ -35,7 +35,7 @@ object FrmDebug: TFrmDebug
     ExplicitWidth = 248
     ExplicitHeight = 445
     ColWidths = (
-      150
-      98)
+      160
+      136)
   end
 end

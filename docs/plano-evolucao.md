@@ -1,8 +1,8 @@
-# Plano de evolução do Delphi Breakout
+﻿# Plano de evolução do Delphi Breakout
 
 Data: 22/10/2026. Ambiente de execução informado: Delphi 13, Windows.
 
-Status: implementação incremental; **E0, E1, E2 e E3 concluídas em 22/10/2026**. O diagnóstico e a referência estão no [relatório da E0](e0-referencia.md); as correções de fluxo, no [resultado da E1](e1-resultados.md). O [resultado da E2](e2-resultados.md) registra o motor independente, os estados, a preparação dos textos para tradução e os testes do motor/adaptador. O [resultado da E3](e3-resultados.md) registra o passo fixo, as colisões contínuas, a bola circular, a raquete arredondada e a validação em quatro configurações. Próxima etapa: E4, renderização.
+Status: implementação incremental; **E0, E1, E2, E3 e E4 concluídas em 22/10/2026**. O diagnóstico e a referência estão no [relatório da E0](e0-referencia.md); as correções de fluxo, no [resultado da E1](e1-resultados.md). O [resultado da E2](e2-resultados.md) registra o motor independente, os estados, a preparação dos textos para tradução e os testes do motor/adaptador. O [resultado da E3](e3-resultados.md) registra o passo fixo, as colisões contínuas, a bola circular, a raquete arredondada e a validação em quatro configurações. O [resultado da E4](e4-resultados.md) registra Canvas, camadas, placar animado, esmaecimento e raquete extensível. Próxima etapa: E5, progressão e feedback.
 
 ## 1. Objetivo e direção
 
@@ -60,6 +60,8 @@ Extrair poucas units com responsabilidades claras. Não criar hierarquias de obj
 | `src/Breakout.Physics.pas` | Geometria contínua, instante de impacto, normais, reflexão e ângulo da raquete; extraída na E3, sem pontuação ou desenho. |
 | `src/Breakout.Loop.pas` | Acumulador de tempo, passos fixos, comandos e diagnóstico de atrasos; extraída na E3, sem relógio do sistema ou VCL. |
 | `src/Breakout.Levels.pas` | Definições e geração de fases a partir de dados e semente explícita. Extrair quando a progressão justificar. |
+| `src/Breakout.Bricks.pas` | Definições explícitas das seis classes, sprites e recompensas, sem VCL; entregue na E4. |
+| `src/Breakout.Presentation.pas` | Fotografia visual, contagem do placar, esmaecimento e viewport, sem VCL; entregue na E4. |
 | `src/Breakout.Renderer.Vcl.pas` | Recursos gráficos, buffer, desenho do cenário, blocos, bola, raquete, HUD e sobreposições. |
 | `UDebug.pas` / `UDebug.dfm` | Exibição de diagnóstico e comandos de inspeção, consumindo uma fotografia do motor. |
 | `tests/Breakout.Tests.dpr` e respectivas units | Testes do motor e da física, executáveis sem abrir a janela do jogo. |
@@ -130,7 +132,7 @@ A primeira melhoria é compor o quadro inteiro em uma única superfície VCL, pr
 - Usar um `TPaintBox` na janela e um `TBitmap` persistente como buffer do quadro. Desenhar no buffer e apresentá-lo no `OnPaint`; o evento de pintura apenas lê o estado. `TPaintBox` fornece o canvas para esse desenho. [Documentação oficial](https://docwiki.embarcadero.com/Libraries/Florence/en/Vcl.ExtCtrls.TPaintBox).
 - Solicitar pintura com `Invalidate` depois da atualização; também permitir repintura normal após minimizar/restaurar ou cobrir a janela, inclusive pausado.
 - Carregar sprites uma vez e recriar buffers somente quando o tamanho necessário mudar. Evitar criar bitmaps, imagens e controles por quadro ou por colisão.
-- Desenhar na ordem: fundo, blocos ativos, raquete, bola, efeitos, HUD e mensagens. HUD e mensagens deixam de ser labels independentes ao final da migração.
+- Compor duas camadas lógicas: a **camada 2**, inferior, contém fundo, blocos, raquete, bola e efeitos de destruição; a **camada 1**, superior, contém pontuação, vidas e mensagens da interface. Desenhar a camada 2 primeiro e a camada 1 por último, garantindo que entidades e efeitos nunca cubram o HUD, mesmo quando suas áreas se sobrepuserem. HUD e mensagens deixam de ser labels independentes ao final da migração.
 - Migrar os sprites embutidos no DFM para recursos incorporados ao executável, preservando transparência e cores. Não depender do diretório de trabalho para encontrar `images/`.
 - Reusar o buffer duplo já habilitado no formulário enquanto for necessário e medir o custo da composição; não acrescentar sucessivas cópias de tela sem benefício observado.
 - Começar com referência lógica de 688 × 453, separando explicitamente a faixa inferior do HUD da área de jogo. Ajustar a altura útil após comparar a posição atual da raquete e dos indicadores.
@@ -140,7 +142,38 @@ A primeira melhoria é compor o quadro inteiro em uma única superfície VCL, pr
 - Em `Ready`, acompanhar a raquete com a bola centralizada e acima dela. Em pausa, congelar também a raquete, coerente com o comportamento pretendido atual.
 - Conferir escala de 100%, 125%, 150% e 200%, nitidez dos sprites, legibilidade do HUD e movimentação entre monitores. O `.dproj` contém configurações `PerMonitorV2`; confirmar o resultado efetivo do build antes de mudar manifestos.
 
-Depois da estabilidade, acrescentar feedback discreto: brilho curto no bloco atingido, partículas limitadas e mensagem de fase concluída. Efeitos usam um estado visual separado e não alteram colisões, sorteios de fases ou pontuação. Sons e novos sprites são opcionais e devem ser avaliados como uma entrega posterior.
+### Classificação e pontuação dos blocos
+
+Ampliação da E4 solicitada pelo usuário em 22/10/2026: explicitar as classes dos blocos e elevar seus valores para favorecer a contagem animada do placar. Antes da E4 existiam seis variantes, com pontos calculados por `(SpriteIndex + 1) * 10`, de 10 a 60. A E4 entregou a tabela de 100 a 600 em `Breakout.Bricks`. A proposta inicial abaixo preserva a proporção e a distribuição existentes; os valores ficam centralizados em uma tabela de definição das classes, com identidade, sprite e pontos, em vez de serem deduzidos pela fórmula do índice da imagem.
+
+| Classe existente | Índice atual do sprite | Pontos atuais | Proposta inicial |
+| --- | ---: | ---: | ---: |
+| 1 | 0 | 10 | 100 |
+| 2 | 1 | 20 | 200 |
+| 3 | 2 | 30 | 300 |
+| 4 | 3 | 40 | 400 |
+| 5 | 4 | 50 | 500 |
+| 6 | 5 | 60 | 600 |
+
+Conferir e documentar a correspondência das classes com as cores/sprites ao implementar. Essa classificação define a recompensa; novas resistências, habilidades ou regras de colisão exigem escopo próprio. Ajustar os testes dos valores por classe e da soma dos pontos, preservando a pontuação única por bloco.
+
+### Placar com contagem animada
+
+- Manter a pontuação real do motor e a pontuação exibida como valores distintos. Ao destruir um bloco, o motor soma imediatamente seus pontos uma única vez. A apresentação recebe o novo total como alvo e aumenta o valor exibido em incrementos de **1 ponto**, até alcançá-lo: `10150 → 10151 → 10152 → … → 10250` para um bloco de 100 pontos.
+- Controlar a contagem por tempo decorrido, com parâmetros visuais centralizados. Proposta inicial para avaliação: `ScoreCountStep = 1` e `ScoreCountIntervalMs = 20`, equivalentes a 50 pontos/s; um acréscimo de 100 leva aproximadamente dois segundos. Esses valores são ajustáveis para testar o efeito de chamar a atenção para o placar, conforme desejado pelo usuário.
+- A pintura mostra o valor atual do contador na cadência disponível. Não prometer que cada inteiro intermediário aparecerá fisicamente em tela em qualquer taxa de quadros: mostrar 100 incrementos distintos a 60 quadros/s exige aproximadamente 1,67 s. O avanço do contador deve ser calculado pelo tempo, sem espera, laço de repintura por ponto ou `ProcessMessages`.
+- Novos acertos acumulam no alvo enquanto a contagem está em andamento, preservando o valor exibido e o progresso; não reiniciar a animação nem perder pontos. Limitar o valor exibido ao total real. O diagnóstico e as regras consultam sempre a pontuação real.
+
+### Esmaecimento do bloco destruído
+
+- Ao impacto, o bloco fica inativo imediatamente para colisão, conclusão de fase e pontuação. Criar somente um efeito visual temporário com o ID, sprite e geometria do bloco, na camada inferior.
+- Fazer sua opacidade cair de 100% a 0% durante `BrickFadeDurationMs`. Proposta inicial: **350 ms**, com ensaios de **250, 350 e 500 ms** para Marcos escolher a sensação desejada. Centralizar a constante/configuração visual para permitir essa alteração em um único lugar. O bloco deve desaparecer progressivamente, sem apagar o fundo ou deixar resíduos.
+- Capturar todos os blocos destruídos desde a última atualização da apresentação, inclusive vários impactos no mesmo passo ou em passos acumulados no mesmo callback. A informação isolada de `LastHitBrickId` não é suficiente. Detectar as transições pelos IDs estáveis ou fornecer o conjunto de eventos necessário, sem criar efeitos dentro do `OnPaint`.
+- Reutilizar os sprites e o buffer; dimensionar/limitar o estado temporário pela quantidade de blocos, sem criar controles ou recarregar bitmaps a cada quadro. A bola pode passar pela imagem em esmaecimento: o bloco já foi destruído no motor.
+
+As duas animações pertencem à apresentação e usam tempo próprio, independente da quantidade de passos da física. A pausa e a perda de foco congelam o tempo visual; a retomada reinicializa sua referência sem salto. Em `Ready` após queda, `LevelComplete`, `Victory` e `GameOver`, manter pintura agendada enquanto houver contagem ou esmaecimento pendente, mesmo com a simulação parada. F2 zera o placar exibido e elimina os efeitos pendentes; carregar outra fase elimina os efeitos da grade anterior e preserva os pontos. A transição de fase continua respondendo ao comando, sem exigir esperar uma animação terminar.
+
+Depois dessa base, avaliar brilho e partículas limitadas como feedback adicional. Sons e novos sprites continuam opcionais para uma entrega posterior.
 
 ## 6. Etapas de implementação
 
@@ -199,19 +232,26 @@ Cada etapa deve resultar em uma alteração pequena e revisável, com build e ve
 
 ### Etapa 4 — Compor e desenhar o quadro
 
+**Concluída:** ver [resultado e evidências da E4](e4-resultados.md). São 191 casos sem VCL por configuração e 47 casos VCL/bitmap, com builds em Win32/Win64 Debug/Release. Timer ajustado para 15 ms após medir a cadência; a física permanece em 120 Hz. A avaliação prolongada e o ensaio de DPI real/múltiplos monitores continuam na consolidação da E6.
+
+Esta etapa estabelece a primeira renderização em canvas VCL, com quadro composto em buffer e apresentação em uma única superfície. Ela fornece a referência para a comparação futura com OpenGL registrada na seção 9. A ampliação livre da janela, o menu inicial e os modos de tela cheia entram nessa evolução posterior à E6.
+
 - Adicionar superfície única, buffer persistente e cache de recursos; retirar os `TImage` de cada entidade depois de conferir equivalência visual.
 - Integrar pintura, transformação de coordenadas, HUD e mensagens; retirar o adaptador temporário.
-- Preservar os sprites, corrigir alinhamento e testar DPI. Adicionar interpolação apenas se a avaliação de movimento justificar.
+- Garantir o HUD na camada 1, acima da camada 2 do campo e de todos os efeitos.
+- Centralizar a classificação dos blocos e seus pontos, usando a tabela inicial de 100 a 600 para avaliação.
+- Acrescentar contagem unitária animada do placar e esmaecimento dos blocos, com os parâmetros e regras de tempo visual definidos na seção 5.
+- Preservar os sprites, corrigir alinhamento e testar DPI. Manter a raquete composta por ponta esquerda, centro e ponta direita: o centro verde com linhas horizontais se estende, enquanto as pontas preservam sua proporção. Desenhar a largura fornecida pelo modelo, preparando aumentos por powerups sem implementar essa mecânica nesta etapa. Adicionar interpolação apenas se a avaliação de movimento justificar.
 - Medir simulação e desenho separadamente, além dos intervalos entre pinturas; atualizar o diagnóstico em torno de 5 vezes por segundo enquanto aberto, sem limitar a física.
 
-**Saída:** movimento visualmente mais fluido, repintura correta e nenhuma criação/destruição de controles durante a partida.
+**Saída:** movimento visualmente mais fluido, repintura correta, HUD sempre acima do campo, placar com contagem animada e blocos esmaecendo após a destruição, sem criar/destruir controles durante a partida nem atrasar as regras do motor. Os ganhos de velocidade e a ausência de flickering devem ser observados e medidos na implementação.
 
 ### Etapa 5 — Completar a progressão e o feedback
 
 - Preservar o gerador atual como primeira fase e acrescentar duas fases pequenas definidas por dados, com distribuição compreensível.
 - Implementar `LevelComplete` e `Victory`; carregar a próxima fase somente por transição explícita.
 - Propor aumento inicial de velocidade de 5% por fase, limitado pela configuração e revisado após jogar. Pontos e vidas continuam entre fases; F2 restaura tudo.
-- Adicionar feedback visual limitado e mensagens claras de pronto, pausa, fim de jogo e vitória.
+- Refinar o feedback e as mensagens de pronto, pausa, fim de jogo e vitória, usando a base de contagem e esmaecimento entregue na E4.
 - Considerar teclado com setas/A/D como melhoria posterior, usando o mesmo comando de movimento do mouse e uma política definida para entradas simultâneas.
 
 **Saída:** ciclo completo de partida, de início até derrota ou vitória, sem acrescentar complexidade desnecessária ao motor.
@@ -235,6 +275,9 @@ Testes automatizados devem cobrir regras e geometria, não reproduzir detalhes i
 | Estados | Pronto → jogando → pausado → jogando; clique/espaço não reiniciam durante pausa; F2 funciona em todos os estados; F1 respeita diagnóstico e pausa. |
 | Vidas | Uma queda desconta exatamente uma vida; zero vidas impede lançamento; nenhuma movimentação extra acontece após reposicionar. |
 | Pontuação | Cada bloco pontua uma vez; F2 zera; formatação de 0, 42, 999999999 e 1000000000 não duplica nem trunca dígitos. |
+| Classes dos blocos | Cada classe usa o sprite e os pontos da definição centralizada; validar a tabela de recompensas e a soma de acertos de classes distintas. |
+| Placar animado | Motor passa de 10150 a 10250 imediatamente; apresentação avança por incrementos unitários até o alvo, sem ultrapassá-lo. Novos acertos durante a contagem se acumulam; tempo final e resultado independem da cadência de pintura. F2, pausa, retomada, queda e conclusão seguem as regras de tempo visual. |
+| Camadas e esmaecimento | Pontos/vidas permanecem acima de bola, raquete, blocos e efeitos em sobreposição deliberada. Opacidade do bloco cai até zero em 250/350/500 ms configurados; o bloco já está inativo e não pontua novamente. Cobrir destruições simultâneas, último bloco, repintura em pausa e ausência de rastros após o efeito. |
 | Paredes | Contatos laterais e superiores mantêm a bola dentro da área e refletem o componente correto. |
 | Blocos | Bola descendo contra a face superior deve sair subindo; bola subindo contra a inferior deve sair descendo. Em contato isolado com a face esquerda, a bola que vai para a direita deve sair para a esquerda; na face direita, o inverso. Repetir esses dois casos com a bola subindo e descendo: inverter somente a velocidade horizontal, preservar a vertical e destruir/pontuar o bloco uma vez. Esses casos devem reproduzir e impedir o defeito relatado de destruir o bloco sem ricochete lateral. Cobrir também cantos, emendas e alta velocidade, sem travamento por sobreposição nem colisão com bloco inativo. |
 | Raquete | Extremos, centro e posições intermediárias devem produzir ângulos proporcionais ao impacto, com velocidade total constante para a dificuldade definida; extremos simétricos produzem saídas espelhadas. Cobrir bola já abaixo da raquete e bola subindo, evitando reflexão indevida. |
@@ -271,4 +314,19 @@ A entrega principal corresponde às etapas 0 a 4: código organizado, motor sepa
 - A apresentação preserva os recursos gráficos existentes, com melhorias de fluidez demonstradas por comparação e medição.
 - Builds e testes passam nas configurações declaradas, com evidência registrada e sem sobrescrever alterações locais do usuário.
 
-Com E0, E1, E2 e E3 concluídas, prosseguir pela E4. A migração para canvas deve acontecer depois que estados e física tiverem limites claros, para permitir identificar a origem de qualquer regressão. Os parâmetros de velocidade, ângulo, cadência e dificuldade são pontos de ajuste durante os testes de jogabilidade.
+Com E0 a E4 concluídas, prosseguir pela E5. A migração para canvas deve acontecer depois que estados e física tiverem limites claros, para permitir identificar a origem de qualquer regressão. Os parâmetros de velocidade, ângulo, cadência e dificuldade são pontos de ajuste durante os testes de jogabilidade.
+
+## 9. Desejos para depois da E6
+
+Registrados por Marcos em 22/10/2026 como direção futura, a explorar depois de concluir as etapas E4, E5 e E6 já definidas. A inspiração declarada do projeto é a experiência de jogar Arkanoid no 386XT; preservar essa sensação de controle e de ricochete ao ampliar a apresentação e a duração das partidas.
+
+| Desejo | Direção para a evolução futura |
+| --- | --- |
+| Escala e janela maior | Permitir aumentar e redimensionar a janela, preservando proporção, geometria lógica, legibilidade e correspondência entre mouse e raquete. O tamanho de apresentação deve permanecer independente da velocidade e das regras da simulação. |
+| Powerup de tamanho da raquete | Ampliar a largura da raquete durante a partida, definindo duração, acumulação, limites e reposicionamento. Preservar as pontas arredondadas e estender somente o centro listrado, como na composição original de um `TPanel` com três `TImages`. A E4 prepara o desenho para largura variável; coleta e regras do powerup ficam para essa evolução. |
+| Menu inicial | Criar uma entrada para iniciar a partida e acessar as opções que forem implementadas, mantendo os textos preparados para internacionalização. Definir navegação e transições antes de integrar o menu à partida. |
+| Tela cheia | Avaliar janela sem bordas ocupando a tela (fullscreen borderless) e tela cheia tradicional, incluindo a possibilidade de modo exclusivo. Comparar troca de modo, perda de foco/retomada e comportamento nos monitores disponíveis antes de escolher quais opções oferecer. |
+| Canvas ou OpenGL | Usar a implementação VCL/Canvas da E4 como referência e experimentar OpenGL em protótipo comparável, preservando o motor e os sprites. Escolher com base em fluidez, ausência de flickering, cadência entre quadros, custo de simulação/desenho, consumo de recursos e compatibilidade observados; a tecnologia fica em aberto até essa avaliação. |
+| Fases por templates e partida contínua | Definir modelos de fases com variações ou geração reproduzível por semente, para que a progressão possa continuar sem esgotar um conjunto finito de fases. Avaliar diversidade, dificuldade limitada e layouts jogáveis. Essa direção mantém a derrota por perda de vidas; a progressão contínua deve ter sua política de conclusão definida ao ser implementada. |
+
+Esses itens são desejos registrados, sem implementação ou escolha antecipada de tecnologia nesta entrega. A E5 continua com as fases finitas e as transições de conclusão/vitória planejadas; a progressão contínua será uma evolução posterior. Os critérios de aceite de E4 a E6 permanecem os definidos nas respectivas etapas. Depois da E6, detalhar experimentos e critérios de escolha para transformar esses desejos nas próximas entregas.

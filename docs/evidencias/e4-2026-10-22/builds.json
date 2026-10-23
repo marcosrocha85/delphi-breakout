@@ -1,0 +1,46 @@
+{
+  "date": "2026-10-22",
+  "toolchain": "Delphi 13 Community, Studio 37.0, IDE Build",
+  "binaries": {
+    "build/e4/binaries/Win32-Debug/Breakout.exe": {
+      "sha256": "de76794efdfdf124de33c4e010fa16f98f41b0ae7c511cf4d28a66df7b8dc46b",
+      "bytes": 2626048
+    },
+    "build/e4/binaries/Win32-Release/Breakout.exe": {
+      "sha256": "3a92c817a6806c1ed573f6596fdf54fe318975a1211df9cd3e600f52860e3621",
+      "bytes": 2626560
+    },
+    "build/e4/binaries/Win64-Debug/Breakout.exe": {
+      "sha256": "df3440abbac9a32a4f20dbd03d6d09dded41343309d0795bcde58ab88631051a",
+      "bytes": 4165120
+    },
+    "build/e4/binaries/Win64-Release/Breakout.exe": {
+      "sha256": "8bb3eb0fe801a87878f9f968dac345cfa57c7c120d27e66c6b760d94c0a8583e",
+      "bytes": 4165632
+    },
+    "build/tests/Win64/Debug/Breakout.Tests.exe": {
+      "sha256": "9b4256e85b4c18cc18012d0d925022f6ec6c0df8805a813a6324bfed5b19e4fb",
+      "bytes": 1934336
+    },
+    "build/tests/Win64/Release/Breakout.Tests.exe": {
+      "sha256": "697a31eba9a8e454a8fb28873724430f2a5f3b2b15bd1b6eee6ceeb322982bac",
+      "bytes": 1928192
+    },
+    "build/tests/Win32/Base/Breakout.Tests.exe": {
+      "sha256": "b3d7a5220c2226722522b13b33940d65a0348bf2c82405b7153d8bc1e3593bae",
+      "bytes": 1144832
+    },
+    "build/tests/Win32/Debug/Breakout.Tests.exe": {
+      "sha256": "d9a3f102760baaa4ee54d279090711164abf9e417923f1dfa5591a4f56e4d181",
+      "bytes": 1183744
+    },
+    "build/tests/Win32/Release/Breakout.Tests.exe": {
+      "sha256": "888708b5a701baabef137500ded516db20b90822b9d401a0bf980bd98c9f7490",
+      "bytes": 1180160
+    },
+    "tools/e0/BaselineRunner.exe": {
+      "sha256": "63ea97d741632e9d1bcbd824243c06b23df96ab48ef330e226c5aec7365392e1",
+      "bytes": 2770432
+    }
+  }
+}

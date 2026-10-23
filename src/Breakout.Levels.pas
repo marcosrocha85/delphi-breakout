@@ -8,6 +8,8 @@ function GenerateLegacyLevel(Seed: Cardinal; Level: Integer): TArray<TBrick>;
 
 implementation
 
+uses Breakout.Bricks;
+
 function GenerateLegacyLevel(Seed: Cardinal; Level: Integer): TArray<TBrick>;
 const
   Colors: array[0..34] of Integer =
@@ -15,6 +17,7 @@ const
 var
   Random: TSeededRandom;
   Row, Col, I: Integer;
+  Definition: TBrickDefinition;
 begin
   Random.Reset(Seed xor Cardinal(Level));
   SetLength(Result, 96);
@@ -27,8 +30,10 @@ begin
       Result[I].Y := 16 + Row * 24;
       Result[I].Width := 50;
       Result[I].Height := 20;
-      Result[I].SpriteIndex := Colors[Random.Next(Length(Colors))];
-      Result[I].Points := (Result[I].SpriteIndex + 1) * 10;
+      Definition := BrickDefinition(TBrickKind(Colors[Random.Next(Length(Colors))]));
+      Result[I].Kind := Definition.Kind;
+      Result[I].SpriteIndex := Definition.SpriteIndex;
+      Result[I].Points := Definition.Points;
       Result[I].Active := True;
     end;
 end;
