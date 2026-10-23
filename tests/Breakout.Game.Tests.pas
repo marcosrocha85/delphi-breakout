@@ -7,7 +7,7 @@ function RunEngineTests(const OutputDirectory: string): Boolean;
 implementation
 
 uses System.SysUtils, System.JSON, System.IOUtils, System.Math,
-  Breakout.Types, Breakout.Game, Breakout.Levels, Breakout.TestScenarios;
+  Breakout.Types, Breakout.Game, Breakout.Levels, Breakout.Bricks, Breakout.TestScenarios;
 
 type
   TEngineTests = class
@@ -19,6 +19,9 @@ type
     procedure LivesAndPoints;
     procedure Completion;
     procedure Determinism;
+    procedure Campaign;
+    procedure LevelDefinitions;
+    procedure SpeedPolicy;
   public
     function Run(const OutputDirectory: string): Boolean;
   end;
@@ -202,7 +205,7 @@ begin
     After := Game.Snapshot;
     Check('continue_loads_next_level_ready_preserving_lives_and_score',
       (After.State = gsReady) and (After.Level = 2) and (After.Score = 100) and
-      (After.Lives = 2) and (After.ActiveBricks = 96));
+      (After.Lives = 2) and (After.ActiveBricks = 20));
     Game.Execute(gcLaunch);
     Game.Fixture(True);
     Game.SetBall(310, 82, 0, 240);
@@ -322,6 +325,171 @@ begin
   Check('invalid_configuration_is_rejected', Valid);
 end;
 
+procedure TEngineTests.LevelDefinitions;
+var
+  A, B: TArray<TBrick>;
+  I, J, Level: Integer;
+  Valid, Same, Raised: Boolean;
+  Definition: TBrickDefinition;
+begin
+  for Level := 1 to CampaignLevelCount do
+  begin
+    A := GenerateLevel(12345, Level);
+    if Level = 1 then B := GenerateLegacyLevel(12345, 1)
+    else B := GenerateLevel(54321, Level);
+    Same := Length(A) = Length(B);
+    Valid := ((Level = 1) and (Length(A) = 96)) or
+      ((Level > 1) and (Length(A) = 20));
+    for I := 0 to High(A) do
+    begin
+      Definition := BrickDefinition(A[I].Kind);
+      Same := Same and (A[I].X = B[I].X) and (A[I].Y = B[I].Y) and
+        (A[I].Kind = B[I].Kind) and (A[I].Points = B[I].Points) and
+        (A[I].SpriteIndex = B[I].SpriteIndex) and (A[I].Id = B[I].Id) and
+        (A[I].Width = B[I].Width) and (A[I].Height = B[I].Height) and
+        (A[I].Active = B[I].Active);
+      Valid := Valid and (A[I].Id = I) and A[I].Active and
+        (A[I].Points = Definition.Points) and (A[I].SpriteIndex = Definition.SpriteIndex) and
+        (A[I].X >= 0) and (A[I].X + A[I].Width <= 688) and (A[I].Y >= 0) and
+        (A[I].Y + A[I].Height < 395) and (A[I].Width > 0) and (A[I].Height > 0);
+      for J := 0 to I - 1 do
+        Valid := Valid and ((A[I].X >= B[J].X + B[J].Width) or
+          (A[I].X + A[I].Width <= B[J].X) or (A[I].Y >= B[J].Y + B[J].Height) or
+          (A[I].Y + A[I].Height <= B[J].Y));
+    end;
+    Check('level_' + IntToStr(Level) + '_deterministic_or_legacy_equivalent', Same);
+    Check('level_' + IntToStr(Level) + '_geometry_ids_rewards', Valid);
+    A[0].Active := False;
+    A := GenerateLevel(12345, Level);
+    Check('level_' + IntToStr(Level) + '_fresh_array', A[0].Active and B[0].Active);
+  end;
+  for Level := 0 to CampaignLevelCount + 1 do
+    if (Level = 0) or (Level > CampaignLevelCount) then
+    begin
+      Raised := False;
+      try A := GenerateLevel(1, Level);
+      except on E: EArgumentOutOfRangeException do Raised := True; end;
+      Check('unsupported_level_' + IntToStr(Level) + '_rejected', Raised);
+    end;
+end;
+
+procedure TEngineTests.Campaign;
+var
+  Game: TGameProbe;
+  Board: TArray<TBrick>;
+  Before, After: TGameSnapshot;
+  I, Level, ExpectedScore: Integer;
+  Valid: Boolean;
+begin
+  Game := TGameProbe.Create(TGameConfig.Default, 12345);
+  try
+    ExpectedScore := 0;
+    for Level := 1 to CampaignLevelCount do
+    begin
+      Before := Game.Snapshot;
+      Check('campaign_ready_' + IntToStr(Level), (Before.State = gsReady) and
+        (Before.Level = Level) and (Before.LevelCount = CampaignLevelCount) and
+        (Before.Score = ExpectedScore) and (Before.Lives = 4 - Level) and
+        SameValue(Hypot(Before.Ball.VelocityX, Before.Ball.VelocityY),
+          240 * Power(1.05, Level - 1), 1.0E-8));
+      Game.Execute(gcLaunch);
+      Board := Before.Bricks;
+      Valid := True;
+      { Arrange isolated top impacts on every real campaign brick, in row order.
+        The board is never replaced; this verifies generation + collision + flow. }
+      for I := 0 to High(Board) do
+      begin
+        Game.SetBall(Board[I].X + (Board[I].Width - Before.Ball.Size) / 2,
+          Board[I].Y - Before.Ball.Size - 1, 0, 240);
+        Game.Step;
+        Inc(ExpectedScore, Board[I].Points);
+        After := Game.Snapshot;
+        Valid := Valid and not After.Bricks[I].Active and
+          (After.Score = ExpectedScore) and (After.ActiveBricks = Length(Board) - I - 1);
+      end;
+      Check('campaign_all_bricks_score_once_' + IntToStr(Level), Valid);
+      if Level < CampaignLevelCount then
+      begin
+        Check('campaign_explicit_completion_' + IntToStr(Level), After.State = gsLevelComplete);
+        Game.Execute(gcLaunch);
+        Check('campaign_continue_does_not_launch_' + IntToStr(Level), Game.State = gsReady);
+        Game.Execute(gcLaunch);
+        Game.PrepareFall;
+        Game.Step;
+        After := Game.Snapshot;
+        Check('campaign_loss_preserves_score_level_speed_' + IntToStr(Level),
+          (After.State = gsReady) and (After.Score = ExpectedScore) and
+          (After.Level = Level + 1) and (After.Lives = 3 - Level) and
+          SameValue(Hypot(After.Ball.VelocityX, After.Ball.VelocityY),
+            240 * Power(1.05, Level), 1.0E-8));
+      end;
+    end;
+    Before := Game.Snapshot;
+    Game.Execute(gcLaunch); Game.Execute(gcDeactivate);
+    Game.Execute(gcTogglePause); Game.Execute(gcDebugStep); Game.Step;
+    After := Game.Snapshot;
+    Check('campaign_final_victory_is_terminal', (After.State = gsVictory) and
+      (After.Score = ExpectedScore) and (After.Level = 3) and (After.Lives = 1) and
+      (Before.Ball.X = After.Ball.X) and (Before.Ball.Y = After.Ball.Y));
+    Game.Execute(gcRestart);
+    After := Game.Snapshot;
+    Check('campaign_restart_restores_board_speed_and_counters', (After.State = gsReady) and
+      (After.Level = 1) and (After.Lives = 3) and (After.Score = 0) and
+      (After.ActiveBricks = 96) and (After.LastHitBrickId = -1) and
+      SameValue(Hypot(After.Ball.VelocityX, After.Ball.VelocityY), 240, 1.0E-8));
+  finally Game.Free; end;
+end;
+
+procedure TEngineTests.SpeedPolicy;
+var
+  Config: TGameConfig;
+  Game: TGameProbe;
+  View: TGameSnapshot;
+  I, Level: Integer;
+  Raised: Boolean;
+begin
+  for I := 0 to 2 do
+  begin
+    Config := TGameConfig.Default;
+    case I of
+      0: Config.MaxBallSpeed := 250;
+      1: Config.LevelSpeedIncrease := 0;
+      2: Config.LevelSpeedIncrease := 1.0E300;
+    end;
+    Game := TGameProbe.Create(Config, 1);
+    try
+      for Level := 1 to CampaignLevelCount do
+      begin
+        View := Game.Snapshot;
+        if (Level = 1) or (I = 1) then
+          Check('speed_policy_' + IntToStr(I) + '_level_' + IntToStr(Level),
+            SameValue(Hypot(View.Ball.VelocityX, View.Ball.VelocityY), 240, 1.0E-8))
+        else Check('speed_policy_' + IntToStr(I) + '_level_' + IntToStr(Level),
+          SameValue(Hypot(View.Ball.VelocityX, View.Ball.VelocityY), Config.MaxBallSpeed, 1.0E-8));
+        Game.Execute(gcLaunch); Game.Fixture(True); Game.SetBall(310, 82, 0, 240); Game.Step;
+        if Level < CampaignLevelCount then Game.Execute(gcLaunch);
+      end;
+    finally Game.Free; end;
+  end;
+  for I := 0 to 6 do
+  begin
+    Config := TGameConfig.Default;
+    case I of
+      0: Config.LevelCount := CampaignLevelCount + 1;
+      1: Config.LevelSpeedIncrease := -0.05;
+      2: Config.LevelSpeedIncrease := NaN;
+      3: Config.LevelSpeedIncrease := Infinity;
+      4: Config.MaxBallSpeed := Config.BallSpeed - 1;
+      5: Config.MaxBallSpeed := NaN;
+      6: Config.MaxBallSpeed := Infinity;
+    end;
+    Raised := False;
+    try Game := TGameProbe.Create(Config, 1); Game.Free;
+    except on E: EArgumentException do Raised := True; end;
+    Check('invalid_campaign_config_' + IntToStr(I) + '_rejected', Raised);
+  end;
+end;
+
 function TEngineTests.Run(const OutputDirectory: string): Boolean;
 var
   Report: TJSONObject;
@@ -334,11 +502,14 @@ begin
       LivesAndPoints;
       Completion;
       Determinism;
+      LevelDefinitions;
+      Campaign;
+      SpeedPolicy;
     except
       on E: Exception do Check('unhandled_exception', False, E.ClassName + ': ' + E.Message);
     end;
     Result := FFailures = 0;
-    Report.AddPair('suite', 'E3 engine flow regressions without VCL');
+    Report.AddPair('suite', 'E5 campaign and engine regressions without VCL');
     Report.AddPair('passed', TJSONBool.Create(Result));
     Report.AddPair('checks', TJSONNumber.Create(FResults.Count));
     Report.AddPair('failures', TJSONNumber.Create(FFailures));

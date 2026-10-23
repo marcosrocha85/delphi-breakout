@@ -69,10 +69,10 @@ After building the corresponding configuration through the IDE:
 
 ```powershell
 .\build\tests\Win64\Debug\Breakout.Tests.exe build\study\console
-.\tools\e0\BaselineRunner.exe --e4 build\study\view
+.\tools\e0\BaselineRunner.exe --e5 build\study\view
 ```
 
-The console has **191 cases**: 46 engine, 104 physics/time, and 41 presentation cases. BaselineRunner has **47 VCL/bitmap checks**. Read the [console instructions](../../tests/README.md), [VCL instructions](../../tools/e4/README.md), and [E4 evidence](../e4-results.md). Console exit code 0 means success; the runner also leaves its window open for evaluation.
+The console has **232 cases**: 87 engine, 104 physics/time, and 41 presentation cases. BaselineRunner has **67 VCL/bitmap checks**. Read the [console instructions](../../tests/README.md), [VCL instructions](../../tools/e5/README.md), and [E5 evidence](../e5-results.md). Console exit code 0 means success; the runner also leaves its window open for evaluation.
 
 A passing test demonstrates the scenario it exercises. Four bitmap scales do not validate every monitor; fifty restarts without continuously growing handles do not prove the absence of every leak; collision fixtures do not make this a universal solver. Keep those boundaries visible when comparing changes.
 

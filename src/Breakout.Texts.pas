@@ -6,10 +6,12 @@ interface
 { Player-facing text stays in resources, ready for Delphi resource translation.
   The engine owns no labels, language selection or presentation strings. }
 resourcestring
-  SGameOver = 'Game Over, Press F2 to Start a New Game . . .';
-  SPaused = 'Game Paused, Press F3 to Continue . . .';
-  SLevelComplete = 'Level Complete, Click or Press Space to Continue . . .';
-  SVictory = 'Victory, Press F2 to Start a New Game . . .';
+  SReady = 'Ready - click or press Space to launch';
+  SGameOver = 'Game over - press F2 to restart';
+  SPaused = 'Paused - press F3 to resume';
+  SLevelComplete = 'Level complete - click or press Space for the next level';
+  SVictory = 'Victory! All levels cleared - press F2 to restart';
+  SLevel = 'Level %d / %d';
   SScore = 'Score:';
   SLives = 'Lives:';
 

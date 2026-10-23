@@ -40,6 +40,9 @@ type
   TGameConfig = record
     Width, Height, PaddleWidth, PaddleHeight, PaddleY, BallSize: Double;
     BallGap, BallSpeed, MaxPaddleAngle, MinPaddleAngle: Double;
+    {** Fractional increase compounded per level (0.05 = 5%). The absolute
+        speed cap must be at least BallSpeed. Life loss reapplies the level speed. }
+    LevelSpeedIncrease, MaxBallSpeed: Double;
     InitialLives, LevelCount: Integer;
     class function Default: TGameConfig; static;
   end;
@@ -49,7 +52,7 @@ type
       Copy when retaining an independently mutable array. }
   TGameSnapshot = record
     State: TGameState;
-    Lives, Score, Level, ActiveBricks, LastHitBrickId: Integer;
+    Lives, Score, Level, LevelCount, ActiveBricks, LastHitBrickId: Integer;
     Seed: Cardinal;
     Ball: TBall;
     Paddle: TPaddle;
@@ -100,10 +103,12 @@ begin
   Result.BallSize := 17;
   Result.BallGap := 8;
   Result.BallSpeed := 240;
+  Result.LevelSpeedIncrease := 0.05;
+  Result.MaxBallSpeed := 300;
   Result.MaxPaddleAngle := 60;
   Result.MinPaddleAngle := 5;
   Result.InitialLives := 3;
-  Result.LevelCount := 1;
+  Result.LevelCount := 3;
 end;
 
 procedure TSeededRandom.Reset(Seed: Cardinal);

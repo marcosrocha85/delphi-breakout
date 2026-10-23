@@ -9,7 +9,9 @@ docs/study/README.md explains the mathematics and experiments.
 Start with @link(Breakout.Types), @link(Breakout.Game) and @link(Breakout.Loop).
 For geometry, read @link(Breakout.Physics). For feedback and drawing, read
 @link(Breakout.Presentation) and @link(TGameRenderer).
-@link(Breakout.Bricks) and @link(Breakout.Levels) define bricks and the grid.
+@link(Breakout.Bricks) and @link(Breakout.Levels) define brick classes and the finite three-board campaign.
+Read docs/study/levels-and-progression.md for explicit level transitions and
+capped difficulty; the first board preserves the original seeded grid.
 
 @section(1 units Conventions)
 Positions: logical units, X rightward and Y downward.
