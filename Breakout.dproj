@@ -182,10 +182,10 @@
         <DCCReference Include="UDebug.pas">
             <Form>FrmDebug</Form>
         </DCCReference>
-        <DCCReference Include="UDM.pas">
-            <Form>DM</Form>
-            <DesignClass>TDataModule</DesignClass>
-        </DCCReference>
+        <DCCReference Include="src\Breakout.Types.pas"/>
+        <DCCReference Include="src\Breakout.Texts.pas"/>
+        <DCCReference Include="src\Breakout.Levels.pas"/>
+        <DCCReference Include="src\Breakout.Game.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

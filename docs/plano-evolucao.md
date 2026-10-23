@@ -2,7 +2,7 @@
 
 Data: 22/10/2026. Ambiente de execução informado: Delphi 13, Windows.
 
-Status: implementação incremental; **E0 e E1 concluídas em 22/10/2026**. O diagnóstico inicial foi produzido por leitura dos fontes, formulários, configurações e imagem de referência. A compilação, os cenários executados e as medições posteriores estão no [relatório da E0](e0-referencia.md). As correções de fluxo, builds e 43 regressões aprovadas estão no [resultado da E1](e1-resultados.md). Próxima etapa: E2, extração do motor e dos estados.
+Status: implementação incremental; **E0, E1 e E2 concluídas em 22/10/2026**. O diagnóstico e a referência estão no [relatório da E0](e0-referencia.md); as correções de fluxo, no [resultado da E1](e1-resultados.md). O [resultado da E2](e2-resultados.md) registra o motor independente, os estados, a preparação dos textos para tradução e os testes do motor/adaptador. Próxima etapa: E3, tempo e física.
 
 ## 1. Objetivo e direção
 
@@ -21,7 +21,7 @@ Premissas de escopo:
 
 ## 2. Diagnóstico com evidências
 
-As linhas abaixo se referem à versão local analisada e mudarão durante a implementação.
+As linhas abaixo se referem aos fontes legados do diagnóstico inicial. Os resultados de E1 e E2 registram os itens já tratados; os defeitos de física continuam na E3. O relato lateral acrescentado pelo usuário permanece identificado separadamente.
 
 | Prioridade | Evidência local | Consequência e ação proposta |
 | --- | --- | --- |
@@ -55,6 +55,8 @@ Extrair poucas units com responsabilidades claras. Não criar hierarquias de obj
 | --- | --- |
 | `UMain.pas` / `UMain.dfm` | Ciclo de vida da janela, leitura da entrada, agendamento, conversão de coordenadas e solicitação de pintura. Eventos pequenos, delegando ao motor. |
 | `src/Breakout.Game.pas` | `TGame`, registros da bola/raquete/blocos, configuração, estados, vidas, pontos, fase e comandos. Sem dependência de formulários ou controles VCL. |
+| `src/Breakout.Types.pas` | Tipos de entidades, configuração, estados/comandos e fotografia; extraídos na E2 para compartilhamento sem VCL. |
+| `src/Breakout.Texts.pas` | Textos da interface em `resourcestring`, preservando a intenção de internacionalização sem acoplar idiomas ao motor. |
 | `src/Breakout.Physics.pas` | Funções de colisão, instante de impacto, normal e reflexão; sem pontuação, labels ou desenho. Extrair junto com a revisão da física. |
 | `src/Breakout.Levels.pas` | Definições e geração de fases a partir de dados e semente explícita. Extrair quando a progressão justificar. |
 | `src/Breakout.Renderer.Vcl.pas` | Recursos gráficos, buffer, desenho do cenário, blocos, bola, raquete, HUD e sobreposições. |
@@ -169,6 +171,8 @@ Cada etapa deve resultar em uma alteração pequena e revisável, com build e ve
 
 ### Etapa 2 — Extrair o motor e os estados
 
+**Concluída:** ver [resultado e evidências da E2](e2-resultados.md). Foram aprovados 46 casos do motor em Win32/Win64 e 52 casos de integração em Win32. O console também está integrado ao grupo da IDE.
+
 - Criar `TGame`, os registros das entidades e a configuração. Usar uma coleção de blocos com IDs estáveis e flag ativo; a VCL passa a refletir os dados.
 - Introduzir os estados e comandos da seção 4; estado completo após cada passo deve ser consultável pelo diagnóstico.
 - Manter um adaptador temporário que sincroniza os controles atuais a partir do motor, sem regras de colisão ou pontuação na sincronização.
@@ -263,4 +267,4 @@ A entrega principal corresponde às etapas 0 a 4: código organizado, motor sepa
 - A apresentação preserva os recursos gráficos existentes, com melhorias de fluidez demonstradas por comparação e medição.
 - Builds e testes passam nas configurações declaradas, com evidência registrada e sem sobrescrever alterações locais do usuário.
 
-Com E0 e E1 concluídas, prosseguir pela E2. A migração para canvas deve acontecer depois que estados e física tiverem limites claros, para permitir identificar a origem de qualquer regressão. Os parâmetros de velocidade, ângulo, cadência e dificuldade são pontos de ajuste durante os testes de jogabilidade.
+Com E0, E1 e E2 concluídas, prosseguir pela E3. A migração para canvas deve acontecer depois que estados e física tiverem limites claros, para permitir identificar a origem de qualquer regressão. Os parâmetros de velocidade, ângulo, cadência e dificuldade são pontos de ajuste durante os testes de jogabilidade.

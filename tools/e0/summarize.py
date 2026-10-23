@@ -57,7 +57,9 @@ def summarize(folder):
         "paddle_left_dx_dy": [integer("paddle_region_0", key) for key in ("dx", "dy")],
         "paddle_center_dx_dy": [integer("paddle_region_1", key) for key in ("dx", "dy")],
         "paddle_right_dx_dy": [integer("paddle_region_2", key) for key in ("dx", "dy")],
-        "brick_top_destroyed_continues_down": integer("brick_top_downward", "bricks") == 0 and integer("brick_top_downward", "dy") > 0,
+        # The E2 fixture keeps a distant second brick to avoid level completion.
+        # This isolated scenario starts at zero score in both harness versions.
+        "brick_top_destroyed_continues_down": int(scenarios["brick_top_downward"]["score"].rsplit(" ", 1)[-1]) > 0 and integer("brick_top_downward", "dy") > 0,
         "pause_stops_timer": scenarios["pause_f3"]["timer_enabled"] == "False",
         "space_during_pause_relaunches": scenarios["space_while_paused"]["timer_enabled"] == "True" and integer("space_while_paused", "ball_y") == 395,
         "space_during_pause_leaves_message_visible": scenarios["space_while_paused"]["message_visible"] == "True",
