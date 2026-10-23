@@ -17,11 +17,11 @@ implementation
 const
   Definitions: array[TBrickKind] of TBrickDefinition = (
     (Kind: bkGreen; SpriteIndex: 0; Points: 100),
-    (Kind: bkYellow; SpriteIndex: 1; Points: 200),
-    (Kind: bkCyan; SpriteIndex: 2; Points: 300),
-    (Kind: bkRed; SpriteIndex: 3; Points: 400),
-    (Kind: bkSilver; SpriteIndex: 4; Points: 500),
-    (Kind: bkGold; SpriteIndex: 5; Points: 600));
+    (Kind: bkYellow; SpriteIndex: 1; Points: 150),
+    (Kind: bkCyan; SpriteIndex: 2; Points: 200),
+    (Kind: bkRed; SpriteIndex: 3; Points: 250),
+    (Kind: bkSilver; SpriteIndex: 4; Points: 400),
+    (Kind: bkGold; SpriteIndex: 5; Points: 500));
 
 function BrickDefinition(Kind: TBrickKind): TBrickDefinition;
 begin

@@ -107,8 +107,8 @@ begin
       Check('painting_read_only', (FrmMain.Presentation.Fades[0].AgeSeconds = 0) and
         (FrmMain.Game.Snapshot.Ball.X = Before.Ball.X));
       Press(VK_F3);
-      for I := 1 to 20 do FrmMain.AdvanceFrame(0.1);
-      Check('score_reaches_target_after_2_seconds', FrmMain.Presentation.DisplayedScore = 100);
+      for I := 1 to 10 do FrmMain.AdvanceFrame(0.1);
+      Check('score_reaches_target_after_1_second', FrmMain.Presentation.DisplayedScore = 100);
       Press(VK_F2); Probe.Fixture(True); FrmMain.RefreshView; Press(VK_SPACE);
       Probe.SetBall(310, 82, 120, 600); FrmMain.AdvanceFrame(FixedDeltaSeconds);
       Check('victory_keeps_visual_timer_alive', (FrmMain.Game.State = gsVictory) and FrmMain.Timer1.Enabled);
@@ -165,10 +165,10 @@ begin
       S.Ball.Y := 350; S.Paddle.Y := 420; V.Reset(S); R.Compose(V,688,453); Ref.Assign(R.Buffer);
       S.Bricks[0].Active := False; V.Sync(S); R.Compose(V,688,453);
       Check('fade_start_same_pixels_as_active', SamePixels(Ref,R.Buffer,100,100,100,100,50,20));
-      V.Advance(0.175,False); R.Compose(V,688,453); SaveFrame('fade-half');
+      V.Advance(BrickFadeDurationMs / 2000.0,False); R.Compose(V,688,453); SaveFrame('fade-half');
       Check('fade_half_darker', GetGValue(ColorToRGB(R.Buffer.Canvas.Pixels[125,110])) <
         GetGValue(ColorToRGB(Ref.Canvas.Pixels[125,110])));
-      V.Advance(0.175,False); R.Compose(V,688,453);
+      V.Advance(BrickFadeDurationMs / 2000.0,False); R.Compose(V,688,453);
       Check('fade_end_restores_background', R.Buffer.Canvas.Pixels[125,110] = clBlack);
       for I := 0 to High(Scales) do
       begin

@@ -2,6 +2,14 @@
 
 Data: 22/10/2026. Base: `2611ded` (E3 integrada). Implementação na branch `codex/e4-canvas`, sem abertura de sessão da Gideon.
 
+## Ajuste após jogar — 23/10/2026
+
+Após avaliar a primeira entrega, Marcos pediu esmaecimento mais curto e contagem mais rápida. `BrickFadeDurationMs` passou de 350 para **250 ms**; `ScoreCountIntervalMs` passou de 20 para **10 ms**, mantendo um ponto por incremento (100 pontos/s: um bloco de 100 em um segundo, de 500 em cinco segundos).
+
+Foi incorporado o balanceamento feito por Marcos em `Breakout.Bricks`: verde **100**, amarelo **150**, ciano **200**, vermelho **250**, prata **400** e ouro **500**. Os testes de valores por classe foram atualizados para essa tabela; os testes temporais passam a verificar o intervalo de 10 ms e a conclusão visual em um segundo para 100 pontos.
+
+Os relatórios abaixo descrevem a entrega original de 22/10. Os ajustes e a validação posterior estão em [evidências de 23/10](evidencias/e4-ajustes-2026-10-23/).
+
 ## Resultado
 
 O jogo desenha um quadro completo em um bitmap persistente e o apresenta no Canvas do formulário com uma cópia. Foram retirados os controles de bola, blocos, raquete e HUD. O formulário tem somente `TTimer` e `TApplicationEvents`; a física contínua e o passo fixo de 120 Hz da E3 permanecem intactos.

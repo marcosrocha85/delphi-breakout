@@ -11,6 +11,7 @@ uses System.SysUtils, System.Math, System.JSON, System.IOUtils,
 
 function RunPresentationTests(const OutputDirectory: string): Boolean;
 const
+  ExpectedPoints: array[TBrickKind] of Integer = (100, 150, 200, 250, 400, 500);
   Rates: array[0..2] of Integer = (30, 60, 144);
   Durations: array[0..2] of Integer = (250, 350, 500);
 var
@@ -47,7 +48,7 @@ begin
     begin
       Definition := BrickDefinition(Kind);
       Check('class_' + IntToStr(Ord(Kind)), (Definition.Kind = Kind) and
-        (Definition.SpriteIndex = Ord(Kind)) and (Definition.Points = (Ord(Kind)+1)*100));
+        (Definition.SpriteIndex = Ord(Kind)) and (Definition.Points = ExpectedPoints[Kind]));
     end;
     for I := 0 to High(Original.Bricks) do
     begin
@@ -64,28 +65,28 @@ begin
     View.Sync(S);
     Check('score_target_immediate_display_deferred', (View.Snapshot.Score = 10250) and
       (View.DisplayedScore = 10150) and View.HasPending);
-    View.Advance(0.019, False);
+    View.Advance(0.009, False);
     Check('score_waits_for_interval', View.DisplayedScore = 10150);
     View.Advance(0.001, False);
     Check('score_increments_by_one', View.DisplayedScore = 10151);
     for I := 2 to 100 do
     begin
       SavedScore := View.DisplayedScore;
-      View.Advance(0.02, False);
+      View.Advance(0.01, False);
       if View.DisplayedScore <> SavedScore + 1 then Inc(Failures);
     end;
     Check('score_reaches_10250_without_overshoot', (View.DisplayedScore = 10250) and not View.HasPending);
     for Rate in Rates do
     begin
       S.Score := 0; View.Reset(S);
-      S.Score := 100; View.Sync(S);
+      S.Score := 200; View.Sync(S);
       for I := 1 to Rate do View.Advance(1.0 / Rate, False);
-      Check('score_rate_' + IntToStr(Rate), View.DisplayedScore = 50);
+      Check('score_rate_' + IntToStr(Rate), View.DisplayedScore = 100);
     end;
     S.Score := 0; View.Reset(S);
     S.Score := 100; View.Sync(S); View.Advance(0.5, False);
     S.Score := 700; View.Sync(S); View.Advance(0.5, False);
-    Check('new_hit_accumulates_target', (View.DisplayedScore = 50) and (View.Snapshot.Score = 700));
+    Check('new_hit_accumulates_target', (View.DisplayedScore = 100) and (View.Snapshot.Score = 700));
     View.Advance(1.0E100, False);
     Check('large_elapsed_bounded_by_target', (View.DisplayedScore = 700) and not View.HasPending);
     for Duration in Durations do

@@ -234,6 +234,8 @@ begin
 end;
 
 procedure TEngineTests.Determinism;
+const
+  ExpectedPoints: array[TBrickKind] of Integer = (100, 150, 200, 250, 400, 500);
 var
   First, Second: TGame;
   A, B: TGameSnapshot;
@@ -256,7 +258,7 @@ begin
         Same := Same and (A.Bricks[I].SpriteIndex = B.Bricks[I].SpriteIndex);
         Valid := Valid and (A.Bricks[I].Id = I) and A.Bricks[I].Active and
           (A.Bricks[I].SpriteIndex >= 0) and (A.Bricks[I].SpriteIndex <= 5) and
-          (A.Bricks[I].Points = (A.Bricks[I].SpriteIndex + 1) * 100);
+          (A.Bricks[I].Points = ExpectedPoints[A.Bricks[I].Kind]);
       end;
       Check('same_seed_generates_same_board_and_launch', Same);
       Check('board_has_unique_stable_ids_and_valid_points', Valid);

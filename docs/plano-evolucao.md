@@ -144,7 +144,7 @@ A primeira melhoria é compor o quadro inteiro em uma única superfície VCL, pr
 
 ### Classificação e pontuação dos blocos
 
-Ampliação da E4 solicitada pelo usuário em 22/10/2026: explicitar as classes dos blocos e elevar seus valores para favorecer a contagem animada do placar. Antes da E4 existiam seis variantes, com pontos calculados por `(SpriteIndex + 1) * 10`, de 10 a 60. A E4 entregou a tabela de 100 a 600 em `Breakout.Bricks`. A proposta inicial abaixo preserva a proporção e a distribuição existentes; os valores ficam centralizados em uma tabela de definição das classes, com identidade, sprite e pontos, em vez de serem deduzidos pela fórmula do índice da imagem.
+Ampliação da E4 solicitada pelo usuário em 22/10/2026: explicitar as classes dos blocos e elevar seus valores para favorecer a contagem animada do placar. Antes da E4 existiam seis variantes, com pontos calculados por `(SpriteIndex + 1) * 10`, de 10 a 60. A E4 entregou inicialmente a tabela de 100 a 600 em `Breakout.Bricks`. Em 23/10/2026, Marcos rebalanceou os valores para verde 100, amarelo 150, ciano 200, vermelho 250, prata 400 e ouro 500; estes são os valores atuais. A proposta inicial abaixo preserva a proporção e a distribuição existentes; os valores ficam centralizados em uma tabela de definição das classes, com identidade, sprite e pontos, em vez de serem deduzidos pela fórmula do índice da imagem.
 
 | Classe existente | Índice atual do sprite | Pontos atuais | Proposta inicial |
 | --- | ---: | ---: | ---: |
@@ -160,14 +160,14 @@ Conferir e documentar a correspondência das classes com as cores/sprites ao imp
 ### Placar com contagem animada
 
 - Manter a pontuação real do motor e a pontuação exibida como valores distintos. Ao destruir um bloco, o motor soma imediatamente seus pontos uma única vez. A apresentação recebe o novo total como alvo e aumenta o valor exibido em incrementos de **1 ponto**, até alcançá-lo: `10150 → 10151 → 10152 → … → 10250` para um bloco de 100 pontos.
-- Controlar a contagem por tempo decorrido, com parâmetros visuais centralizados. Proposta inicial para avaliação: `ScoreCountStep = 1` e `ScoreCountIntervalMs = 20`, equivalentes a 50 pontos/s; um acréscimo de 100 leva aproximadamente dois segundos. Esses valores são ajustáveis para testar o efeito de chamar a atenção para o placar, conforme desejado pelo usuário.
+- Controlar a contagem por tempo decorrido, com parâmetros visuais centralizados. Proposta inicial para avaliação: `ScoreCountStep = 1` e `ScoreCountIntervalMs = 20`, equivalentes a 50 pontos/s; um acréscimo de 100 leva aproximadamente dois segundos. Em 23/10/2026, o intervalo foi reduzido para **10 ms** (100 pontos/s; 100 pontos em um segundo), preservando o incremento unitário. Esses valores são ajustáveis para testar o efeito de chamar a atenção para o placar, conforme desejado pelo usuário.
 - A pintura mostra o valor atual do contador na cadência disponível. Não prometer que cada inteiro intermediário aparecerá fisicamente em tela em qualquer taxa de quadros: mostrar 100 incrementos distintos a 60 quadros/s exige aproximadamente 1,67 s. O avanço do contador deve ser calculado pelo tempo, sem espera, laço de repintura por ponto ou `ProcessMessages`.
 - Novos acertos acumulam no alvo enquanto a contagem está em andamento, preservando o valor exibido e o progresso; não reiniciar a animação nem perder pontos. Limitar o valor exibido ao total real. O diagnóstico e as regras consultam sempre a pontuação real.
 
 ### Esmaecimento do bloco destruído
 
 - Ao impacto, o bloco fica inativo imediatamente para colisão, conclusão de fase e pontuação. Criar somente um efeito visual temporário com o ID, sprite e geometria do bloco, na camada inferior.
-- Fazer sua opacidade cair de 100% a 0% durante `BrickFadeDurationMs`. Proposta inicial: **350 ms**, com ensaios de **250, 350 e 500 ms** para Marcos escolher a sensação desejada. Centralizar a constante/configuração visual para permitir essa alteração em um único lugar. O bloco deve desaparecer progressivamente, sem apagar o fundo ou deixar resíduos.
+- Fazer sua opacidade cair de 100% a 0% durante `BrickFadeDurationMs`. Proposta inicial: **350 ms**, com ensaios de **250, 350 e 500 ms** para Marcos escolher a sensação desejada. Em 23/10/2026, Marcos escolheu **250 ms** como duração atual. Centralizar a constante/configuração visual para permitir essa alteração em um único lugar. O bloco deve desaparecer progressivamente, sem apagar o fundo ou deixar resíduos.
 - Capturar todos os blocos destruídos desde a última atualização da apresentação, inclusive vários impactos no mesmo passo ou em passos acumulados no mesmo callback. A informação isolada de `LastHitBrickId` não é suficiente. Detectar as transições pelos IDs estáveis ou fornecer o conjunto de eventos necessário, sem criar efeitos dentro do `OnPaint`.
 - Reutilizar os sprites e o buffer; dimensionar/limitar o estado temporário pela quantidade de blocos, sem criar controles ou recarregar bitmaps a cada quadro. A bola pode passar pela imagem em esmaecimento: o bloco já foi destruído no motor.
 

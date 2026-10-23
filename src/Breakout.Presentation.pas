@@ -5,8 +5,8 @@ interface
 uses Breakout.Types;
 
 const
-  BrickFadeDurationMs = 350;
-  ScoreCountIntervalMs = 20;
+  BrickFadeDurationMs = 250;
+  ScoreCountIntervalMs = 10;
   ScoreCountStep = 1;
   DebugRefreshSeconds = 0.2;
 
