@@ -2,8 +2,8 @@
 
 Date: 2026-10-23. Base: integrated E5 `82b7b24`.
 Environment: Delphi 13 Community Edition, Windows, VCL.
-Status: Marcos reported the manual route complete except paused diagnostic paddle input;
-the correction is implemented and its focused human retest is pending.
+Status: the manual route exposed paused diagnostic input and visual-stepping issues.
+Both corrections are implemented; the focused visual-stepping retest is pending.
 
 ## Delivered changes
 
@@ -108,6 +108,25 @@ mouse/F1/F10 handlers, presentation synchronization, paused timer, and step coun
 Fresh reports are retained separately from the initial consolidation evidence in
 [evidence/e6-debug-paddle-2026-10-23](evidence/e6-debug-paddle-2026-10-23/README.md).
 
+## Diagnostic visual stepping correction
+
+In follow-up manual testing, Marcos paused during a brick fade and observed
+that F1 advanced physics while the fade stayed frozen. `SendCommand` now advances
+presentation by `FixedDeltaSeconds` for an accepted paused debug step. Existing
+fades and score debt advance before physics, matching `AdvanceFrame`; newly hit
+bricks are synchronized afterward and begin at full opacity with zero fade age.
+A full 250 ms fade takes 30 debug steps from its impact.
+No wall-clock time is consumed while waiting between F1 steps. F1 in Playing or
+without diagnostics does not advance visual feedback.
+
+Nine form-level regression checks cover a fresh F1 impact, a fade paused at
+100 ms, one 1/120 s quantum, three steps reaching half opacity, completion after
+18 steps, the displayed score, frozen timer/step count between commands, closing
+diagnostics, and restart cleanup. The suite now has 85 VCL/bitmap checks.
+The new checks first failed against the previous implementation (five failed
+assertions), then passed with this correction. Fresh evidence is recorded in
+[evidence/e6-debug-visual-2026-10-23](evidence/e6-debug-visual-2026-10-23/README.md).
+
 ## Human report and remaining retest
 
 Marcos's report is the acceptance evidence for the other requested manual checks.
@@ -117,10 +136,11 @@ automated handler and bitmap evidence remains narrower than native human play.
 
 Only this focused human retest is pending:
 
-1. Launch a ball, show diagnostics with F10, and pause with F3.
-2. Move the mouse: the paddle follows and clamps at both edges; the ball stays still.
-3. Press F1 once, then move the mouse again: one simulation step is counted,
-   the paddle follows, and the ball remains still until the next F1.
+1. Launch a ball and show diagnostics with F10.
+2. Hit a brick and pause with F3 while it is fading and the score is counting.
+   Move the mouse: the paddle follows and clamps at both edges; other feedback stays still.
+3. Press F1 repeatedly: each step advances physics, brick fading, and score counting
+   by 1/120 s. The paddle follows the mouse, and feedback stays still between steps.
 4. Hide diagnostics with F10: mouse and F1 leave the paused match frozen.
 5. Resume with F3 and verify normal play.
 

@@ -38,6 +38,7 @@ var
   Results: TJSONArray;
   Failures, I, J, Level, X, Y, BaseGdi, BaseUser, Updates, Resizes, SavedScore: Integer;
   Count: Int64;
+  SavedFadeAge, SavedOpacity: Double;
   Before, S: TGameSnapshot;
   V: TGamePresentation;
   R: TGameRenderer;
@@ -177,6 +178,75 @@ begin
         (S.Ball.X = Before.Ball.X) and (S.Ball.Y = Before.Ball.Y) and
         (FrmMain.GameLoop.Diagnostics.TotalSteps = Count+1) and not FrmMain.Timer1.Enabled);
       Press(VK_F2);
+      { F1 advances existing visual feedback by the same quantum as physics.
+        New impacts start at full opacity, as in the normal frame ordering. }
+      Probe.Fixture; FrmMain.RefreshView; Press(VK_F10); Press(VK_SPACE);
+      Probe.SetBall(310, 82, 0, 240); Press(VK_F3);
+      Count := FrmMain.GameLoop.Diagnostics.TotalSteps; Press(VK_F1);
+      Check('f1_impact_creates_fresh_fade_and_score_debt',
+        (FrmMain.Game.State = gsPaused) and
+        (FrmMain.GameLoop.Diagnostics.TotalSteps = Count+1) and
+        FrmMain.Presentation.Fades[0].Active and
+        (FrmMain.Presentation.Fades[0].AgeSeconds = 0) and
+        (FrmMain.Presentation.FadeOpacity(0) = 1) and
+        (FrmMain.Presentation.DisplayedScore = 0) and
+        (FrmMain.Game.Snapshot.Score = 100));
+      Press(VK_F3); FrmMain.AdvanceFrame(0.1);
+      SavedFadeAge := FrmMain.Presentation.Fades[0].AgeSeconds;
+      SavedOpacity := FrmMain.Presentation.FadeOpacity(0);
+      SavedScore := FrmMain.Presentation.DisplayedScore;
+      Count := FrmMain.GameLoop.Diagnostics.TotalSteps; Press(VK_F1);
+      Check('f1_while_playing_does_not_advance_visuals',
+        (FrmMain.Presentation.Fades[0].AgeSeconds = SavedFadeAge) and
+        (FrmMain.Presentation.DisplayedScore = SavedScore) and
+        (FrmMain.GameLoop.Diagnostics.TotalSteps = Count));
+      Press(VK_F3); Before := FrmMain.Game.Snapshot;
+      FrmMain.AdvanceFrame(1); FrmMain.FormPaint(nil);
+      FrmMain.FormMouseMove(nil, [], 500, 400); FrmMain.RefreshView;
+      Check('paused_mid_fade_freezes_between_debug_steps',
+        SameValue(SavedFadeAge, 0.1, 1.0E-8) and
+        (FrmMain.Presentation.Fades[0].AgeSeconds = SavedFadeAge) and
+        (FrmMain.Presentation.FadeOpacity(0) = SavedOpacity) and
+        (FrmMain.Presentation.DisplayedScore = SavedScore) and
+        (FrmMain.Game.Snapshot.Ball.Y = Before.Ball.Y) and
+        (FrmMain.GameLoop.Diagnostics.TotalSteps = Count) and not FrmMain.Timer1.Enabled);
+      Press(VK_F1);
+      Check('f1_advances_existing_fade_and_score_by_one_quantum',
+        SameValue(FrmMain.Presentation.Fades[0].AgeSeconds,
+          SavedFadeAge + FixedDeltaSeconds, 1.0E-8) and
+        (FrmMain.Presentation.FadeOpacity(0) < SavedOpacity) and
+        (FrmMain.Presentation.DisplayedScore = SavedScore+1) and
+        (FrmMain.GameLoop.Diagnostics.TotalSteps = Count+1) and
+        (FrmMain.Game.State = gsPaused) and not FrmMain.Timer1.Enabled);
+      Press(VK_F1); Press(VK_F1);
+      Check('three_debug_quanta_reach_half_fade_and_five_points',
+        SameValue(FrmMain.Presentation.FadeOpacity(0), 0.5, 1.0E-8) and
+        (FrmMain.Presentation.DisplayedScore = SavedScore+5) and
+        (FrmMain.GameLoop.Diagnostics.TotalSteps = Count+3));
+      SavedFadeAge := FrmMain.Presentation.Fades[0].AgeSeconds;
+      FrmMain.AdvanceFrame(1); FrmMain.FormPaint(nil);
+      Check('debug_visuals_freeze_again_after_stepping',
+        (FrmMain.Presentation.Fades[0].AgeSeconds = SavedFadeAge) and
+        (FrmMain.Presentation.DisplayedScore = SavedScore+5) and
+        (FrmMain.GameLoop.Diagnostics.TotalSteps = Count+3));
+      for I := 1 to 15 do Press(VK_F1);
+      Check('debug_steps_finish_fade_without_resuming_match',
+        not FrmMain.Presentation.Fades[0].Active and
+        (FrmMain.Presentation.FadeOpacity(0) = 0) and
+        (FrmMain.Presentation.DisplayedScore = SavedScore+30) and
+        FrmMain.Presentation.HasPending and
+        (FrmMain.GameLoop.Diagnostics.TotalSteps = Count+18) and
+        (FrmMain.Game.State = gsPaused) and not FrmMain.Timer1.Enabled);
+      Press(VK_F10); SavedFadeAge := FrmMain.Presentation.Fades[0].AgeSeconds;
+      Press(VK_F1); FrmMain.AdvanceFrame(1);
+      Check('f1_without_debug_leaves_visuals_frozen',
+        (FrmMain.Presentation.Fades[0].AgeSeconds = SavedFadeAge) and
+        (FrmMain.Presentation.DisplayedScore = SavedScore+30) and
+        (FrmMain.GameLoop.Diagnostics.TotalSteps = Count+18));
+      Press(VK_F2);
+      Check('restart_clears_stepped_visual_feedback',
+        not FrmMain.Presentation.HasPending and
+        (FrmMain.Presentation.DisplayedScore = 0) and not FrmMain.Timer1.Enabled);
       { E5: drive the real form/loop/presentation across every campaign board.
         Fixture shortens each board to one collision; console tests clear all
         136 real bricks separately. No production skip-level command is added. }

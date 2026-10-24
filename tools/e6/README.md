@@ -30,7 +30,7 @@ After each build, run that configuration's executables, for example:
 .\build\Win64\Release\BaselineRunner.exe --e5 build\e6\Win64-Release\view
 ```
 
-Expect 269 console checks and 76 VCL/bitmap checks with zero failures. Read the
+Expect 269 console checks and 85 VCL/bitmap checks with zero failures. Read the
 JSON reports. The VCL runner leaves a window open; close it before rebuilding
 that executable. Existing E4/E5 command flags and report schemas remain usable.
 
@@ -55,8 +55,10 @@ executable names remain compatible with existing references. Icon/sprite inputs
 remain unchanged; the existing 1.0.1.0 release is not replaced by these builds.
 
 Marcos reported completing the [manual route](../../docs/implementation-plan.md),
-with one issue: the paddle could not move during paused diagnostic stepping.
-The correction allows mouse positioning with diagnostics visible, while the ball,
-clock, and animations remain frozen between F1 steps. The focused human retest
+with paused diagnostic-input issues: the paddle could not move, and follow-up
+testing found that F1 did not advance a partially faded brick.
+The corrections allow mouse positioning with diagnostics visible and advance
+physics, brick fading, and score counting by one 1/120 s quantum per F1. The ball,
+clock, and animations remain frozen between steps. The focused human retest
 is still pending; see [E6 results](../../docs/e6-results.md). No detailed monitor
 setup, duration, or resource measurements were supplied with the user report.

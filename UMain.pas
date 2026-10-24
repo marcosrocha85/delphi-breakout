@@ -93,6 +93,10 @@ var
   Before: TGameState;
 begin
   Before := FGame.State;
+  { Match AdvanceFrame ordering: age existing feedback first, then simulate.
+    Newly hit bricks are synchronized below and start at full opacity. }
+  if (Command = gcDebugStep) and (Before = gsPaused) then
+    FPresentation.Advance(FixedDeltaSeconds, False);
   FLoop.Execute(Command);
   if (Before <> FGame.State) or (Command in [gcRestart, gcDebugStep]) then
     FLastTimestamp := TStopwatch.GetTimeStamp;

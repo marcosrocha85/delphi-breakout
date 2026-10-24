@@ -42,7 +42,7 @@ The group also contains `BaselineRunner.exe` for VCL checks and measurements, an
 | F2 | Restart the match, score, and effects. |
 | F3 | Pause or resume. |
 | F10 | Show or hide diagnostics. |
-| F1, with diagnostics open and the game paused | Execute one simulation step; move the mouse to reposition the paddle between steps. |
+| F1, with diagnostics open and the game paused | Advance physics, brick fading, and score counting by one 1/120 s step; move the mouse to reposition the paddle between steps. |
 
 The cursor is hidden over the game, but the mouse can still leave the window. Losing focus pauses the match; return to the window and press F3 to resume.
 
@@ -60,7 +60,7 @@ The cursor is hidden over the game, but the mouse can still leave the window. Lo
 - Initial speeds of **240 / 252 / 264.6 units/s**: 5% compounded per level, capped by configuration at 300 units/s.
 - Tests that control elapsed time and measurements that distinguish simulation, callbacks, and painting.
 
-The current implementation includes **E6 consolidation** of the [evolution plan](docs/implementation-plan.md): separate build outputs, consistent project settings, and named HUD layout. See [E6 results](docs/e6-results.md), [progression results](docs/e5-results.md), and [VCL checks](tools/e5/README.md). Marcos reported completing the manual route with one paused diagnostic-input issue; its focused retest is pending. The window remains fixed; menus, fullscreen, template-based levels, powerups, and an OpenGL comparison are planned. The [E4 results](docs/e4-results.md) retain the rendering measurements and their limits. The published 1.0.1.0 binaries above precede E5; build this branch to try the campaign.
+The current implementation includes **E6 consolidation** of the [evolution plan](docs/implementation-plan.md): separate build outputs, consistent project settings, and named HUD layout. See [E6 results](docs/e6-results.md), [progression results](docs/e5-results.md), and [VCL checks](tools/e5/README.md). Marcos reported completing the manual route with paused diagnostic-input and visual-stepping issues; the final focused retest is pending. The window remains fixed; menus, fullscreen, template-based levels, powerups, and an OpenGL comparison are planned. The [E4 results](docs/e4-results.md) retain the rendering measurements and their limits. The published 1.0.1.0 binaries above precede E5; build this branch to try the campaign.
 
 ## From a USB backup to a study project
 
