@@ -1,0 +1,218 @@
+{
+  "date": "2026-10-23",
+  "base_commit": "4ac848f9f0eeb5f35805c79df0ebb1fe889efea7",
+  "change": "Open maximized; confine/hide the foreground Playing cursor to the screen-space viewport and release/show it outside play, on focus loss, minimize/hide and destruction.",
+  "build_method": "Eight affected GUI targets rebuilt with full IDE Build; all reported Success. Existing console binaries rerun, not rebuilt; their dependencies are unchanged.",
+  "cursor_test_boundary": "Hidden probe records native calls and simulates foreground eligibility. Automated host disables confinement. Actual foreground confinement/startup and native monitor/DPI changes require human acceptance.",
+  "native_human_acceptance": "pending",
+  "configurations": [
+    {
+      "name": "Win32-Debug",
+      "console_checks": {
+        "engine": 124,
+        "physics": 104,
+        "presentation": 51
+      },
+      "vcl_checks": 150,
+      "pixel_comparisons": 13,
+      "failures": 0,
+      "original_report_sha256": {
+        "engine": "786e36d58ed152c434901b09f2c5aa4f4eb8b4943416c3bd8270548ba8ed6380",
+        "physics": "0fb62d39a17472915187904556c84637a831f392a1427ea1c79a9cccc07c3171",
+        "presentation": "eff101764b662a864ce8f21bae39bad3fb5b5290258700fbdb5978c92a901bec",
+        "view": "515b5d4e109f22bbc634b1ac31c7622e228b8d52d2e9361ddbac0c427d764ad4",
+        "pixel-comparison": "8921518d8babdaed8eee2fe7e197cd3ff5ce530c121f1fa8b01d460df683f5c7"
+      },
+      "binaries": [
+        {
+          "path": "build/Win32/Debug/Breakout.exe",
+          "sha256": "1833b3ca8639bb1d864aa66414069e1445a02087a488a2aaf604528a3ae51a6d",
+          "bytes": 2634752,
+          "machine": "0x14c",
+          "rebuilt_for_followup": true,
+          "modified_at_utc": "2026-10-24T01:39:43.930008+00:00"
+        },
+        {
+          "path": "build/Win32/Debug/BaselineRunner.exe",
+          "sha256": "568e6b9dfa273e2e4a75f97b3510c7e9866f0a02227977ac488bd8fe5574fea9",
+          "bytes": 2798080,
+          "machine": "0x14c",
+          "rebuilt_for_followup": true,
+          "modified_at_utc": "2026-10-24T01:37:42.565378+00:00"
+        },
+        {
+          "path": "build/Win32/Debug/Breakout.Tests.exe",
+          "sha256": "55d682c05f897bc5714368e5836469127f519faeb26f7d5de0268f33cca005ff",
+          "bytes": 1202688,
+          "machine": "0x14c",
+          "rebuilt_for_followup": false,
+          "modified_at_utc": "2026-10-24T01:10:55.719415+00:00"
+        }
+      ]
+    },
+    {
+      "name": "Win32-Release",
+      "console_checks": {
+        "engine": 124,
+        "physics": 104,
+        "presentation": 51
+      },
+      "vcl_checks": 150,
+      "pixel_comparisons": 13,
+      "failures": 0,
+      "original_report_sha256": {
+        "engine": "786e36d58ed152c434901b09f2c5aa4f4eb8b4943416c3bd8270548ba8ed6380",
+        "physics": "0fb62d39a17472915187904556c84637a831f392a1427ea1c79a9cccc07c3171",
+        "presentation": "eff101764b662a864ce8f21bae39bad3fb5b5290258700fbdb5978c92a901bec",
+        "view": "515b5d4e109f22bbc634b1ac31c7622e228b8d52d2e9361ddbac0c427d764ad4",
+        "pixel-comparison": "8921518d8babdaed8eee2fe7e197cd3ff5ce530c121f1fa8b01d460df683f5c7"
+      },
+      "binaries": [
+        {
+          "path": "build/Win32/Release/Breakout.exe",
+          "sha256": "f1cdb74f2bba64fd2716b260a4bd4280fabb218962f8a8d262f0ca4af4d13a13",
+          "bytes": 2629632,
+          "machine": "0x14c",
+          "rebuilt_for_followup": true,
+          "modified_at_utc": "2026-10-24T01:40:42.216194+00:00"
+        },
+        {
+          "path": "build/Win32/Release/BaselineRunner.exe",
+          "sha256": "2e3839ee14374d5867dd78e85125a3f646d040272deaa7066d5ff5a9b1e97323",
+          "bytes": 2789376,
+          "machine": "0x14c",
+          "rebuilt_for_followup": true,
+          "modified_at_utc": "2026-10-24T01:37:10.024418+00:00"
+        },
+        {
+          "path": "build/Win32/Release/Breakout.Tests.exe",
+          "sha256": "5135616ccea7acea95c08974094cd7cf96fb12f067d454ad0dccca2d72f0339e",
+          "bytes": 1195008,
+          "machine": "0x14c",
+          "rebuilt_for_followup": false,
+          "modified_at_utc": "2026-10-24T01:11:43.079998+00:00"
+        }
+      ]
+    },
+    {
+      "name": "Win64-Debug",
+      "console_checks": {
+        "engine": 124,
+        "physics": 104,
+        "presentation": 51
+      },
+      "vcl_checks": 150,
+      "pixel_comparisons": 13,
+      "failures": 0,
+      "original_report_sha256": {
+        "engine": "786e36d58ed152c434901b09f2c5aa4f4eb8b4943416c3bd8270548ba8ed6380",
+        "physics": "0fb62d39a17472915187904556c84637a831f392a1427ea1c79a9cccc07c3171",
+        "presentation": "eff101764b662a864ce8f21bae39bad3fb5b5290258700fbdb5978c92a901bec",
+        "view": "515b5d4e109f22bbc634b1ac31c7622e228b8d52d2e9361ddbac0c427d764ad4",
+        "pixel-comparison": "8921518d8babdaed8eee2fe7e197cd3ff5ce530c121f1fa8b01d460df683f5c7"
+      },
+      "binaries": [
+        {
+          "path": "build/Win64/Debug/Breakout.exe",
+          "sha256": "fe27693c5c75a7713164a549ae31a158406ab14237d7915fc8f18a0bcef012db",
+          "bytes": 4177920,
+          "machine": "0x8664",
+          "rebuilt_for_followup": true,
+          "modified_at_utc": "2026-10-24T01:39:05.197942+00:00"
+        },
+        {
+          "path": "build/Win64/Debug/BaselineRunner.exe",
+          "sha256": "9775a00bbc7e515ac4aade6a0dddc42d45cde094c22fa68f53db4c86a8f909cc",
+          "bytes": 4480000,
+          "machine": "0x8664",
+          "rebuilt_for_followup": true,
+          "modified_at_utc": "2026-10-24T01:34:35.573803+00:00"
+        },
+        {
+          "path": "build/Win64/Debug/Breakout.Tests.exe",
+          "sha256": "b7726e58419f0869b05234b01b5c5fbfec455dcee3702804814772657bf5df5d",
+          "bytes": 1964544,
+          "machine": "0x8664",
+          "rebuilt_for_followup": false,
+          "modified_at_utc": "2026-10-24T01:13:30.840784+00:00"
+        }
+      ]
+    },
+    {
+      "name": "Win64-Release",
+      "console_checks": {
+        "engine": 124,
+        "physics": 104,
+        "presentation": 51
+      },
+      "vcl_checks": 150,
+      "pixel_comparisons": 13,
+      "failures": 0,
+      "original_report_sha256": {
+        "engine": "786e36d58ed152c434901b09f2c5aa4f4eb8b4943416c3bd8270548ba8ed6380",
+        "physics": "0fb62d39a17472915187904556c84637a831f392a1427ea1c79a9cccc07c3171",
+        "presentation": "eff101764b662a864ce8f21bae39bad3fb5b5290258700fbdb5978c92a901bec",
+        "view": "515b5d4e109f22bbc634b1ac31c7622e228b8d52d2e9361ddbac0c427d764ad4",
+        "pixel-comparison": "8921518d8babdaed8eee2fe7e197cd3ff5ce530c121f1fa8b01d460df683f5c7"
+      },
+      "binaries": [
+        {
+          "path": "build/Win64/Release/Breakout.exe",
+          "sha256": "afedf3354f970186d774c8d36a47be1004287bad5213c78086378582e98e3b88",
+          "bytes": 4171264,
+          "machine": "0x8664",
+          "rebuilt_for_followup": true,
+          "modified_at_utc": "2026-10-24T01:41:19.424261+00:00"
+        },
+        {
+          "path": "build/Win64/Release/BaselineRunner.exe",
+          "sha256": "6a5563732d3fe2280adc9bd5d95a7894a9f2236b077623da38d885b15675b32e",
+          "bytes": 4469248,
+          "machine": "0x8664",
+          "rebuilt_for_followup": true,
+          "modified_at_utc": "2026-10-24T01:35:50.535541+00:00"
+        },
+        {
+          "path": "build/Win64/Release/Breakout.Tests.exe",
+          "sha256": "ed25a0c650e5dff8d1c000ee7b4d9b5984b40eb4a2c0ff914ed0a9071d48cd05",
+          "bytes": 1954304,
+          "machine": "0x8664",
+          "rebuilt_for_followup": false,
+          "modified_at_utc": "2026-10-24T01:12:35.520078+00:00"
+        }
+      ]
+    }
+  ],
+  "sources": {
+    "UMain.pas": "81d3217ab4791201713dbd854e5558c245bfb42d342db7d0b9a917840b6d7988",
+    "UMain.dfm": "dbe97bc9e18e0b85b08a141c79fe473046df792d80371d7a9f9b9e554f62b0f9",
+    "tools/e0/BaselineRunner.dpr": "03aab333e896979e4e9273bdf5319b9452ac9d4c1a7e009f19f14cfa06f09c75",
+    "tools/e4/UE4ViewChecks.pas": "8f6868c8a3d1eb5a0391f6faff39f4f2d9ad4db3d692c07d512f0d10413d495f",
+    "src/Breakout.Game.pas": "0c050054bf01a89fe0351b400c461c607613bd85fa2e7976dd91775a9032b4c6",
+    "src/Breakout.Loop.pas": "fac6c18a402c6495dba81918f85be8aee31789f182ea982723106e2269cb4c99",
+    "src/Breakout.Presentation.pas": "1558082b4b7b34c3dfcdc295ccca8600df5bebe5c52ffd33ed57d07ba06e3c49",
+    "src/Breakout.Renderer.Vcl.pas": "707673a177a0dad3d33ebf0355404ebc996e02a03ac508f33ca4f09f7f2ed7ba"
+  },
+  "preserved_local_build_inputs": {
+    "Breakout.dproj": {
+      "sha256": "475e55e520031284ec23f5055760d1ca2bc7505223f052d6fd267ce2bed00397",
+      "unchanged_from_pre_change_backup": true,
+      "included_in_commit": false
+    },
+    "Breakout.res": {
+      "sha256": "a133d4baaa238d6bea57394b9c877741ea59b87985425a1f061178fd6c750054",
+      "unchanged_from_pre_change_backup": true,
+      "included_in_commit": false
+    },
+    "tests/Breakout.Tests.dproj": {
+      "sha256": "2aeb690a3545cee24c6c867e1bf0ce140d64dc2b8282808245c13c0db2a35eaf",
+      "unchanged_from_pre_change_backup": true,
+      "included_in_commit": false
+    },
+    "tools/e0/BaselineRunner.dproj": {
+      "sha256": "9b1dbd959e9cf21ab3edf5f80965acadacf38e7769a24e5796e820ac6d810d98",
+      "unchanged_from_pre_change_backup": true,
+      "included_in_commit": false
+    }
+  }
+}

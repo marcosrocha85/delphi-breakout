@@ -224,13 +224,17 @@ Selected explicitly by Marcos on 2026-10-23 after accepting E6 and authorizing
 PR #10 merge. Base: integrated E6 `648cc82`.
 
 - Enable native border resizing and maximize/restore, starting at the existing
-  client size. The initial DPI-scaled window dimensions define the minimum;
+  client size as the restored bounds and opening maximized. The initial DPI-scaled window dimensions define the minimum;
   VCL scales the constraints during DPI changes.
 - Keep the 688 by 453 logical field and all physics/time rules independent of
   client dimensions. Reuse the existing centered uniform viewport; unused space
   stays black. Do not stretch sprites or force the window to a fixed ratio.
 - Use the same viewport for mouse inversion and rendering. Preserve edge clamps,
   Ready ball attachment, pause, F1 visuals, and focus-loss behavior.
+- Confine and hide the cursor inside the displayed field while Playing in the
+  foreground; release/show it in Ready, pause, terminal states, on focus loss,
+  minimize/hide, handle destruction, and shutdown. Follow window movement,
+  client resizing, and DPI notifications. Pause before using native borders.
 - Cover wide, tall, doubled, and fractional client sizes; minimum bounds,
   persistent buffer reuse, bounded GUI resources, and deterministic trajectories.
 - Rebuild all projects in Win32/Win64 Debug/Release, retain the E6 reference pixel
@@ -240,7 +244,8 @@ Output: a resizable game with unchanged logical mechanics and appearance at its
 original client size. See [E7 results](e7-results.md) and
 [verification instructions](../tools/e7/README.md). Interactive border dragging,
 maximizing/restoring, minimize/focus behavior and real monitor/DPI transitions
-remain manual checks before acceptance. Fullscreen and menus are later work.
+remain manual checks before acceptance. Marcos confirmed that fullscreen and
+borderless fullscreen come after the initial menu; E7 retains a native window.
 
 ## 7. Validation for each delivery
 
@@ -301,7 +306,7 @@ Recorded by Marcos on 2026-10-22 for exploration after the established stages. P
 | Scaling/larger window | Resize while preserving proportions, logical geometry, readability, and mouse mapping. Presentation size stays independent of simulation speed/rules. |
 | Paddle size powerup | Define collection, duration, stacking, bounds, and repositioning. Preserve rounded caps and extend only the striped center, following the original TPanel/three-TImage composition. E4 prepares drawing only. |
 | Initial menu | Start a match/access implemented options with localization-ready text. Define navigation/transitions before integration. |
-| Fullscreen | Evaluate borderless and traditional/exclusive modes, transitions, focus/resume, available monitors; decide supported options after testing. |
+| Fullscreen | After the initial menu, evaluate borderless and traditional/exclusive modes, transitions, focus/resume, available monitors; decide supported options after testing. |
 | Canvas/OpenGL | Use E4 as baseline for a comparable prototype retaining engine/sprites. Choose by observed smoothness/flicker, frame intervals, simulation/drawing cost, resources, and compatibility. |
 | Template levels/endless progression | Seeded templates/variations allowing progression beyond a finite set. Evaluate diversity, bounded difficulty, playable layouts; lives can still end a match. Define completion policy when implementing. |
 

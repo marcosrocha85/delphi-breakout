@@ -2,7 +2,7 @@ unit UMain;
 
 interface
 
-uses Winapi.Windows, Winapi.Messages, System.SysUtils, System.Classes,
+uses Winapi.Windows, Winapi.Messages, System.SysUtils, System.Classes, System.Types,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.ExtCtrls, Vcl.AppEvnts,
   Breakout.Types, Breakout.Game, Breakout.Loop, Breakout.Presentation,
   Breakout.Renderer.Vcl;
@@ -29,10 +29,19 @@ type
     FAppActive: Boolean;
     FDebugElapsed, FSimulationMs: Double;
     FDebugUpdates: Integer;
+    FCursorClipped: Boolean;
+    FCursorClipBounds: TRect;
+    procedure UpdateCursorConfinement;
+    procedure ReleaseCursorConfinement;
     procedure SendCommand(Command: TGameCommand);
     procedure ToggleDebug;
     procedure UpdateDiagnostic(Force: Boolean);
     procedure WMEraseBkgnd(var Message: TWMEraseBkgnd); message WM_ERASEBKGND;
+  protected
+    function CursorWindowActive: Boolean; virtual;
+    function ApplyCursorClip(Bounds: PRect): Boolean; virtual;
+    procedure WndProc(var Message: TMessage); override;
+    procedure DestroyWnd; override;
   public
     destructor Destroy; override;
     class function FormatScore(Value: Integer): string; static;
@@ -65,7 +74,7 @@ begin
   FRenderer := TGameRenderer.Create;
   FAppActive := True;
   FLastTimestamp := TStopwatch.GetTimeStamp;
-  Cursor := crNone;
+  Cursor := crDefault;
   { Keep the initial client readable; VCL scales these window constraints on DPI
     changes. The viewport handles larger client sizes without changing physics. }
   Constraints.MinWidth := Width;
@@ -78,12 +87,84 @@ end;
 
 destructor TFrmMain.Destroy;
 begin
+  ReleaseCursorConfinement;
   if Assigned(Timer1) then Timer1.Enabled := False;
   FreeAndNil(FrmDebug);
   FreeAndNil(FRenderer);
   FreeAndNil(FPresentation);
   FreeAndNil(FLoop);
   FreeAndNil(FGame);
+  inherited;
+end;
+
+function TFrmMain.CursorWindowActive: Boolean;
+begin
+  Result := HandleAllocated and Visible and
+    IsWindowVisible(Handle) and (GetForegroundWindow = Handle) and not IsIconic(Handle);
+end;
+
+function TFrmMain.ApplyCursorClip(Bounds: PRect): Boolean;
+begin
+  Result := Winapi.Windows.ClipCursor(Bounds);
+end;
+
+procedure TFrmMain.ReleaseCursorConfinement;
+begin
+  Cursor := crDefault;
+  if FCursorClipped and ApplyCursorClip(nil) then FCursorClipped := False;
+end;
+
+procedure TFrmMain.UpdateCursorConfinement;
+var
+  Viewport: TViewport;
+  Origin: TPoint;
+  Bounds: TRect;
+begin
+  if not Assigned(FGame) then Exit;
+  if not FAppActive or (FGame.State <> gsPlaying) or
+    (WindowState = wsMinimized) or not CursorWindowActive then
+  begin
+    ReleaseCursorConfinement;
+    Exit;
+  end;
+  Viewport := TViewport.Fit(ClientWidth, ClientHeight);
+  Origin := ClientToScreen(Point(0, 0));
+  { ClipCursor uses screen pixels; round inward to exclude letterbox pixels. }
+  Bounds := Rect(Origin.X + Ceil(Viewport.OffsetX), Origin.Y + Ceil(Viewport.OffsetY),
+    Origin.X + Floor(Viewport.OffsetX + Viewport.Width),
+    Origin.Y + Floor(Viewport.OffsetY + Viewport.Height));
+  if (Bounds.Right <= Bounds.Left) or (Bounds.Bottom <= Bounds.Top) then
+  begin
+    ReleaseCursorConfinement;
+    Exit;
+  end;
+  if not FCursorClipped or not EqualRect(Bounds, FCursorClipBounds) then
+    if ApplyCursorClip(@Bounds) then
+    begin
+      FCursorClipped := True;
+      FCursorClipBounds := Bounds;
+    end;
+  if FCursorClipped then Cursor := crNone else Cursor := crDefault;
+end;
+
+procedure TFrmMain.WndProc(var Message: TMessage);
+begin
+  if ((Message.Msg = WM_ACTIVATE) and (TWMActivate(Message).Active = WA_INACTIVE)) or
+    ((Message.Msg = WM_SIZE) and (Message.WParam = SIZE_MINIMIZED)) or
+    ((Message.Msg = WM_SHOWWINDOW) and (Message.WParam = 0)) then
+    ReleaseCursorConfinement;
+  inherited;
+  case Message.Msg of
+    WM_ACTIVATE: if TWMActivate(Message).Active <> WA_INACTIVE then UpdateCursorConfinement;
+    WM_SIZE: if Message.WParam <> SIZE_MINIMIZED then UpdateCursorConfinement;
+    WM_SHOWWINDOW: if Message.WParam <> 0 then UpdateCursorConfinement;
+    WM_WINDOWPOSCHANGED, WM_DPICHANGED: UpdateCursorConfinement;
+  end;
+end;
+
+procedure TFrmMain.DestroyWnd;
+begin
+  ReleaseCursorConfinement;
   inherited;
 end;
 
@@ -180,6 +261,7 @@ begin
   FPresentation.Sync(FGame.Snapshot);
   Timer1.Enabled := FAppActive and ((FGame.State = gsPlaying) or
     ((FGame.State <> gsPaused) and FPresentation.HasPending));
+  UpdateCursorConfinement;
   UpdateDiagnostic(ForceDiagnostic);
   Invalidate;
 end;
@@ -191,6 +273,7 @@ end;
 
 procedure TFrmMain.FormResize(Sender: TObject);
 begin
+  UpdateCursorConfinement;
   Invalidate;
 end;
 

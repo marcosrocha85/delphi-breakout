@@ -1,0 +1,607 @@
+{
+  "suite": "E5 progression with E4 VCL and bitmap regressions",
+  "checks": 150,
+  "failures": 0,
+  "results": [
+    {
+      "name": "single_surface_no_entity_controls",
+      "passed": true
+    },
+    {
+      "name": "timer_15ms_and_idle_ready",
+      "passed": true
+    },
+    {
+      "name": "f1_without_debug_does_not_launch",
+      "passed": true
+    },
+    {
+      "name": "click_launch",
+      "passed": true
+    },
+    {
+      "name": "real_stopwatch_drives_fixed_steps",
+      "passed": true
+    },
+    {
+      "name": "pause_freezes_launch_and_movement",
+      "passed": true
+    },
+    {
+      "name": "resume_resets_timestamp",
+      "passed": true
+    },
+    {
+      "name": "deactivate_pauses_and_disables_timer",
+      "passed": true
+    },
+    {
+      "name": "explicit_resume_after_activate",
+      "passed": true
+    },
+    {
+      "name": "impact_0_inactive_and_scored",
+      "passed": true
+    },
+    {
+      "name": "impact_0_fade_and_deferred_score",
+      "passed": true
+    },
+    {
+      "name": "impact_0_reflected",
+      "passed": true
+    },
+    {
+      "name": "impact_1_inactive_and_scored",
+      "passed": true
+    },
+    {
+      "name": "impact_1_fade_and_deferred_score",
+      "passed": true
+    },
+    {
+      "name": "impact_1_reflected",
+      "passed": true
+    },
+    {
+      "name": "impact_2_inactive_and_scored",
+      "passed": true
+    },
+    {
+      "name": "impact_2_fade_and_deferred_score",
+      "passed": true
+    },
+    {
+      "name": "impact_2_reflected",
+      "passed": true
+    },
+    {
+      "name": "paused_visual_age_frozen",
+      "passed": true
+    },
+    {
+      "name": "painting_read_only",
+      "passed": true
+    },
+    {
+      "name": "score_reaches_target_after_half_second",
+      "passed": true
+    },
+    {
+      "name": "victory_keeps_visual_timer_alive",
+      "passed": true
+    },
+    {
+      "name": "victory_stops_timer_when_effects_finish",
+      "passed": true
+    },
+    {
+      "name": "f2_clears_pending",
+      "passed": true
+    },
+    {
+      "name": "one_life_per_fall_1",
+      "passed": true
+    },
+    {
+      "name": "one_life_per_fall_2",
+      "passed": true
+    },
+    {
+      "name": "one_life_per_fall_3",
+      "passed": true
+    },
+    {
+      "name": "game_over_cannot_launch",
+      "passed": true
+    },
+    {
+      "name": "wide_paddle_centered_on_input",
+      "passed": true
+    },
+    {
+      "name": "wide_paddle_clamps_left",
+      "passed": true
+    },
+    {
+      "name": "wide_paddle_clamps_right",
+      "passed": true
+    },
+    {
+      "name": "50_restarts_and_debug_toggles_stable_gdi",
+      "passed": true
+    },
+    {
+      "name": "50_restarts_and_debug_toggles_stable_user",
+      "passed": true
+    },
+    {
+      "name": "debug_throttled_to_5hz",
+      "passed": true
+    },
+    {
+      "name": "paused_debug_mouse_moves_paddle_without_advancing",
+      "passed": true
+    },
+    {
+      "name": "paused_debug_mouse_refreshes_presentation",
+      "passed": true
+    },
+    {
+      "name": "f1_debug_step_only_one_fixed_step",
+      "passed": true
+    },
+    {
+      "name": "paused_debug_mouse_moves_again_after_f1",
+      "passed": true
+    },
+    {
+      "name": "paused_debug_mouse_clamps_left",
+      "passed": true
+    },
+    {
+      "name": "paused_debug_mouse_clamps_right",
+      "passed": true
+    },
+    {
+      "name": "closing_debug_restores_frozen_paddle_and_blocks_f1",
+      "passed": true
+    },
+    {
+      "name": "f1_impact_creates_fresh_fade_and_score_debt",
+      "passed": true
+    },
+    {
+      "name": "f1_while_playing_does_not_advance_visuals",
+      "passed": true
+    },
+    {
+      "name": "paused_mid_fade_freezes_between_debug_steps",
+      "passed": true
+    },
+    {
+      "name": "f1_advances_existing_fade_and_score_by_one_quantum",
+      "passed": true
+    },
+    {
+      "name": "three_debug_quanta_reach_half_fade_and_five_points",
+      "passed": true
+    },
+    {
+      "name": "debug_visuals_freeze_again_after_stepping",
+      "passed": true
+    },
+    {
+      "name": "debug_steps_finish_fade_without_resuming_match",
+      "passed": true
+    },
+    {
+      "name": "f1_without_debug_leaves_visuals_frozen",
+      "passed": true
+    },
+    {
+      "name": "restart_clears_stepped_visual_feedback",
+      "passed": true
+    },
+    {
+      "name": "window_has_native_resize_and_maximize",
+      "passed": true
+    },
+    {
+      "name": "window_minimum_preserves_initial_client",
+      "passed": true
+    },
+    {
+      "name": "window_resize_viewport_wide",
+      "passed": true
+    },
+    {
+      "name": "window_resize_and_paint_preserve_match_wide",
+      "passed": true
+    },
+    {
+      "name": "window_buffer_size_and_reuse_wide",
+      "passed": true
+    },
+    {
+      "name": "window_letterbox_is_black_wide",
+      "passed": true
+    },
+    {
+      "name": "window_mouse_and_ready_ball_alignment_wide",
+      "passed": true
+    },
+    {
+      "name": "window_mouse_clamps_both_edges_wide",
+      "passed": true
+    },
+    {
+      "name": "window_resize_viewport_tall",
+      "passed": true
+    },
+    {
+      "name": "window_resize_and_paint_preserve_match_tall",
+      "passed": true
+    },
+    {
+      "name": "window_buffer_size_and_reuse_tall",
+      "passed": true
+    },
+    {
+      "name": "window_letterbox_is_black_tall",
+      "passed": true
+    },
+    {
+      "name": "window_mouse_and_ready_ball_alignment_tall",
+      "passed": true
+    },
+    {
+      "name": "window_mouse_clamps_both_edges_tall",
+      "passed": true
+    },
+    {
+      "name": "window_resize_viewport_double",
+      "passed": true
+    },
+    {
+      "name": "window_resize_and_paint_preserve_match_double",
+      "passed": true
+    },
+    {
+      "name": "window_buffer_size_and_reuse_double",
+      "passed": true
+    },
+    {
+      "name": "window_letterbox_is_black_double",
+      "passed": true
+    },
+    {
+      "name": "window_mouse_and_ready_ball_alignment_double",
+      "passed": true
+    },
+    {
+      "name": "window_mouse_clamps_both_edges_double",
+      "passed": true
+    },
+    {
+      "name": "window_resize_viewport_fractional",
+      "passed": true
+    },
+    {
+      "name": "window_resize_and_paint_preserve_match_fractional",
+      "passed": true
+    },
+    {
+      "name": "window_buffer_size_and_reuse_fractional",
+      "passed": true
+    },
+    {
+      "name": "window_letterbox_is_black_fractional",
+      "passed": true
+    },
+    {
+      "name": "window_mouse_and_ready_ball_alignment_fractional",
+      "passed": true
+    },
+    {
+      "name": "window_mouse_clamps_both_edges_fractional",
+      "passed": true
+    },
+    {
+      "name": "resizing_preserves_trajectory_and_fractional_time_wide",
+      "passed": true
+    },
+    {
+      "name": "resizing_preserves_trajectory_and_fractional_time_tall",
+      "passed": true
+    },
+    {
+      "name": "resizing_preserves_trajectory_and_fractional_time_double",
+      "passed": true
+    },
+    {
+      "name": "resizing_preserves_trajectory_and_fractional_time_fractional",
+      "passed": true
+    },
+    {
+      "name": "resize_preserves_paused_fade_and_score",
+      "passed": true
+    },
+    {
+      "name": "debug_visual_step_survives_resize",
+      "passed": true
+    },
+    {
+      "name": "repeated_resizes_keep_gui_resources_bounded",
+      "passed": true
+    },
+    {
+      "name": "window_initial_state_is_maximized",
+      "passed": true
+    },
+    {
+      "name": "cursor_ready_is_free_and_visible",
+      "passed": true
+    },
+    {
+      "name": "cursor_launch_confines_to_screen_field",
+      "passed": true
+    },
+    {
+      "name": "cursor_unchanged_bounds_do_not_repeat_native_call",
+      "passed": true
+    },
+    {
+      "name": "cursor_pause_releases_and_shows_pointer",
+      "passed": true
+    },
+    {
+      "name": "cursor_paused_debug_step_stays_free",
+      "passed": true
+    },
+    {
+      "name": "cursor_resume_reacquires",
+      "passed": true
+    },
+    {
+      "name": "cursor_background_window_releases",
+      "passed": true
+    },
+    {
+      "name": "cursor_foreground_playing_window_reacquires",
+      "passed": true
+    },
+    {
+      "name": "cursor_app_deactivation_pauses_and_releases",
+      "passed": true
+    },
+    {
+      "name": "cursor_app_activation_does_not_resume_or_capture",
+      "passed": true
+    },
+    {
+      "name": "cursor_resize_excludes_letterbox_0",
+      "passed": true
+    },
+    {
+      "name": "cursor_resize_excludes_letterbox_1",
+      "passed": true
+    },
+    {
+      "name": "cursor_resize_excludes_letterbox_2",
+      "passed": true
+    },
+    {
+      "name": "cursor_resize_excludes_letterbox_3",
+      "passed": true
+    },
+    {
+      "name": "cursor_move_updates_screen_coordinates_without_simulation",
+      "passed": true
+    },
+    {
+      "name": "cursor_native_deactivation_releases_immediately",
+      "passed": true
+    },
+    {
+      "name": "cursor_native_activation_rechecks_capture",
+      "passed": true
+    },
+    {
+      "name": "cursor_minimized_window_stays_free",
+      "passed": true
+    },
+    {
+      "name": "cursor_restored_playing_window_reacquires",
+      "passed": true
+    },
+    {
+      "name": "cursor_handle_recreation_releases_and_reacquires",
+      "passed": true
+    },
+    {
+      "name": "cursor_restart_ready_releases",
+      "passed": true
+    },
+    {
+      "name": "cursor_life_loss_ready_releases",
+      "passed": true
+    },
+    {
+      "name": "cursor_terminal_state_releases_0",
+      "passed": true
+    },
+    {
+      "name": "cursor_terminal_state_releases_1",
+      "passed": true
+    },
+    {
+      "name": "cursor_terminal_state_releases_2",
+      "passed": true
+    },
+    {
+      "name": "cursor_failed_acquisition_does_not_release_unowned_clip",
+      "passed": true
+    },
+    {
+      "name": "cursor_can_acquire_after_native_failure",
+      "passed": true
+    },
+    {
+      "name": "cursor_failed_release_keeps_ownership_for_retry",
+      "passed": true
+    },
+    {
+      "name": "cursor_failed_release_is_retried",
+      "passed": true
+    },
+    {
+      "name": "cursor_form_destruction_releases_owned_clip",
+      "passed": true
+    },
+    {
+      "name": "cursor_checks_leave_desktop_clip_unchanged",
+      "passed": true
+    },
+    {
+      "name": "campaign_ready_board_1",
+      "passed": true
+    },
+    {
+      "name": "campaign_premium_spacing_1",
+      "passed": true
+    },
+    {
+      "name": "ready_message_and_level_feedback_1",
+      "passed": true
+    },
+    {
+      "name": "campaign_terminal_visuals_1",
+      "passed": true
+    },
+    {
+      "name": "campaign_level_complete_waits_1",
+      "passed": true
+    },
+    {
+      "name": "campaign_continue_keeps_score_debt_1",
+      "passed": true
+    },
+    {
+      "name": "campaign_continue_removes_old_fades_1",
+      "passed": true
+    },
+    {
+      "name": "campaign_ready_finishes_debt_then_idles_1",
+      "passed": true
+    },
+    {
+      "name": "campaign_ready_board_2",
+      "passed": true
+    },
+    {
+      "name": "campaign_premium_spacing_2",
+      "passed": true
+    },
+    {
+      "name": "ready_message_and_level_feedback_2",
+      "passed": true
+    },
+    {
+      "name": "campaign_terminal_visuals_2",
+      "passed": true
+    },
+    {
+      "name": "campaign_level_complete_waits_2",
+      "passed": true
+    },
+    {
+      "name": "campaign_continue_keeps_score_debt_2",
+      "passed": true
+    },
+    {
+      "name": "campaign_continue_removes_old_fades_2",
+      "passed": true
+    },
+    {
+      "name": "campaign_ready_finishes_debt_then_idles_2",
+      "passed": true
+    },
+    {
+      "name": "campaign_ready_board_3",
+      "passed": true
+    },
+    {
+      "name": "campaign_premium_spacing_3",
+      "passed": true
+    },
+    {
+      "name": "ready_message_and_level_feedback_3",
+      "passed": true
+    },
+    {
+      "name": "campaign_terminal_visuals_3",
+      "passed": true
+    },
+    {
+      "name": "campaign_victory_rejects_continue",
+      "passed": true
+    },
+    {
+      "name": "campaign_victory_settles_score",
+      "passed": true
+    },
+    {
+      "name": "campaign_f2_resets_presentation_and_match",
+      "passed": true
+    },
+    {
+      "name": "wide_paddle_caps_preserve_original_pixels",
+      "passed": true
+    },
+    {
+      "name": "wide_paddle_stripes_extend_without_seams",
+      "passed": true
+    },
+    {
+      "name": "hud_above_all_field_objects",
+      "passed": true
+    },
+    {
+      "name": "fade_start_same_pixels_as_active",
+      "passed": true
+    },
+    {
+      "name": "fade_half_darker",
+      "passed": true
+    },
+    {
+      "name": "fade_end_restores_background",
+      "passed": true
+    },
+    {
+      "name": "dpi_buffer_0",
+      "passed": true
+    },
+    {
+      "name": "dpi_buffer_1",
+      "passed": true
+    },
+    {
+      "name": "dpi_buffer_2",
+      "passed": true
+    },
+    {
+      "name": "dpi_buffer_3",
+      "passed": true
+    },
+    {
+      "name": "1000_frames_reuse_buffer",
+      "passed": true
+    },
+    {
+      "name": "score_format_long_values",
+      "passed": true
+    }
+  ]
+}

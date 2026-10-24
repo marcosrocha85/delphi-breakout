@@ -44,7 +44,13 @@ The group also contains `BaselineRunner.exe` for VCL checks and measurements, an
 | F10 | Show or hide diagnostics. |
 | F1, with diagnostics open and the game paused | Advance physics, brick fading, and score counting by one 1/120 s step; move the mouse to reposition the paddle between steps. |
 
-The cursor is hidden over the game, but the mouse can still leave the window. Losing focus pauses the match; return to the window and press F3 to resume.
+The game opens maximized, with a native border and title bar. While playing in
+the foreground, the cursor is hidden and confined to the displayed field,
+excluding black margins. Press F3 to pause and release it before using the
+window borders/buttons or another application. Resuming confines it again.
+Ready, paused, completed, and inactive windows leave the cursor free and visible.
+Losing application focus pauses the match; return and press F3 to resume.
+Fullscreen and borderless fullscreen are planned after the initial menu.
 
 ## Techniques already implemented
 

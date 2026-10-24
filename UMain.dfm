@@ -16,6 +16,7 @@ object FrmMain: TFrmMain
   KeyPreview = True
   Position = poMainFormCenter
   StyleElements = [seFont, seBorder]
+  WindowState = wsMaximized
   OnClick = FormClick
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown

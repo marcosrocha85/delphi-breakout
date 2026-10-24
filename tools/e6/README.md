@@ -30,7 +30,7 @@ After each build, run that configuration's executables, for example:
 .\build\Win64\Release\BaselineRunner.exe --e5 build\e6\Win64-Release\view
 ```
 
-The current suite, including E7 resize regressions, expects 279 console checks and 118 VCL/bitmap checks with zero failures. Read the
+The current suite, including E7 resize/cursor regressions, expects 279 console checks and 150 VCL/bitmap checks with zero failures. Read the
 JSON reports. The VCL runner leaves a window open; close it before rebuilding
 that executable. Existing E4/E5 command flags and report schemas remain usable.
 

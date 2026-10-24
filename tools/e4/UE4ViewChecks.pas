@@ -5,17 +5,48 @@ function RunE4ViewChecks(const OutputDirectory: string): Boolean;
 
 implementation
 
-uses System.SysUtils, System.Math, System.JSON, System.IOUtils,
-  Winapi.Windows, Vcl.Graphics, Vcl.Imaging.pngimage, UMain, UDebug,
+uses System.SysUtils, System.Math, System.JSON, System.IOUtils, System.Types,
+  Winapi.Windows, Winapi.Messages, Vcl.Controls, Vcl.Forms, Vcl.Graphics, Vcl.Imaging.pngimage, UMain, UDebug,
   Breakout.Types, Breakout.Game, Breakout.Loop, Breakout.TestScenarios,
   Breakout.Presentation, Breakout.Renderer.Vcl;
 
 type
+  TCursorLog = record
+    Bounds: TRect;
+    Acquires, Releases: Integer;
+    Clipped, FailNext: Boolean;
+  end;
+
+  TCursorProbeForm = class(TFrmMain)
+  public
+    WindowEligible: Boolean;
+    Log: ^TCursorLog;
+    procedure RecreateNativeWindow;
+  protected
+    function CursorWindowActive: Boolean; override;
+    function ApplyCursorClip(Bounds: PRect): Boolean; override;
+  end;
+
   TViewProbe = class(TGameProbe)
     procedure SetCounters(State: TGameState; Score: Integer);
     procedure SetWidth(Width: Double);
     procedure SetFinalLevel;
   end;
+
+function TCursorProbeForm.CursorWindowActive: Boolean;
+begin Result := WindowEligible; end;
+
+function TCursorProbeForm.ApplyCursorClip(Bounds: PRect): Boolean;
+begin
+  Result := not Log^.FailNext; Log^.FailNext := False;
+  if Assigned(Bounds) then Inc(Log^.Acquires) else Inc(Log^.Releases);
+  if not Result then Exit;
+  Log^.Clipped := Assigned(Bounds);
+  if Assigned(Bounds) then Log^.Bounds := Bounds^;
+end;
+
+procedure TCursorProbeForm.RecreateNativeWindow;
+begin RecreateWnd; end;
 
 procedure TViewProbe.SetCounters(State: TGameState; Score: Integer);
 begin FState := State; FScore := Score; end;
@@ -59,6 +90,124 @@ var
   procedure SaveFrame(const Name: string);
   begin
     Png.Assign(R.Buffer); Png.SaveToFile(TPath.Combine(OutputDirectory, Name + '.png'));
+  end;
+  procedure CheckCursorConfinement;
+  const
+    Sizes: array[0..3, 0..1] of Integer =
+      ((1000, 453), (688, 900), (1376, 906), (1101, 733));
+    ExpectedBounds: array[0..3, 0..3] of Integer =
+      ((156, 0, 844, 453), (0, 224, 688, 676),
+       (0, 0, 1376, 906), (0, 5, 1101, 728));
+    EndStates: array[0..2] of TGameState = (gsLevelComplete, gsGameOver, gsVictory);
+  var
+    Form: TCursorProbeForm;
+    Log: TCursorLog;
+    DesktopBefore, DesktopAfter, Bounds: TRect;
+    TopLeft, BottomRight: TPoint;
+    N, Acquires, Releases: Integer;
+    Steps: Int64;
+    function SameRect(const A, B: TRect): Boolean;
+    begin
+      Result := (A.Left = B.Left) and (A.Top = B.Top) and
+        (A.Right = B.Right) and (A.Bottom = B.Bottom);
+    end;
+    procedure Key(Value: Word);
+    begin Form.FormKeyDown(nil, Value, []); end;
+  begin
+    GetClipCursor(DesktopBefore);
+    FillChar(Log, SizeOf(Log), 0);
+    Form := TCursorProbeForm.Create(nil);
+    try
+      Form.Log := @Log; Form.WindowEligible := True;
+      Check('window_initial_state_is_maximized', Form.WindowState = wsMaximized);
+      Form.WindowState := wsNormal;
+      Form.RefreshView;
+      Check('cursor_ready_is_free_and_visible', not Log.Clipped and
+        (Log.Acquires = 0) and (Form.Cursor = crDefault));
+      Key(VK_SPACE);
+      TopLeft := Form.ClientToScreen(Point(0, 0));
+      BottomRight := Form.ClientToScreen(Point(688, 453));
+      Check('cursor_launch_confines_to_screen_field', Log.Clipped and
+        SameRect(Log.Bounds, Rect(TopLeft.X, TopLeft.Y, BottomRight.X, BottomRight.Y)) and
+        (Form.Cursor = crNone));
+      Acquires := Log.Acquires;
+      Form.RefreshView; Form.FormPaint(nil); Form.FormMouseMove(nil, [], 300, 400);
+      Check('cursor_unchanged_bounds_do_not_repeat_native_call', Log.Acquires = Acquires);
+      Key(VK_F3);
+      Check('cursor_pause_releases_and_shows_pointer', not Log.Clipped and
+        (Log.Releases = 1) and (Form.Cursor = crDefault));
+      Steps := Form.GameLoop.Diagnostics.TotalSteps;
+      Form.GameLoop.Execute(gcDebugStep); Form.RefreshView;
+      Check('cursor_paused_debug_step_stays_free', not Log.Clipped and
+        (Form.GameLoop.Diagnostics.TotalSteps = Steps+1) and (Log.Acquires = Acquires));
+      Key(VK_F3);
+      Check('cursor_resume_reacquires', Log.Clipped and (Log.Acquires = Acquires+1));
+      Form.WindowEligible := False; Form.RefreshView;
+      Check('cursor_background_window_releases', not Log.Clipped);
+      Form.WindowEligible := True; Form.RefreshView;
+      Check('cursor_foreground_playing_window_reacquires', Log.Clipped);
+      Form.ApplicationEvents1Deactivate(nil);
+      Check('cursor_app_deactivation_pauses_and_releases', not Log.Clipped and
+        (Form.Game.State = gsPaused));
+      Form.ApplicationEvents1Activate(nil);
+      Check('cursor_app_activation_does_not_resume_or_capture', not Log.Clipped and
+        (Form.Game.State = gsPaused));
+      Key(VK_F3);
+      for N := 0 to High(Sizes) do
+      begin
+        Form.ClientWidth := Sizes[N, 0]; Form.ClientHeight := Sizes[N, 1];
+        TopLeft := Form.ClientToScreen(Point(ExpectedBounds[N, 0], ExpectedBounds[N, 1]));
+        BottomRight := Form.ClientToScreen(Point(ExpectedBounds[N, 2], ExpectedBounds[N, 3]));
+        Check('cursor_resize_excludes_letterbox_' + IntToStr(N), Log.Clipped and
+          SameRect(Log.Bounds, Rect(TopLeft.X, TopLeft.Y, BottomRight.X, BottomRight.Y)));
+      end;
+      Bounds := Log.Bounds; Steps := Form.GameLoop.Diagnostics.TotalSteps;
+      Form.SetBounds(Form.Left+37, Form.Top+19, Form.Width, Form.Height);
+      OffsetRect(Bounds, 37, 19);
+      Check('cursor_move_updates_screen_coordinates_without_simulation',
+        SameRect(Log.Bounds, Bounds) and (Form.GameLoop.Diagnostics.TotalSteps = Steps));
+      Form.Perform(WM_ACTIVATE, WA_INACTIVE, 0);
+      Check('cursor_native_deactivation_releases_immediately', not Log.Clipped);
+      Form.Perform(WM_ACTIVATE, WA_ACTIVE, 0);
+      Check('cursor_native_activation_rechecks_capture', Log.Clipped);
+      Form.WindowState := wsMinimized;
+      Form.Perform(WM_SIZE, SIZE_MINIMIZED, 0); Form.RefreshView;
+      Check('cursor_minimized_window_stays_free', not Log.Clipped);
+      Form.WindowState := wsNormal; Form.RefreshView;
+      Check('cursor_restored_playing_window_reacquires', Log.Clipped);
+      Releases := Log.Releases;
+      Form.RecreateNativeWindow; Form.RefreshView;
+      Check('cursor_handle_recreation_releases_and_reacquires', Log.Clipped and
+        (Log.Releases > Releases));
+      Key(VK_F2);
+      Check('cursor_restart_ready_releases', not Log.Clipped and (Form.Game.State = gsReady));
+      Key(VK_SPACE); TViewProbe(Form.Game).PrepareFall;
+      Form.AdvanceFrame(FixedDeltaSeconds);
+      Check('cursor_life_loss_ready_releases', not Log.Clipped and (Form.Game.State = gsReady));
+      for N := 0 to High(EndStates) do
+      begin
+        Key(VK_F2); Key(VK_SPACE);
+        TViewProbe(Form.Game).SetCounters(EndStates[N], 100); Form.RefreshView;
+        Check('cursor_terminal_state_releases_' + IntToStr(N), not Log.Clipped);
+      end;
+      Key(VK_F2); Log.FailNext := True; Releases := Log.Releases;
+      Key(VK_SPACE); Key(VK_F3);
+      Check('cursor_failed_acquisition_does_not_release_unowned_clip',
+        not Log.Clipped and (Log.Releases = Releases));
+      Key(VK_F3);
+      Check('cursor_can_acquire_after_native_failure', Log.Clipped);
+      Log.FailNext := True; Key(VK_F3);
+      Check('cursor_failed_release_keeps_ownership_for_retry', Log.Clipped);
+      Form.RefreshView;
+      Check('cursor_failed_release_is_retried', not Log.Clipped);
+      Key(VK_F3); Releases := Log.Releases;
+    finally
+      Form.Free;
+    end;
+    Check('cursor_form_destruction_releases_owned_clip', not Log.Clipped and
+      (Log.Releases = Releases+1));
+    Check('cursor_checks_leave_desktop_clip_unchanged', GetClipCursor(DesktopAfter) and
+      SameRect(DesktopBefore, DesktopAfter));
   end;
   procedure CheckWindowResizing;
   const
@@ -385,6 +534,7 @@ begin
         not FrmMain.Presentation.HasPending and
         (FrmMain.Presentation.DisplayedScore = 0) and not FrmMain.Timer1.Enabled);
       CheckWindowResizing;
+      CheckCursorConfinement;
       { E5: drive the real form/loop/presentation across every campaign board.
         Fixture shortens each board to one collision; console tests clear all
         136 real bricks separately. No production skip-level command is added. }

@@ -3,6 +3,8 @@
 Date: 2026-10-23. Base: integrated E6 `648cc82`.
 Environment: Delphi 13 Community Edition, Windows, VCL.
 Status: implemented and automated validation passed; native manual acceptance pending.
+Current validation after the cursor/startup follow-up: 279 console checks,
+150 VCL/bitmap checks, and 13 pixel comparisons per configuration, with zero failures.
 
 Marcos selected the resizable-window delivery after accepting E6 and authorizing
 PR #10 merge. That PR is integrated. The E6 acceptance record is retained in this
@@ -10,8 +12,8 @@ branch because its documentation update arrived after the merge.
 
 ## Delivered behavior
 
-The main form now has a native sizing border and maximize button. It starts at
-the existing client dimensions; its initial DPI-scaled outer dimensions set
+The main form now has a native sizing border and maximize button and opens
+maximized. Restored bounds retain the existing client dimensions; its initial DPI-scaled outer dimensions set
 the minimum window constraints. VCL rescales those constraints on DPI changes.
 AutoScroll is disabled so the client remains the single drawing surface.
 
@@ -22,15 +24,15 @@ can be wide or tall; it is not constrained to the field's aspect ratio.
 
 Rendering and horizontal mouse inversion use the same viewport. Mouse movement
 outside the field still clamps the paddle to its logical edges, and the Ready
-ball follows the paddle's center. Resize only invalidates painting. The model,
+ball follows the paddle's center. Resize updates cursor bounds and invalidates painting. The model,
 fixed-step loop, animation ages, score debt, and controls retain their existing
 behavior; no new resize-specific timing policy was introduced.
 
-Production changes are limited to form properties and initial minimum bounds.
-The existing viewport, renderer, engine, and loop required no implementation
-changes. Menus and fullscreen remain later deliveries.
+The form also manages foreground cursor confinement and its native window
+lifecycle. The existing viewport, renderer, engine, and loop required no
+implementation changes. Fullscreen and borderless fullscreen follow the menu.
 
-## Automated validation
+## Initial resize validation
 
 All three projects used full IDE Build in the already open Delphi group for
 each configuration. The twelve executables were refreshed and their PE
@@ -80,3 +82,31 @@ native focus/DPI messages behave during human interaction.
 
 Keep the PR in draft until Marcos accepts these focused checks. No human E7
 playtest or native DPI transition is claimed by this report.
+
+## Maximized startup and cursor confinement follow-up
+
+Marcos requested opening maximized and keeping the mouse inside the game while
+playing, with fullscreen after the initial menu. The foreground Playing window
+now hides/confines the cursor to the displayed field in screen coordinates,
+excluding black margins. F3 releases/shows it; resuming captures again. Ready,
+level completion, GameOver, Victory, app/form deactivation, minimize/hide,
+handle destruction/recreation, and shutdown release confinement. Window
+movement, size and DPI notifications update the rectangle. A failed acquisition
+does not grant ownership; failed release is retried on the next update.
+
+Thirty-two added checks cover the maximized startup property and cursor policy,
+including four known viewport bounds, screen movement without simulation,
+pause/debug stepping, foreground eligibility, app/native activation, minimize,
+handle recreation, restart/life loss/terminal states, native failure/retry,
+destruction, and unchanged desktop cursor bounds. Calls that would confine the
+shared desktop cursor are recorded by a hidden test form. The automated host
+disables confinement and restores normal bounds for the existing pixel fixtures.
+These are policy/geometry tests, not an actual foreground mouse playtest.
+
+The regression run before implementing confinement failed 16 of 150 checks.
+After implementation all four runners passed 150, and all four existing console
+binaries were rerun with 279 passing checks. Console dependencies did not change,
+so those binaries were not rebuilt for this follow-up. All eight affected GUI
+targets used fresh full IDE Build; all 13 E6 pixel comparisons remained identical
+per configuration. Reports and hashes are in
+[cursor/startup evidence](evidence/e7-cursor-2026-10-23/README.md).
