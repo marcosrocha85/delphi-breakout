@@ -2,7 +2,7 @@
 
 Date: 2026-10-23. Base: integrated E6 `648cc82`.
 Environment: Delphi 13 Community Edition, Windows, VCL.
-Status: implemented and automated validation passed; native manual acceptance pending.
+Status: completed and accepted by Marcos on 2026-10-23; squash merge explicitly authorized.
 Current validation after the cursor/startup follow-up: 279 console checks,
 150 VCL/bitmap checks, and 13 pixel comparisons per configuration, with zero failures.
 
@@ -71,7 +71,7 @@ The pre-existing local project preferences and generated resource were preserved
 byte-for-byte and are outside the E7 commit. The local Delphi knowledge base
 remains ignored by Git.
 
-## Native acceptance still required
+## Native evaluation and acceptance
 
 Follow the [manual checklist](../tools/e7/README.md): drag borders/corners,
 maximize/restore, exercise mouse alignment during Ready and play, resize a
@@ -80,8 +80,10 @@ monitor/DPI transitions where equipment permits, recording the configurations
 used. Programmatic size changes do not establish how Windows modal sizing and
 native focus/DPI messages behave during human interaction.
 
-Keep the PR in draft until Marcos accepts these focused checks. No human E7
-playtest or native DPI transition is claimed by this report.
+Marcos accepted the result on 2026-10-23 and explicitly requested a squash merge
+of PR #11 and a continuation prompt for a new chat. This closes E7. His report
+did not enumerate monitor/DPI configurations or individual checklist results;
+no additional native DPI coverage or measurements are inferred from the acceptance.
 
 ## Maximized startup and cursor confinement follow-up
 

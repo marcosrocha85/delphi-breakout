@@ -2,7 +2,7 @@
 
 Created: 2026-10-22. Updated: 2026-10-23. Runtime environment: Delphi 13, Windows.
 
-Status: incremental implementation; **E0–E4 completed on 2026-10-22**. [E0](e0-baseline.md) records the baseline; [E1](e1-results.md) covers flow fixes; [E2](e2-results.md) extracts the engine and translation-ready text; [E3](e3-results.md) adds fixed-step continuous collision with a circular ball and rounded paddle; [E4](e4-results.md) adds Canvas, layering, animated scoring, fading, and a stretchable paddle. **E5 completed on 2026-10-23** adds a finite campaign and progression feedback; see [E5 results](e5-results.md). **E6 completed and manually accepted on 2026-10-23**; see [E6 results](e6-results.md). **E7 implements the selected resizable-window desire**; native manual validation remains pending.
+Status: incremental implementation; **E0–E4 completed on 2026-10-22**. [E0](e0-baseline.md) records the baseline; [E1](e1-results.md) covers flow fixes; [E2](e2-results.md) extracts the engine and translation-ready text; [E3](e3-results.md) adds fixed-step continuous collision with a circular ball and rounded paddle; [E4](e4-results.md) adds Canvas, layering, animated scoring, fading, and a stretchable paddle. **E5 completed on 2026-10-23** adds a finite campaign and progression feedback; see [E5 results](e5-results.md). **E6 completed and manually accepted on 2026-10-23**; see [E6 results](e6-results.md). **E7 completed and accepted on 2026-10-23**; see [E7 results](e7-results.md). The initial menu precedes fullscreen and borderless fullscreen.
 
 ## 1. Goal and direction
 
@@ -218,7 +218,7 @@ corrections and the focused human retest are recorded in E6 results. Marcos
 confirmed both fixes worked and explicitly authorized merging PR #10. No detailed
 monitor setup or resource measurements were supplied with his report.
 
-### E7 — Resizable window (implemented; native manual validation pending)
+### E7 — Resizable window (completed and accepted on 2026-10-23)
 
 Selected explicitly by Marcos on 2026-10-23 after accepting E6 and authorizing
 PR #10 merge. Base: integrated E6 `648cc82`.
@@ -244,8 +244,10 @@ Output: a resizable game with unchanged logical mechanics and appearance at its
 original client size. See [E7 results](e7-results.md) and
 [verification instructions](../tools/e7/README.md). Interactive border dragging,
 maximizing/restoring, minimize/focus behavior and real monitor/DPI transitions
-remain manual checks before acceptance. Marcos confirmed that fullscreen and
-borderless fullscreen come after the initial menu; E7 retains a native window.
+remain native evaluation scenarios. Marcos accepted E7 on 2026-10-23 and
+explicitly requested the squash merge of PR #11. His acceptance did not specify
+monitor/DPI coverage. Fullscreen and borderless fullscreen come after the
+initial menu; E7 retains a native window.
 
 ## 7. Validation for each delivery
 
@@ -295,7 +297,7 @@ E0–E4 deliver organized code, separated engine, predictable physics, and compo
 - Preserve art and demonstrate smoothness changes by comparison/measurement.
 - Declared builds/tests pass with evidence and without overwriting local user work.
 
-With E0–E6 completed, E7 addresses the resizable-window desire selected by Marcos. Keep simulation boundaries clear before graphics changes so regressions can be located. Speed, angle, cadence, and difficulty remain playtesting parameters.
+With E0–E7 completed, the initial menu precedes fullscreen and borderless fullscreen as confirmed by Marcos. Keep simulation boundaries clear before graphics changes so regressions can be located. Speed, angle, cadence, and difficulty remain playtesting parameters.
 
 ## 9. Desires after E6
 

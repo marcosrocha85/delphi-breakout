@@ -61,6 +61,7 @@ Use the rebuilt game, preferably starting with Win64 Release:
    Check minimum bounds, proportions, text, paddle/cursor alignment, and restore
    behavior. Record actual configurations exercised rather than assuming coverage.
 
-Fullscreen and borderless fullscreen follow the initial menu. Keep the PR in
-draft until this focused native evaluation is accepted. Results
-and evidence are in [E7 results](../../docs/e7-results.md).
+Fullscreen and borderless fullscreen follow the initial menu. Marcos accepted
+E7 and explicitly authorized PR #11 squash merge on 2026-10-23. The checklist
+remains the reproduction route; his acceptance did not enumerate monitor/DPI
+configurations. Results and evidence are in [E7 results](../../docs/e7-results.md).
