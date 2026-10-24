@@ -198,7 +198,7 @@ Output: [Canvas/feedback results](e4-results.md), 191 non-VCL cases per configur
 
 Output: a finite three-board match with explicit Ready transitions, lives/score preservation, 5% compounded level speed capped at 300 units/s, localized state feedback, and a level HUD. See [E5 results](e5-results.md) and [progression chapter](study/levels-and-progression.md) for validation and human playtesting limits.
 
-### E6 — Consolidate project and documentation
+### E6 — Consolidate project and documentation (delivered; diagnostic stepping retest pending)
 
 - Separate executable/DCU outputs by platform/configuration, e.g. build/Win32/Debug and build/Win64/Release.
 - Review duplicate targets imports/legacy project settings with before/after builds; preserve resources/icon.
@@ -209,6 +209,14 @@ Output: a finite three-board match with explicit Ready transitions, lives/score 
 - Run clean Debug/Release builds on Win32/Win64, engine tests, and the manual matrix; record final settings/measurements.
 
 Output: a project another compatible installation can open, build, test, and understand.
+The four-configuration builds, automated tests, embedded-resource comparison,
+and layout extraction are recorded in [E6 results](e6-results.md). Marcos
+authorized incorporating the preserved IDE/form changes and aligning the
+Delphi Blocks title on 2026-10-23. Marcos subsequently reported completing the
+manual route with paused diagnostic-input and visual-stepping issues. Those
+corrections and the focused human retest still pending are recorded in E6 results;
+no detailed
+monitor setup or resource measurements were supplied with his report.
 
 ## 7. Validation for each delivery
 
@@ -237,7 +245,7 @@ Manual Delphi 13 matrix:
 2. Move to paddle extremes; launch by click/Space; check initial ball placement.
 3. Pause, try click/Space, resume; switch apps and verify focus-loss pause.
 4. Lose all lives, reject game-over launch, restart; repeat during motion/pause.
-5. Open F10, pause, step impacts with F1; move the window and verify unchanged physics.
+5. Open F10, pause, reposition the paddle with the mouse between F1 steps; verify the ball, brick fading, and score counter advance once per F1 and freeze between steps. Close F10 and verify mouse/F1 no longer change the paused match. Move the window and verify unchanged physics.
 6. Use a small diagnostic board for level completion/victory.
 7. Minimize/restore and cover/uncover during play/pause; check repaint and resume jumps.
 8. Test DPI scales and real monitor movement where available; verify mouse/paddle correspondence.

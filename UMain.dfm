@@ -3,7 +3,7 @@ object FrmMain: TFrmMain
   Top = 107
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
-  Caption = 'Delphi Breakout'
+  Caption = 'Delphi Blocks'
   ClientHeight = 453
   ClientWidth = 688
   Color = clBlack
@@ -32,7 +32,7 @@ object FrmMain: TFrmMain
   object ApplicationEvents1: TApplicationEvents
     OnActivate = ApplicationEvents1Activate
     OnDeactivate = ApplicationEvents1Deactivate
-    Left = 88
+    Left = 104
     Top = 8
   end
 end

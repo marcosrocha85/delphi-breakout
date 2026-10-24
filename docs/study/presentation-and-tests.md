@@ -68,11 +68,11 @@ The VCL runner complements these tests with a real clock, form handlers, and ren
 After building the corresponding configuration through the IDE:
 
 ```powershell
-.\build\tests\Win64\Debug\Breakout.Tests.exe build\study\console
-.\tools\e0\BaselineRunner.exe --e5 build\study\view
+.\build\Win64\Debug\Breakout.Tests.exe build\study\console
+.\build\Win32\Debug\BaselineRunner.exe --e5 build\study\view
 ```
 
-The console has **262 cases**: 117 engine, 104 physics/time, and 41 presentation cases. BaselineRunner has **70 VCL/bitmap checks**. Read the [console instructions](../../tests/README.md), [VCL instructions](../../tools/e5/README.md), and [E5 evidence](../e5-results.md). Console exit code 0 means success; the runner also leaves its window open for evaluation.
+The console has **269 cases**: 124 engine, 104 physics/time, and 41 presentation cases. BaselineRunner has **85 VCL/bitmap checks**. Read the [console instructions](../../tests/README.md), [VCL instructions](../../tools/e5/README.md), and [E5 evidence](../e5-results.md). Console exit code 0 means success; the runner also leaves its window open for evaluation.
 
 A passing test demonstrates the scenario it exercises. Four bitmap scales do not validate every monitor; fifty restarts without continuously growing handles do not prove the absence of every leak; collision fixtures do not make this a universal solver. Keep those boundaries visible when comparing changes.
 

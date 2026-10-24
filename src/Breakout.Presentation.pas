@@ -36,7 +36,8 @@ type
     {** Fits the logical field without stretching; nonpositive dimensions
         produce a zero viewport. This does not resize the application window. }
     class function Fit(ClientWidth, ClientHeight: Integer;
-      LogicalWidth: Double = 688; LogicalHeight: Double = 453): TViewport; static;
+      LogicalWidth: Double = LogicalFieldWidth;
+      LogicalHeight: Double = LogicalFieldHeight): TViewport; static;
     {** Inverts horizontal input; a zero viewport safely returns zero. }
     function ToLogicalX(ClientX: Double): Double;
   end;

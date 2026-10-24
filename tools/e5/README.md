@@ -5,14 +5,14 @@ through the IDE. The project stays in `tools/e0`; the shared VCL suite stays in
 `tools/e4/UE4ViewChecks.pas` to retain all existing rendering regressions.
 
 ```powershell
-.\tools\e0\BaselineRunner.exe --e5 build\e5\view
+.\build\Win32\Debug\BaselineRunner.exe --e5 build\e5\view
 ```
 
 With no arguments, output is `build/e5/latest`. `--e4` remains an alias.
 The runner executes the shared checks and leaves its window open with a
 PASSED/FAILED caption. Read `view.json`; a window appearing alone is not proof.
 
-The current suite runs 70 checks, including a premium-spacing check for each actual loaded board. The E5 scenarios use actual form handlers, loop, and presentation to move
+The current suite runs 85 checks, including a premium-spacing check for each actual loaded board. The E5 scenarios use actual form handlers, loop, and presentation to move
 through all three levels, with one-brick fixtures for terminal impacts. They
 check the generated board sizes, Ready feedback, a separate continuation and
 launch, score/life preservation, accumulator reset, pending score across levels,

@@ -42,8 +42,11 @@ type
         once only when paused; it can change state after a loss or final brick. }
     procedure Execute(Command: TGameCommand);
     {** Moves the paddle in Ready/Playing and carries the ready ball.
-        @param(CenterX Requested center in logical units, clamped to the field.) }
-    procedure MovePaddle(CenterX: Double);
+        Paused diagnostics may opt in to reposition only the paddle between
+        debug steps; the ball and simulation remain frozen.
+        @param(CenterX Requested center in logical units, clamped to the field.)
+        @param(AllowPaused Explicit permission from the diagnostics input adapter.) }
+    procedure MovePaddle(CenterX: Double; AllowPaused: Boolean = False);
     {** Advances one FixedDeltaSeconds quantum only while Playing.
         Earliest impacts consume time, reflect velocity and continue the
         remaining interval, up to MaxImpactsPerStep. }
@@ -167,9 +170,10 @@ begin
   end;
 end;
 
-procedure TGame.MovePaddle(CenterX: Double);
+procedure TGame.MovePaddle(CenterX: Double; AllowPaused: Boolean);
 begin
-  if not (FState in [gsReady, gsPlaying]) then Exit;
+  if not ((FState in [gsReady, gsPlaying]) or
+    (AllowPaused and (FState = gsPaused))) then Exit;
   FPaddle.X := EnsureRange(CenterX - FPaddle.Width / 2, 0.0,
     FConfig.Width - FPaddle.Width);
   if FState = gsReady then

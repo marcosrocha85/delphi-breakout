@@ -1,4 +1,4 @@
-@title(Delphi Breakout - engine API)
+@title(Delphi Blocks - engine API)
 @shortTitle(Home)
 
 This reference is generated from Pascal interface comments. Contracts describe

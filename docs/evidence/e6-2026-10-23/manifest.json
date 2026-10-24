@@ -1,0 +1,194 @@
+{
+  "date": "2026-10-23",
+  "base": "82b7b24356c561ed62aaf3604eefdc19be53ae0b",
+  "build_method": "Delphi 13 Community Edition IDE, existing DelphiBlocks.groupproj; full Build into initially empty target directories",
+  "matrix": [
+    {
+      "platform": "Win32",
+      "configuration": "Debug",
+      "game_build": "passed",
+      "console_checks": 262,
+      "vcl_checks": 70,
+      "identical_pixel_comparisons": 13,
+      "failures": 0
+    },
+    {
+      "platform": "Win32",
+      "configuration": "Release",
+      "game_build": "passed",
+      "console_checks": 262,
+      "vcl_checks": 70,
+      "identical_pixel_comparisons": 13,
+      "failures": 0
+    },
+    {
+      "platform": "Win64",
+      "configuration": "Debug",
+      "game_build": "passed",
+      "console_checks": 262,
+      "vcl_checks": 70,
+      "identical_pixel_comparisons": 13,
+      "failures": 0
+    },
+    {
+      "platform": "Win64",
+      "configuration": "Release",
+      "game_build": "passed",
+      "console_checks": 262,
+      "vcl_checks": 70,
+      "identical_pixel_comparisons": 13,
+      "failures": 0
+    }
+  ],
+  "sources": {
+    "Breakout.dpr": "7947b50ee918f5fb93c8d15698f3608b85602b2c4723a380c427d062d24b4035",
+    "Breakout.dproj": "0447aed3792e049147d92b18c1b7dc04d4328ebb134443031e87b48078cf4e35",
+    "Breakout.res": "cf2dbea6608c9d1ee868024cd5210953b0136b72065a4b860390f988e2129b33",
+    "Breakout_Icon.ico": "79ec83d679faad4a8208a952230e69fbd2f2e26629e65e31c6c6215f79c0bf21",
+    "resources/Ball.bmp": "581a3fb72c7199e73f7f785104960d70fcad56f4a5804b267a8787b0fff7147d",
+    "resources/Breakout.Sprites.rc": "76d03f6217b65e39dd7820d732f873c7622914c163958d9a6fee58f5c06eb420",
+    "resources/Breakout.Sprites.res": "8100d5b20515d21f7da132c3fbbfc070c35cf08abc42e491d810b6dcb27f126a",
+    "resources/Bricks.imagelist": "fbcd5c871275aa4cb94c4353e814dc95a2b348e5836fb2c09ee1f2c623032ab2",
+    "resources/ImgPlayerL.bmp": "be3ed4bf9ee43bbbef1378d5a00f26563eb425a7ca2ddc7551366a1f53cef59c",
+    "resources/ImgPlayerM.bmp": "d7dc10a436966071e305727005f61293275ec6ae1494fc1586929ce898980ef4",
+    "resources/ImgPlayerR.bmp": "080ced0eb5aba610d9b3f9f1b65b12e3d5f78e5b3e954b2bee61d054b713a79e",
+    "resources/provenance.json": "7c5b62c13789e2361592409556a17d0a45541d1981a22bac140cf08c54dbfcbc",
+    "resources/README.md": "44843a9f99c5ae09be5f9fe8a10e61bf7d56121bbf09356536c82e8c7f96cf0a",
+    "resources/VLives.bmp": "3eab88ba3a98d82a7328fc17e3bcdb57fa33ae8664f0af13bd45ccecc04d54a8",
+    "src/Breakout.Bricks.pas": "bdb85a220c9a047eeaf34983cabf8e3b4f5ca97450a6fdb01627fc8a6e1e985e",
+    "src/Breakout.Game.pas": "ff0589d9427c37509c5d79abef431c19a946e1b13a73982138a98f093668fec7",
+    "src/Breakout.Levels.pas": "5c7d1900827a63c18b847efd0e9446a5ea2ebd762bf2958152ccecf936dcabc4",
+    "src/Breakout.Loop.pas": "fac6c18a402c6495dba81918f85be8aee31789f182ea982723106e2269cb4c99",
+    "src/Breakout.Physics.pas": "0281c52ec873fa8a632ffc030ec32ff169a0ea93474961f1633fb6485de8ff6f",
+    "src/Breakout.Presentation.pas": "1558082b4b7b34c3dfcdc295ccca8600df5bebe5c52ffd33ed57d07ba06e3c49",
+    "src/Breakout.Renderer.Vcl.pas": "707673a177a0dad3d33ebf0355404ebc996e02a03ac508f33ca4f09f7f2ed7ba",
+    "src/Breakout.Texts.pas": "739044301260b52ac34a37a2d1ea9f4de898dff03f4db6eb0a72b880a161534c",
+    "src/Breakout.Types.pas": "14d97919dffa44bef1ecde577b795ddd3e67bce8be5ff246d5905ac57ac1658b",
+    "tests/Breakout.Game.Tests.pas": "0d5475fb164516e9752b3a0403d2682f7021eef9de70b4045873116900e5aa7d",
+    "tests/Breakout.Physics.Tests.pas": "841b59154abaf877d2b0217befe242ed65defffe6fb42246d70f92bdc79556b4",
+    "tests/Breakout.Presentation.Tests.pas": "a04817061b5715f610d1bf51d335485ea316e850a6ea2e2805ed88e31f91f72b",
+    "tests/Breakout.Tests.dpr": "c9df25b7fcbbe79ad1baa16304ff02fba6fd98fa74b9c1bfe23c6787cbcf03db",
+    "tests/Breakout.Tests.dproj": "241f42dd21b7f4c9a75c4b9458f4d3138a84de4023d28b0ef39092e4ff942559",
+    "tests/Breakout.TestScenarios.pas": "c413adb88b67055d6004e55188e46590fbb8636423133a371ef91f9a08faa9d7",
+    "tools/e0/BaselineRunner.dpr": "94f3219d8aa35f3566bc0c626e4b5702f245265c7185e9e9d37ec6565c7b99fb",
+    "tools/e0/BaselineRunner.dproj": "b75f81261834702752165a2387b3ecfdd483b22e45b41a480b010d480eb92bd9",
+    "tools/e4/UE4ViewChecks.pas": "ca92e743373dd10a6ac048c175569d05e62ed6e7a14d528aee331ecf13c1946c",
+    "tools/e6/compare_frames.py": "595a02a680bee669610ca7b4e072e496d32fbf5150f71a124b66a32b79962b32",
+    "UDebug.pas": "bc125c9d07a5a1f9d37fc97a0036f11154b98de7b03136d1264d63889f1f9592",
+    "UMain.dfm": "bd6fb50fee104f78322b53af2bf88753b16599535d9f94b2c8fcec8a8580b5cf",
+    "UMain.pas": "b87504ca8dddd2237fa12cb8b29c02a1ebe867b07df3b26c1f20cf3edd568ee1"
+  },
+  "executables": {
+    "build/Win32/Debug/Breakout.exe": {
+      "sha256": "5d6b1d2a7546e9d8fb445a7ab34d8fa52d365329326cd8a0c5b2cd754a41da09",
+      "bytes": 2633728,
+      "machine": "0x14c"
+    },
+    "build/Win32/Debug/Breakout.Tests.exe": {
+      "sha256": "8a60872f325a088a4352314630b41eabd79b01da1fb3f1a1a337f445a7a53f5c",
+      "bytes": 1199104,
+      "machine": "0x14c"
+    },
+    "build/Win32/Debug/BaselineRunner.exe": {
+      "sha256": "2540a5dd7c178a7658f96a78781aa6e7e4d9fcfe337064b9d601df88f2e75c93",
+      "bytes": 2778112,
+      "machine": "0x14c"
+    },
+    "build/Win32/Release/Breakout.exe": {
+      "sha256": "71c3dd844cdfb576308e7e579f15ee0d28769aff29b34a2567e76f21b16fb267",
+      "bytes": 2628608,
+      "machine": "0x14c"
+    },
+    "build/Win32/Release/Breakout.Tests.exe": {
+      "sha256": "936aca3dc8fdcc6725bddf3288b0bc01f9372c6d713b2ef9cd31761deb7930bb",
+      "bytes": 1191936,
+      "machine": "0x14c"
+    },
+    "build/Win32/Release/BaselineRunner.exe": {
+      "sha256": "780956f323dfc7defd60c34593ccf34108dd92ea50b5803d00db19b08ae65dc8",
+      "bytes": 2771456,
+      "machine": "0x14c"
+    },
+    "build/Win64/Debug/Breakout.exe": {
+      "sha256": "2269e087dc29402f08f045ea0fcc7da75b10cee560178c97ef0a77f3e39c1d19",
+      "bytes": 4174848,
+      "machine": "0x8664"
+    },
+    "build/Win64/Debug/Breakout.Tests.exe": {
+      "sha256": "e6b3004a6b3a446be1a989c033a93ae25fcf90c8a0503ab30e91502fac745d2b",
+      "bytes": 1959936,
+      "machine": "0x8664"
+    },
+    "build/Win64/Debug/BaselineRunner.exe": {
+      "sha256": "bd550d73e7db57095aa0d225c088324b42f83988ed3f1cab2cc6c24b7a84a8ea",
+      "bytes": 4454912,
+      "machine": "0x8664"
+    },
+    "build/Win64/Release/Breakout.exe": {
+      "sha256": "af6480dbaef96fc29610ca02f36e2273d7f5fe94d11a8fbb522990a1a47bfb2c",
+      "bytes": 4169216,
+      "machine": "0x8664"
+    },
+    "build/Win64/Release/Breakout.Tests.exe": {
+      "sha256": "b2e339f1108fb8686578ba313723a7b34f807e57a465a187e593aa2f1e7ee053",
+      "bytes": 1950720,
+      "machine": "0x8664"
+    },
+    "build/Win64/Release/BaselineRunner.exe": {
+      "sha256": "030d1c5bcaa4af154faa32d5869657f127b1bf0b9467b517bdb07448845fba71",
+      "bytes": 4446208,
+      "machine": "0x8664"
+    }
+  },
+  "artifacts": {
+    "after/fade-half.png": "e95483cff04a790a41f546c6b7fce2bca6ec8ea4b9c0b0c7611746c4c5feb9d3",
+    "after/level-1-complete.png": "a216c1cc55ace30d975de7998403b5b79ce964eca1fb31a260ebd3533bb277c9",
+    "after/level-2-complete.png": "f2c08f6789959f8104f96df830cb7ca3b44f88f10ab52f777d46291cd8a0440b",
+    "after/level-3-complete.png": "eca734e54de103755782673e3ed25a308aadae51af1958ea5e8d520213708a2a",
+    "after/paddle-100.png": "b5d255ee5359cd76a44897497f744de5e7436207cb1d6d09775f203d2a288f6c",
+    "after/scale-100.png": "e6c55e39d9900bda56e164141bed8594d51e81ba64838a89ab82fda5e5d08d30",
+    "after/scale-125.png": "010087d4e6c1b012bf3f396f4370ea29ec9371a551352ee204068533bf6561b2",
+    "after/scale-150.png": "e69166aa852f6f92d29fb0c32243e637aba6d0694bda860e665d1d6998843675",
+    "after/scale-200.png": "2529de85f578e08d5422a0f6322816a128a3f9fb48cefa42e087a7e527aa37b5",
+    "before/fade-half.png": "e95483cff04a790a41f546c6b7fce2bca6ec8ea4b9c0b0c7611746c4c5feb9d3",
+    "before/level-1-complete.png": "a216c1cc55ace30d975de7998403b5b79ce964eca1fb31a260ebd3533bb277c9",
+    "before/level-2-complete.png": "f2c08f6789959f8104f96df830cb7ca3b44f88f10ab52f777d46291cd8a0440b",
+    "before/level-3-complete.png": "eca734e54de103755782673e3ed25a308aadae51af1958ea5e8d520213708a2a",
+    "before/paddle-100.png": "b5d255ee5359cd76a44897497f744de5e7436207cb1d6d09775f203d2a288f6c",
+    "before/scale-100.png": "278ba869c926dfe4f74b2b7afd8a51198b33dc89f9fe3569b089e87d4aec757c",
+    "before/scale-125.png": "f658c311917fc226f44ad9376c4dc5d9651aab08128ff80361583c11b7ae941f",
+    "before/scale-150.png": "1757ba01cd23000c3cce156144c6f578d7f71a1367b94a91d54111c4e63bad37",
+    "before/scale-200.png": "a09e1dfed96c1592a2d02c7d35335a6067128e9cc74ef4e087c08528cf3b597f",
+    "before/view.json": "b5ddbcfb13b4640a0da6730ee7dc9c51a3bf421183342daf3d069712ed49ce21",
+    "console-build-attempt.json": "859c48c73dea7dd4aca94198440d4d6d1985bbe592a30162fb795e1f04aa2027",
+    "README.md": "3a06ce053602ad91ebaf21b6dac345c7309be6e59ad0f3f352e7f4b2fc8d33ad",
+    "resource-comparison.json": "71bce21fcda7f5fdf11a94d16481d49b06942253331cc86323451a45e626c4df",
+    "Win32-Debug/engine.json": "3053d7818eb1c2bdeea80f4cfb6364f853c69fb2ff59a123c65ba9f8b3f70631",
+    "Win32-Debug/physics.json": "0fb62d39a17472915187904556c84637a831f392a1427ea1c79a9cccc07c3171",
+    "Win32-Debug/pixel-comparison.json": "8921518d8babdaed8eee2fe7e197cd3ff5ce530c121f1fa8b01d460df683f5c7",
+    "Win32-Debug/presentation.json": "10e1dae47e1e8a415c6024cadb22b16efdb4b8908333434da2ac28369e03adfc",
+    "Win32-Debug/view.json": "b5ddbcfb13b4640a0da6730ee7dc9c51a3bf421183342daf3d069712ed49ce21",
+    "Win32-Release/engine.json": "3053d7818eb1c2bdeea80f4cfb6364f853c69fb2ff59a123c65ba9f8b3f70631",
+    "Win32-Release/physics.json": "0fb62d39a17472915187904556c84637a831f392a1427ea1c79a9cccc07c3171",
+    "Win32-Release/pixel-comparison.json": "8921518d8babdaed8eee2fe7e197cd3ff5ce530c121f1fa8b01d460df683f5c7",
+    "Win32-Release/presentation.json": "10e1dae47e1e8a415c6024cadb22b16efdb4b8908333434da2ac28369e03adfc",
+    "Win32-Release/view.json": "b5ddbcfb13b4640a0da6730ee7dc9c51a3bf421183342daf3d069712ed49ce21",
+    "Win64-Debug/engine.json": "3053d7818eb1c2bdeea80f4cfb6364f853c69fb2ff59a123c65ba9f8b3f70631",
+    "Win64-Debug/physics.json": "0fb62d39a17472915187904556c84637a831f392a1427ea1c79a9cccc07c3171",
+    "Win64-Debug/pixel-comparison.json": "8921518d8babdaed8eee2fe7e197cd3ff5ce530c121f1fa8b01d460df683f5c7",
+    "Win64-Debug/presentation.json": "10e1dae47e1e8a415c6024cadb22b16efdb4b8908333434da2ac28369e03adfc",
+    "Win64-Debug/view.json": "b5ddbcfb13b4640a0da6730ee7dc9c51a3bf421183342daf3d069712ed49ce21",
+    "Win64-Release/engine.json": "3053d7818eb1c2bdeea80f4cfb6364f853c69fb2ff59a123c65ba9f8b3f70631",
+    "Win64-Release/physics.json": "0fb62d39a17472915187904556c84637a831f392a1427ea1c79a9cccc07c3171",
+    "Win64-Release/pixel-comparison.json": "8921518d8babdaed8eee2fe7e197cd3ff5ce530c121f1fa8b01d460df683f5c7",
+    "Win64-Release/presentation.json": "10e1dae47e1e8a415c6024cadb22b16efdb4b8908333434da2ac28369e03adfc",
+    "Win64-Release/view.json": "b5ddbcfb13b4640a0da6730ee7dc9c51a3bf421183342daf3d069712ed49ce21"
+  },
+  "local_changes": "Marcos explicitly authorized incorporating the preserved project/form changes during E6. Initial files backed up in ignored build/e6/preserved-local.",
+  "limitations": [
+    "Full human play/manual matrix remains open.",
+    "Bitmap scales and form handlers do not validate native DPI/monitor changes.",
+    "No new FPS/CPU benchmark.",
+    "Current CE compiler rejected console build despite MSBuild exit code zero; only IDE-produced binaries count."
+  ]
+}

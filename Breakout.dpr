@@ -18,7 +18,7 @@ uses
 
 begin
   Application.Initialize;
-  Application.Title := 'Delphi Breakout';
+  Application.Title := 'Delphi Blocks';
   Application.CreateForm(TFrmMain, FrmMain);
   Application.Run;
 end.

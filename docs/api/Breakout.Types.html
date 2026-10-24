@@ -85,6 +85,12 @@ Value types, logical units and simulation budgets shared by the engine.</p>
 <span id="PasDoc-Constants"></span><h3 class="summary">Constants</h3>
 <table class="summary wide_list">
 <tr class="list visibility-published">
+<td class="itemcode"><code><strong><a href="Breakout.Types.html#LogicalFieldWidth">LogicalFieldWidth</a></strong> = 688;</code></td>
+</tr>
+<tr class="list2 visibility-published">
+<td class="itemcode"><code><strong><a href="Breakout.Types.html#LogicalFieldHeight">LogicalFieldHeight</a></strong> = 453;</code></td>
+</tr>
+<tr class="list visibility-published">
 <td class="itemcode"><code><strong><a href="Breakout.Types.html#FixedDeltaSeconds">FixedDeltaSeconds</a></strong> = 1.0 / 120.0;</code></td>
 </tr>
 <tr class="list2 visibility-published">
@@ -106,7 +112,7 @@ Value types, logical units and simulation budgets shared by the engine.</p>
 <tr><td colspan="1">
 <p>
 Stable diagnostic name, independent of player-facing translations.</p>
-<p class="source_position">Source: src/Breakout.Types.pas (line 90).</p></td></tr>
+<p class="source_position">Source: src/Breakout.Types.pas (line 95).</p></td></tr>
 </table>
 <h3 class="detail">Types</h3>
 <table class="detail visibility-published wide_list">
@@ -131,7 +137,7 @@ Explicit lifecycle; only gsPlaying advances through normal Step calls.</p>
 <li>
 <span id="gsVictory">gsVictory</span></li>
 </ul>
-<p class="source_position">Source: src/Breakout.Types.pas (line 8).</p></td></tr>
+<p class="source_position">Source: src/Breakout.Types.pas (line 13).</p></td></tr>
 </table>
 <table class="detail visibility-published wide_list">
 <tr class="list visibility-published">
@@ -153,7 +159,7 @@ Input intent, independent of keyboard bindings or VCL events.</p>
 <li>
 <span id="gcDebugStep">gcDebugStep</span></li>
 </ul>
-<p class="source_position">Source: src/Breakout.Types.pas (line 10).</p></td></tr>
+<p class="source_position">Source: src/Breakout.Types.pas (line 15).</p></td></tr>
 </table>
 <table class="detail visibility-published wide_list">
 <tr class="list visibility-published">
@@ -177,9 +183,25 @@ Stable identities; scoring and sprite selection live in Breakout.Bricks.</p>
 <li>
 <span id="bkGold">bkGold</span></li>
 </ul>
-<p class="source_position">Source: src/Breakout.Types.pas (line 12).</p></td></tr>
+<p class="source_position">Source: src/Breakout.Types.pas (line 17).</p></td></tr>
 </table>
 <h3 class="detail">Constants</h3>
+<table class="detail visibility-published wide_list">
+<tr class="list visibility-published">
+<td class="itemcode"><span id="LogicalFieldWidth"></span><code><strong>LogicalFieldWidth</strong> = 688;</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+Shared logical field dimensions, independent of client pixels or DPI.</p>
+<p class="source_position">Source: src/Breakout.Types.pas (line 8).</p></td></tr>
+</table>
+<table class="detail visibility-published wide_list">
+<tr class="list visibility-published">
+<td class="itemcode"><span id="LogicalFieldHeight"></span><code><strong>LogicalFieldHeight</strong> = 453;</code></td>
+</tr>
+<tr><td colspan="1">
+<p class="nodescription">This item has no description.</p><p class="source_position">Source: src/Breakout.Types.pas (line 9).</p></td></tr>
+</table>
 <table class="detail visibility-published wide_list">
 <tr class="list visibility-published">
 <td class="itemcode"><span id="FixedDeltaSeconds"></span><code><strong>FixedDeltaSeconds</strong> = 1.0 / 120.0;</code></td>
@@ -187,7 +209,7 @@ Stable identities; scoring and sprite selection live in Breakout.Bricks.</p>
 <tr><td colspan="1">
 <p>
 Simulation quantum: 120 steps per simulated second.</p>
-<p class="source_position">Source: src/Breakout.Types.pas (line 66).</p></td></tr>
+<p class="source_position">Source: src/Breakout.Types.pas (line 71).</p></td></tr>
 </table>
 <table class="detail visibility-published wide_list">
 <tr class="list visibility-published">
@@ -196,7 +218,7 @@ Simulation quantum: 120 steps per simulated second.</p>
 <tr><td colspan="1">
 <p>
 Maximum elapsed time accepted by one loop callback; excess is recorded.</p>
-<p class="source_position">Source: src/Breakout.Types.pas (line 68).</p></td></tr>
+<p class="source_position">Source: src/Breakout.Types.pas (line 73).</p></td></tr>
 </table>
 <table class="detail visibility-published wide_list">
 <tr class="list visibility-published">
@@ -205,7 +227,7 @@ Maximum elapsed time accepted by one loop callback; excess is recorded.</p>
 <tr><td colspan="1">
 <p>
 Work budget against unbounded catch-up after a stalled callback.</p>
-<p class="source_position">Source: src/Breakout.Types.pas (line 70).</p></td></tr>
+<p class="source_position">Source: src/Breakout.Types.pas (line 75).</p></td></tr>
 </table>
 <table class="detail visibility-published wide_list">
 <tr class="list visibility-published">
@@ -214,7 +236,7 @@ Work budget against unbounded catch-up after a stalled callback.</p>
 <tr><td colspan="1">
 <p>
 Collision-iteration budget; unresolved remaining time is discarded.</p>
-<p class="source_position">Source: src/Breakout.Types.pas (line 72).</p></td></tr>
+<p class="source_position">Source: src/Breakout.Types.pas (line 77).</p></td></tr>
 </table>
 <hr><span class="appinfo"><em>Generated by <a href="https://pasdoc.github.io/">PasDoc 1.0.4</a>. </em>
 </span>

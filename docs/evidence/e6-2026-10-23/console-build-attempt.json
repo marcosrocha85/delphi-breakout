@@ -1,0 +1,13 @@
+{
+  "date": "2026-10-23",
+  "timezone": "America/Sao_Paulo",
+  "method": "rsvars.bat then Framework v4 MSBuild.exe; tests/Breakout.Tests.dproj; Build Win32 Debug",
+  "msbuild_exit_code": 0,
+  "compiler_message": "This version of the product does not support command line compiling.",
+  "expected_fresh_executable": "build/e6/console-learning/Win32/Debug/Breakout.Tests.exe",
+  "executable_exists": false,
+  "isolated_dcu_count": 0,
+  "validated_build": false,
+  "source": "Local installed compiler output; no desktop interaction",
+  "log": "build/e6/console-learning/msbuild-win32-debug.log"
+}

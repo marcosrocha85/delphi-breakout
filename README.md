@@ -1,4 +1,4 @@
-# Delphi Breakout
+# Delphi Blocks
 
 A Breakout inspired by the Arkanoid I played on a 386XT, originally written in Delphi around 2009–2010. Today, it also serves as a study project for developers building a 2D game engine and learning what happens between player input, simulation, and drawing a frame.
 
@@ -31,9 +31,9 @@ The validated environment is **Delphi 13 Community Edition, Windows, VCL**, targ
 
 1. Open [`DelphiBlocks.groupproj`](DelphiBlocks.groupproj) in the IDE.
 2. In **Projects**, activate `Breakout.exe`, select the platform/configuration, and choose **Build**.
-3. Run from the IDE. Game executables go to `build/x86/` or `build/x64/`; sprites are embedded in the executable.
+3. Run from the IDE. Game executables go to `build/<Platform>/<Config>/` (for example `build/Win64/Release/`); sprites are embedded in the executable.
 
-The group also contains `BaselineRunner.exe` for VCL checks and measurements, and `Breakout.Tests.exe` for tests without a UI. See the [engine tests](tests/README.md) and [E4 runner](tools/e4/README.md). Builds in this Community Edition installation were performed through the IDE.
+The group also contains `BaselineRunner.exe` for VCL checks and measurements, and `Breakout.Tests.exe` for tests without a UI. All three executables use `build/<Platform>/<Config>/`; DCUs are additionally separated by project. See the [engine tests](tests/README.md), [VCL runner](tools/e5/README.md), and [build consolidation](tools/e6/README.md). Builds in this Community Edition installation were performed through the IDE. The repository and executable retain the Breakout names; the application title is Delphi Blocks.
 
 | Input | Action |
 | --- | --- |
@@ -42,7 +42,7 @@ The group also contains `BaselineRunner.exe` for VCL checks and measurements, an
 | F2 | Restart the match, score, and effects. |
 | F3 | Pause or resume. |
 | F10 | Show or hide diagnostics. |
-| F1, with diagnostics open and the game paused | Execute one simulation step. |
+| F1, with diagnostics open and the game paused | Advance physics, brick fading, and score counting by one 1/120 s step; move the mouse to reposition the paddle between steps. |
 
 The cursor is hidden over the game, but the mouse can still leave the window. Losing focus pauses the match; return to the window and press F3 to resume.
 
@@ -60,7 +60,7 @@ The cursor is hidden over the game, but the mouse can still leave the window. Lo
 - Initial speeds of **240 / 252 / 264.6 units/s**: 5% compounded per level, capped by configuration at 300 units/s.
 - Tests that control elapsed time and measurements that distinguish simulation, callbacks, and painting.
 
-The current implementation is **E5** of the [evolution plan](docs/implementation-plan.md). See the [progression results](docs/e5-results.md) and [VCL checks](tools/e5/README.md). The window remains fixed; menus, fullscreen, template-based levels, powerups, and an OpenGL comparison are planned. E6 includes removing remaining magic numbers, especially in HUD layout. The [E4 results](docs/e4-results.md) retain the rendering measurements and their limits. The published 1.0.1.0 binaries above precede E5; build this branch to try the campaign.
+The current implementation includes **E6 consolidation** of the [evolution plan](docs/implementation-plan.md): separate build outputs, consistent project settings, and named HUD layout. See [E6 results](docs/e6-results.md), [progression results](docs/e5-results.md), and [VCL checks](tools/e5/README.md). Marcos reported completing the manual route with paused diagnostic-input and visual-stepping issues; the final focused retest is pending. The window remains fixed; menus, fullscreen, template-based levels, powerups, and an OpenGL comparison are planned. The [E4 results](docs/e4-results.md) retain the rendering measurements and their limits. The published 1.0.1.0 binaries above precede E5; build this branch to try the campaign.
 
 ## From a USB backup to a study project
 

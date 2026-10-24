@@ -3,6 +3,11 @@ unit Breakout.Types;
 
 interface
 
+const
+  {** Shared logical field dimensions, independent of client pixels or DPI. }
+  LogicalFieldWidth = 688;
+  LogicalFieldHeight = 453;
+
 type
   {** Explicit lifecycle; only gsPlaying advances through normal Step calls. }
   TGameState = (gsReady, gsPlaying, gsPaused, gsLevelComplete, gsGameOver, gsVictory);
@@ -95,8 +100,8 @@ uses System.SysUtils;
 
 class function TGameConfig.Default: TGameConfig;
 begin
-  Result.Width := 688;
-  Result.Height := 453;
+  Result.Width := LogicalFieldWidth;
+  Result.Height := LogicalFieldHeight;
   Result.PaddleWidth := 50;
   Result.PaddleHeight := 15;
   Result.PaddleY := 420;
