@@ -59,6 +59,6 @@ with paused diagnostic-input issues: the paddle could not move, and follow-up
 testing found that F1 did not advance a partially faded brick.
 The corrections allow mouse positioning with diagnostics visible and advance
 physics, brick fading, and score counting by one 1/120 s quantum per F1. The ball,
-clock, and animations remain frozen between steps. The focused human retest
-is still pending; see [E6 results](../../docs/e6-results.md). No detailed monitor
+clock, and animations remain frozen between steps. Marcos confirmed the focused
+retest passed and accepted E6; see [E6 results](../../docs/e6-results.md). No detailed monitor
 setup, duration, or resource measurements were supplied with the user report.

@@ -2,7 +2,7 @@
 
 Created: 2026-10-22. Updated: 2026-10-23. Runtime environment: Delphi 13, Windows.
 
-Status: incremental implementation; **E0–E4 completed on 2026-10-22**. [E0](e0-baseline.md) records the baseline; [E1](e1-results.md) covers flow fixes; [E2](e2-results.md) extracts the engine and translation-ready text; [E3](e3-results.md) adds fixed-step continuous collision with a circular ball and rounded paddle; [E4](e4-results.md) adds Canvas, layering, animated scoring, fading, and a stretchable paddle. **E5 completed on 2026-10-23** adds a finite campaign and progression feedback; see [E5 results](e5-results.md). Next: **E6, consolidation**.
+Status: incremental implementation; **E0–E4 completed on 2026-10-22**. [E0](e0-baseline.md) records the baseline; [E1](e1-results.md) covers flow fixes; [E2](e2-results.md) extracts the engine and translation-ready text; [E3](e3-results.md) adds fixed-step continuous collision with a circular ball and rounded paddle; [E4](e4-results.md) adds Canvas, layering, animated scoring, fading, and a stretchable paddle. **E5 completed on 2026-10-23** adds a finite campaign and progression feedback; see [E5 results](e5-results.md). **E6 completed and manually accepted on 2026-10-23**; see [E6 results](e6-results.md). The next delivery will address the selected post-E6 desire.
 
 ## 1. Goal and direction
 
@@ -198,7 +198,7 @@ Output: [Canvas/feedback results](e4-results.md), 191 non-VCL cases per configur
 
 Output: a finite three-board match with explicit Ready transitions, lives/score preservation, 5% compounded level speed capped at 300 units/s, localized state feedback, and a level HUD. See [E5 results](e5-results.md) and [progression chapter](study/levels-and-progression.md) for validation and human playtesting limits.
 
-### E6 — Consolidate project and documentation (delivered; diagnostic stepping retest pending)
+### E6 — Consolidate project and documentation (completed 2026-10-23)
 
 - Separate executable/DCU outputs by platform/configuration, e.g. build/Win32/Debug and build/Win64/Release.
 - Review duplicate targets imports/legacy project settings with before/after builds; preserve resources/icon.
@@ -214,8 +214,8 @@ and layout extraction are recorded in [E6 results](e6-results.md). Marcos
 authorized incorporating the preserved IDE/form changes and aligning the
 Delphi Blocks title on 2026-10-23. Marcos subsequently reported completing the
 manual route with paused diagnostic-input and visual-stepping issues. Those
-corrections and the focused human retest still pending are recorded in E6 results;
-no detailed
+corrections and the focused human retest are recorded in E6 results. Marcos
+confirmed both fixes worked and explicitly authorized merging PR #10. No detailed
 monitor setup or resource measurements were supplied with his report.
 
 ## 7. Validation for each delivery
@@ -266,7 +266,7 @@ E0–E4 deliver organized code, separated engine, predictable physics, and compo
 - Preserve art and demonstrate smoothness changes by comparison/measurement.
 - Declared builds/tests pass with evidence and without overwriting local user work.
 
-With E0–E5 completed, proceed to E6. Keep simulation boundaries clear before graphics changes so regressions can be located. Speed, angle, cadence, and difficulty remain playtesting parameters.
+With E0–E6 completed, select the next delivery from the recorded desires below. Keep simulation boundaries clear before graphics changes so regressions can be located. Speed, angle, cadence, and difficulty remain playtesting parameters.
 
 ## 9. Desires after E6
 
