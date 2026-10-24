@@ -66,6 +66,10 @@ begin
   FAppActive := True;
   FLastTimestamp := TStopwatch.GetTimeStamp;
   Cursor := crNone;
+  { Keep the initial client readable; VCL scales these window constraints on DPI
+    changes. The viewport handles larger client sizes without changing physics. }
+  Constraints.MinWidth := Width;
+  Constraints.MinHeight := Height;
   { One persistent frame buffer; erase suppression avoids an exposed clear and
     removes the need for a second VCL form buffer. }
   ControlStyle := ControlStyle + [csOpaque];

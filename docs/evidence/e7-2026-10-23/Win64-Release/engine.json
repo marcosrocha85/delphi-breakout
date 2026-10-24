@@ -1,0 +1,774 @@
+{
+  "suite": "E5 campaign and engine regressions without VCL",
+  "passed": true,
+  "checks": 124,
+  "failures": 0,
+  "results": [
+    {
+      "name": "initial_state_and_counters",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "ready_ignores_tick_debug_pause_and_deactivation",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "paddle_clamps_left_and_carries_ready_ball",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "paddle_clamps_right",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "launch_preserves_prepared_position",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "playing_ignores_debug_step_and_repeated_launch",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "immediate_pause_needs_no_timer",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "paused_ignores_launch_move_and_tick",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "debug_step_advances_once_and_preserves_pause",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "resume_preserves_position_and_steps",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "deactivation_is_idempotent_pause",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "restart_from_pause_restores_ready",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "restart_from_play_restores_ready",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "paused_debug_input_repositions_only_paddle",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "paused_debug_paddle_clamps_left",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "paused_debug_paddle_clamps_right",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "paused_debug_movement_does_not_enable_ticks",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "debug_step_after_paddle_move_advances_one_quantum",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "paused_debug_paddle_moves_again_between_steps",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "paused_debug_permission_is_not_retained",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "fall_1_loses_exactly_one_life",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "fall_1_terminates_without_extra_motion",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "idle_after_fall_1_does_not_advance",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "fall_2_loses_exactly_one_life",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "fall_2_terminates_without_extra_motion",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "idle_after_fall_2_does_not_advance",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "fall_3_loses_exactly_one_life",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "fall_3_terminates_without_extra_motion",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "idle_after_fall_3_does_not_advance",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "third_fall_enters_game_over",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "game_over_rejects_simulation_commands",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "restart_after_game_over_restores_board",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "hit_deactivates_brick_and_adds_its_points",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "inactive_brick_retains_stable_id_and_slot",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "inactive_brick_cannot_score_again",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "restart_clears_score_and_last_hit",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "last_brick_enters_level_complete_once",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "completion_terminates_the_step",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "level_complete_waits_without_moving_or_scoring",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "continue_loads_next_level_ready_preserving_lives_and_score",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "last_level_enters_victory",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "victory_ignores_launch_pause_and_steps",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "restart_from_victory_resets_level_and_counters",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "debug_completion_keeps_terminal_state",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "restart_from_level_complete_restores_ready",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "same_seed_generates_same_board_and_launch",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "board_has_unique_stable_ids_and_valid_points",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "different_seed_changes_board",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "snapshot_is_detached_from_live_model",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "replay_ignores_global_random_and_external_level_generation",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "restart_repeats_seeded_board",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "full_cardinal_seed_works_with_overflow_checking",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "invalid_configuration_is_rejected",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "level_1_same_seed_repeats_classes_and_geometry",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "level_1_geometry_ids_rewards",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "level_1_different_seed_changes_classes",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "level_1_preserves_approved_formation",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "level_1_fresh_array",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "level_2_same_seed_repeats_classes_and_geometry",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "level_2_geometry_ids_rewards",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "level_2_different_seed_changes_classes",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "level_2_preserves_approved_formation",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "level_2_fresh_array",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "level_3_same_seed_repeats_classes_and_geometry",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "level_3_geometry_ids_rewards",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "level_3_different_seed_changes_classes",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "level_3_preserves_approved_formation",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "level_3_fresh_array",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "unsupported_level_0_rejected",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "unsupported_level_4_rejected",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "balance_1_1024_seeds_no_premium_side_neighbors",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "balance_1_allows_silver_gold_diagonals",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "balance_1_all_classes_possible_in_each_band",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "balance_1_bottom_predominantly_green_yellow",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "balance_1_bottom_cheaper_than_top",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "balance_1_premium_more_likely_at_top",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "balance_1_middle_predominantly_yellow_cyan_red",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "balance_1_mean_reward_increases_upwards",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "balance_2_1024_seeds_no_premium_side_neighbors",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "balance_2_allows_silver_gold_diagonals",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "balance_2_all_classes_possible_in_each_band",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "balance_2_bottom_predominantly_green_yellow",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "balance_2_bottom_cheaper_than_top",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "balance_2_premium_more_likely_at_top",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "balance_2_middle_predominantly_yellow_cyan_red",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "balance_2_mean_reward_increases_upwards",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "balance_3_1024_seeds_no_premium_side_neighbors",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "balance_3_allows_silver_gold_diagonals",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "balance_3_all_classes_possible_in_each_band",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "balance_3_bottom_predominantly_green_yellow",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "balance_3_bottom_cheaper_than_top",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "balance_3_premium_more_likely_at_top",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "balance_3_middle_predominantly_yellow_cyan_red",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "balance_3_mean_reward_increases_upwards",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "campaign_ready_1",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "campaign_all_bricks_score_once_1",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "campaign_explicit_completion_1",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "campaign_continue_does_not_launch_1",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "campaign_loss_preserves_score_level_speed_1",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "campaign_ready_2",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "campaign_all_bricks_score_once_2",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "campaign_explicit_completion_2",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "campaign_continue_does_not_launch_2",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "campaign_loss_preserves_score_level_speed_2",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "campaign_ready_3",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "campaign_all_bricks_score_once_3",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "campaign_final_victory_is_terminal",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "campaign_restart_restores_board_speed_and_counters",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "speed_policy_0_level_1",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "speed_policy_0_level_2",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "speed_policy_0_level_3",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "speed_policy_1_level_1",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "speed_policy_1_level_2",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "speed_policy_1_level_3",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "speed_policy_2_level_1",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "speed_policy_2_level_2",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "speed_policy_2_level_3",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "invalid_campaign_config_0_rejected",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "invalid_campaign_config_1_rejected",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "invalid_campaign_config_2_rejected",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "invalid_campaign_config_3_rejected",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "invalid_campaign_config_4_rejected",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "invalid_campaign_config_5_rejected",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "invalid_campaign_config_6_rejected",
+      "passed": true,
+      "detail": ""
+    }
+  ],
+  "class_balance": [
+    {
+      "level": 1,
+      "seeds": 1024,
+      "bands": [
+        {
+          "band": "top",
+          "bricks": 36864,
+          "mean_points": 240.314398871528,
+          "premium_fraction": 0.183539496527778,
+          "class_counts_green_yellow_cyan_red_silver_gold": {
+            "0": 3822,
+            "1": 6093,
+            "2": 7895,
+            "3": 12288,
+            "4": 4712,
+            "5": 2054
+          }
+        },
+        {
+          "band": "middle",
+          "bricks": 24576,
+          "mean_points": 189.63623046875,
+          "premium_fraction": 0.0433756510416667,
+          "class_counts_green_yellow_cyan_red_silver_gold": {
+            "0": 3710,
+            "1": 7389,
+            "2": 7400,
+            "3": 5011,
+            "4": 846,
+            "5": 220
+          }
+        },
+        {
+          "band": "bottom",
+          "bricks": 36864,
+          "mean_points": 130.581325954861,
+          "premium_fraction": 0.0187445746527778,
+          "class_counts_green_yellow_cyan_red_silver_gold": {
+            "0": 22166,
+            "1": 11062,
+            "2": 2196,
+            "3": 749,
+            "4": 341,
+            "5": 350
+          }
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "seeds": 1024,
+      "bands": [
+        {
+          "band": "top",
+          "bricks": 4096,
+          "mean_points": 256.99462890625,
+          "premium_fraction": 0.22314453125,
+          "class_counts_green_yellow_cyan_red_silver_gold": {
+            "0": 314,
+            "1": 742,
+            "2": 639,
+            "3": 1487,
+            "4": 466,
+            "5": 448
+          }
+        },
+        {
+          "band": "middle",
+          "bricks": 10240,
+          "mean_points": 189.70703125,
+          "premium_fraction": 0.0439453125,
+          "class_counts_green_yellow_cyan_red_silver_gold": {
+            "0": 1533,
+            "1": 3094,
+            "2": 3089,
+            "3": 2074,
+            "4": 361,
+            "5": 89
+          }
+        },
+        {
+          "band": "bottom",
+          "bricks": 6144,
+          "mean_points": 130.696614583333,
+          "premium_fraction": 0.0188802083333333,
+          "class_counts_green_yellow_cyan_red_silver_gold": {
+            "0": 3685,
+            "1": 1846,
+            "2": 379,
+            "3": 118,
+            "4": 57,
+            "5": 59
+          }
+        }
+      ]
+    },
+    {
+      "level": 3,
+      "seeds": 1024,
+      "bands": [
+        {
+          "band": "top",
+          "bricks": 6144,
+          "mean_points": 249.405924479167,
+          "premium_fraction": 0.203776041666667,
+          "class_counts_green_yellow_cyan_red_silver_gold": {
+            "0": 542,
+            "1": 1092,
+            "2": 1085,
+            "3": 2173,
+            "4": 719,
+            "5": 533
+          }
+        },
+        {
+          "band": "middle",
+          "bricks": 8192,
+          "mean_points": 189.935302734375,
+          "premium_fraction": 0.04541015625,
+          "class_counts_green_yellow_cyan_red_silver_gold": {
+            "0": 1223,
+            "1": 2483,
+            "2": 2462,
+            "3": 1652,
+            "4": 302,
+            "5": 70
+          }
+        },
+        {
+          "band": "bottom",
+          "bricks": 6144,
+          "mean_points": 130.582682291667,
+          "premium_fraction": 0.0192057291666667,
+          "class_counts_green_yellow_cyan_red_silver_gold": {
+            "0": 3701,
+            "1": 1832,
+            "2": 381,
+            "3": 112,
+            "4": 58,
+            "5": 60
+          }
+        }
+      ]
+    }
+  ]
+}

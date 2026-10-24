@@ -2,7 +2,7 @@
 
 Created: 2026-10-22. Updated: 2026-10-23. Runtime environment: Delphi 13, Windows.
 
-Status: incremental implementation; **E0–E4 completed on 2026-10-22**. [E0](e0-baseline.md) records the baseline; [E1](e1-results.md) covers flow fixes; [E2](e2-results.md) extracts the engine and translation-ready text; [E3](e3-results.md) adds fixed-step continuous collision with a circular ball and rounded paddle; [E4](e4-results.md) adds Canvas, layering, animated scoring, fading, and a stretchable paddle. **E5 completed on 2026-10-23** adds a finite campaign and progression feedback; see [E5 results](e5-results.md). **E6 completed and manually accepted on 2026-10-23**; see [E6 results](e6-results.md). The next delivery will address the selected post-E6 desire.
+Status: incremental implementation; **E0–E4 completed on 2026-10-22**. [E0](e0-baseline.md) records the baseline; [E1](e1-results.md) covers flow fixes; [E2](e2-results.md) extracts the engine and translation-ready text; [E3](e3-results.md) adds fixed-step continuous collision with a circular ball and rounded paddle; [E4](e4-results.md) adds Canvas, layering, animated scoring, fading, and a stretchable paddle. **E5 completed on 2026-10-23** adds a finite campaign and progression feedback; see [E5 results](e5-results.md). **E6 completed and manually accepted on 2026-10-23**; see [E6 results](e6-results.md). **E7 implements the selected resizable-window desire**; native manual validation remains pending.
 
 ## 1. Goal and direction
 
@@ -218,6 +218,30 @@ corrections and the focused human retest are recorded in E6 results. Marcos
 confirmed both fixes worked and explicitly authorized merging PR #10. No detailed
 monitor setup or resource measurements were supplied with his report.
 
+### E7 — Resizable window (implemented; native manual validation pending)
+
+Selected explicitly by Marcos on 2026-10-23 after accepting E6 and authorizing
+PR #10 merge. Base: integrated E6 `648cc82`.
+
+- Enable native border resizing and maximize/restore, starting at the existing
+  client size. The initial DPI-scaled window dimensions define the minimum;
+  VCL scales the constraints during DPI changes.
+- Keep the 688 by 453 logical field and all physics/time rules independent of
+  client dimensions. Reuse the existing centered uniform viewport; unused space
+  stays black. Do not stretch sprites or force the window to a fixed ratio.
+- Use the same viewport for mouse inversion and rendering. Preserve edge clamps,
+  Ready ball attachment, pause, F1 visuals, and focus-loss behavior.
+- Cover wide, tall, doubled, and fractional client sizes; minimum bounds,
+  persistent buffer reuse, bounded GUI resources, and deterministic trajectories.
+- Rebuild all projects in Win32/Win64 Debug/Release, retain the E6 reference pixel
+  comparisons, update the study guide, and leave a native manual checklist visible.
+
+Output: a resizable game with unchanged logical mechanics and appearance at its
+original client size. See [E7 results](e7-results.md) and
+[verification instructions](../tools/e7/README.md). Interactive border dragging,
+maximizing/restoring, minimize/focus behavior and real monitor/DPI transitions
+remain manual checks before acceptance. Fullscreen and menus are later work.
+
 ## 7. Validation for each delivery
 
 Test rules/geometry rather than duplicating handler internals or mechanically testing renames.
@@ -266,7 +290,7 @@ E0–E4 deliver organized code, separated engine, predictable physics, and compo
 - Preserve art and demonstrate smoothness changes by comparison/measurement.
 - Declared builds/tests pass with evidence and without overwriting local user work.
 
-With E0–E6 completed, select the next delivery from the recorded desires below. Keep simulation boundaries clear before graphics changes so regressions can be located. Speed, angle, cadence, and difficulty remain playtesting parameters.
+With E0–E6 completed, E7 addresses the resizable-window desire selected by Marcos. Keep simulation boundaries clear before graphics changes so regressions can be located. Speed, angle, cadence, and difficulty remain playtesting parameters.
 
 ## 9. Desires after E6
 

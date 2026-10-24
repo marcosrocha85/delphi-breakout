@@ -7,7 +7,8 @@ implementation
 
 uses System.SysUtils, System.Math, System.JSON, System.IOUtils,
   Winapi.Windows, Vcl.Graphics, Vcl.Imaging.pngimage, UMain, UDebug,
-  Breakout.Types, Breakout.TestScenarios, Breakout.Presentation, Breakout.Renderer.Vcl;
+  Breakout.Types, Breakout.Game, Breakout.Loop, Breakout.TestScenarios,
+  Breakout.Presentation, Breakout.Renderer.Vcl;
 
 type
   TViewProbe = class(TGameProbe)
@@ -58,6 +59,142 @@ var
   procedure SaveFrame(const Name: string);
   begin
     Png.Assign(R.Buffer); Png.SaveToFile(TPath.Combine(OutputDirectory, Name + '.png'));
+  end;
+  procedure CheckWindowResizing;
+  const
+    Sizes: array[0..3, 0..1] of Integer =
+      ((1000, 453), (688, 900), (1376, 906), (1101, 733));
+    Names: array[0..3] of string = ('wide', 'tall', 'double', 'fractional');
+  var
+    InitialWidth, InitialHeight, N, AllocationCount, Gdi, User: Integer;
+    A, B: TGameSnapshot;
+    Viewport: TViewport;
+    Reference: TGame;
+    ReferenceLoop: TGameLoop;
+    Age: Double;
+    Steps: Int64;
+    Score: Integer;
+    Clamped, Clear: Boolean;
+    procedure ResizeClient(W, H: Integer);
+    begin
+      FrmMain.ClientWidth := W;
+      FrmMain.ClientHeight := H;
+      FrmMain.FormPaint(nil);
+    end;
+    function SameModel(const First, Second: TGameSnapshot): Boolean;
+    var K: Integer;
+    begin
+      Result := (First.State = Second.State) and (First.Seed = Second.Seed) and
+        (First.Score = Second.Score) and (First.Lives = Second.Lives) and
+        (First.Level = Second.Level) and (First.ActiveBricks = Second.ActiveBricks) and
+        (First.Ball.X = Second.Ball.X) and (First.Ball.Y = Second.Ball.Y) and
+        (First.Ball.VelocityX = Second.Ball.VelocityX) and
+        (First.Ball.VelocityY = Second.Ball.VelocityY) and
+        (First.Paddle.X = Second.Paddle.X) and (First.Paddle.Width = Second.Paddle.Width) and
+        (Length(First.Bricks) = Length(Second.Bricks));
+      if not Result then Exit;
+      for K := 0 to High(First.Bricks) do
+        Result := Result and (First.Bricks[K].Active = Second.Bricks[K].Active) and
+          (First.Bricks[K].X = Second.Bricks[K].X) and
+          (First.Bricks[K].Y = Second.Bricks[K].Y) and
+          (First.Bricks[K].Kind = Second.Bricks[K].Kind);
+    end;
+  begin
+    InitialWidth := FrmMain.ClientWidth; InitialHeight := FrmMain.ClientHeight;
+    Reference := nil; ReferenceLoop := nil;
+    try
+      Check('window_has_native_resize_and_maximize',
+        (GetWindowLong(FrmMain.Handle, GWL_STYLE) and WS_THICKFRAME <> 0) and
+        (GetWindowLong(FrmMain.Handle, GWL_STYLE) and WS_MAXIMIZEBOX <> 0));
+      FrmMain.SetBounds(FrmMain.Left, FrmMain.Top, 1, 1);
+      Check('window_minimum_preserves_initial_client',
+        (FrmMain.ClientWidth = InitialWidth) and (FrmMain.ClientHeight = InitialHeight));
+      for N := 0 to High(Sizes) do
+      begin
+        A := FrmMain.Game.Snapshot; Steps := FrmMain.GameLoop.Diagnostics.TotalSteps;
+        ResizeClient(Sizes[N, 0], Sizes[N, 1]);
+        Viewport := FrmMain.Renderer.Viewport;
+        Check('window_resize_viewport_' + Names[N],
+          (FrmMain.ClientWidth = Sizes[N, 0]) and (FrmMain.ClientHeight = Sizes[N, 1]) and
+          SameValue(Viewport.Width / Viewport.Height, 688.0 / 453, 1.0E-8) and
+          SameValue(Viewport.Width + 2 * Viewport.OffsetX, Sizes[N, 0], 1.0E-8) and
+          SameValue(Viewport.Height + 2 * Viewport.OffsetY, Sizes[N, 1], 1.0E-8));
+        Check('window_resize_and_paint_preserve_match_' + Names[N],
+          SameModel(A, FrmMain.Game.Snapshot) and
+          (FrmMain.GameLoop.Diagnostics.TotalSteps = Steps) and not FrmMain.Timer1.Enabled);
+        AllocationCount := FrmMain.Renderer.Metrics.BufferResizes;
+        FrmMain.FormPaint(nil);
+        Check('window_buffer_size_and_reuse_' + Names[N],
+          (FrmMain.Renderer.Buffer.Width = Sizes[N, 0]) and
+          (FrmMain.Renderer.Buffer.Height = Sizes[N, 1]) and
+          (FrmMain.Renderer.Metrics.BufferResizes = AllocationCount));
+        Clear := True;
+        if Viewport.OffsetX > 0 then
+          Clear := FrmMain.Renderer.Buffer.Canvas.Pixels[Round(Viewport.OffsetX/2),
+            Round(Viewport.OffsetY + 100*Viewport.Scale)] = clBlack;
+        if Viewport.OffsetY > 0 then
+          Clear := Clear and (FrmMain.Renderer.Buffer.Canvas.Pixels[
+            Round(Viewport.OffsetX + 100*Viewport.Scale), Round(Viewport.OffsetY/2)] = clBlack);
+        Check('window_letterbox_is_black_' + Names[N], Clear);
+        FrmMain.FormMouseMove(nil, [], Round(Viewport.OffsetX + 325*Viewport.Scale), 400);
+        B := FrmMain.Game.Snapshot;
+        Check('window_mouse_and_ready_ball_alignment_' + Names[N],
+          (Abs(B.Paddle.X + B.Paddle.Width/2 - 325) <= 0.5/Viewport.Scale + 1.0E-8) and
+          SameValue(B.Ball.X + B.Ball.Size/2, B.Paddle.X + B.Paddle.Width/2, 1.0E-8));
+        FrmMain.FormMouseMove(nil, [], -100, 400);
+        Clamped := FrmMain.Game.Snapshot.Paddle.X = 0;
+        FrmMain.FormMouseMove(nil, [], Sizes[N, 0] + 100, 400);
+        Check('window_mouse_clamps_both_edges_' + Names[N], Clamped and
+          (FrmMain.Game.Snapshot.Paddle.X = 638));
+        FrmMain.FormPaint(nil);
+        Png.Assign(FrmMain.Renderer.Buffer);
+        Png.SaveToFile(TPath.Combine(OutputDirectory, 'window-' + Names[N] + '.png'));
+      end;
+      Press(VK_F2);
+      Reference := TGame.Create(TGameConfig.Default, FrmMain.Game.Snapshot.Seed);
+      ReferenceLoop := TGameLoop.Create(Reference);
+      Press(VK_SPACE); ReferenceLoop.Execute(gcLaunch);
+      for N := 0 to High(Sizes) do
+      begin
+        ResizeClient(Sizes[N, 0], Sizes[N, 1]);
+        FrmMain.AdvanceFrame(2.5*FixedDeltaSeconds);
+        ReferenceLoop.Advance(2.5*FixedDeltaSeconds);
+        Check('resizing_preserves_trajectory_and_fractional_time_' + Names[N],
+          SameModel(FrmMain.Game.Snapshot, Reference.Snapshot) and
+          SameValue(FrmMain.GameLoop.Diagnostics.AccumulatorSeconds,
+            ReferenceLoop.Diagnostics.AccumulatorSeconds, 1.0E-8));
+      end;
+      Press(VK_F2); Probe.Fixture; FrmMain.RefreshView; Press(VK_SPACE);
+      Probe.SetBall(310,82,0,240); FrmMain.AdvanceFrame(FixedDeltaSeconds);
+      FrmMain.AdvanceFrame(0.1); Press(VK_F10); Press(VK_F3);
+      A := FrmMain.Game.Snapshot; Steps := FrmMain.GameLoop.Diagnostics.TotalSteps;
+      Age := FrmMain.Presentation.Fades[0].AgeSeconds;
+      Score := FrmMain.Presentation.DisplayedScore;
+      ResizeClient(1101,733);
+      Check('resize_preserves_paused_fade_and_score',
+        SameModel(A, FrmMain.Game.Snapshot) and
+        (FrmMain.Presentation.Fades[0].AgeSeconds = Age) and
+        (FrmMain.Presentation.DisplayedScore = Score) and
+        (FrmMain.GameLoop.Diagnostics.TotalSteps = Steps) and not FrmMain.Timer1.Enabled);
+      Press(VK_F1);
+      Check('debug_visual_step_survives_resize',
+        SameValue(FrmMain.Presentation.Fades[0].AgeSeconds, Age + FixedDeltaSeconds, 1.0E-8) and
+        (FrmMain.Presentation.DisplayedScore = Score+1) and
+        (FrmMain.GameLoop.Diagnostics.TotalSteps = Steps+1) and not FrmMain.Timer1.Enabled);
+      Press(VK_F10); Press(VK_F2);
+      ResizeClient(InitialWidth,InitialHeight);
+      Gdi := GetGuiResources(GetCurrentProcess,GR_GDIOBJECTS);
+      User := GetGuiResources(GetCurrentProcess,GR_USEROBJECTS);
+      for N := 1 to 30 do
+        if Odd(N) then ResizeClient(1000,453) else ResizeClient(InitialWidth,InitialHeight);
+      Check('repeated_resizes_keep_gui_resources_bounded',
+        (GetGuiResources(GetCurrentProcess,GR_GDIOBJECTS) <= DWORD(Gdi+2)) and
+        (GetGuiResources(GetCurrentProcess,GR_USEROBJECTS) <= DWORD(User+2)));
+    finally
+      ReferenceLoop.Free; Reference.Free;
+      if Assigned(FrmDebug) then FreeAndNil(FrmDebug);
+      Press(VK_F2); ResizeClient(InitialWidth,InitialHeight);
+    end;
   end;
 begin
   Report := TJSONObject.Create; Results := TJSONArray.Create; Failures := 0;
@@ -247,6 +384,7 @@ begin
       Check('restart_clears_stepped_visual_feedback',
         not FrmMain.Presentation.HasPending and
         (FrmMain.Presentation.DisplayedScore = 0) and not FrmMain.Timer1.Enabled);
+      CheckWindowResizing;
       { E5: drive the real form/loop/presentation across every campaign board.
         Fixture shortens each board to one collision; console tests clear all
         136 real bricks separately. No production skip-level command is added. }

@@ -1,0 +1,124 @@
+{
+  "checks": 13,
+  "failures": 0,
+  "comparisons": [
+    {
+      "frame": "paddle-100.png",
+      "region": "full frame",
+      "box": null,
+      "identical": true
+    },
+    {
+      "frame": "fade-half.png",
+      "region": "full frame",
+      "box": null,
+      "identical": true
+    },
+    {
+      "frame": "level-1-complete.png",
+      "region": "full frame",
+      "box": null,
+      "identical": true
+    },
+    {
+      "frame": "level-2-complete.png",
+      "region": "full frame",
+      "box": null,
+      "identical": true
+    },
+    {
+      "frame": "level-3-complete.png",
+      "region": "full frame",
+      "box": null,
+      "identical": true
+    },
+    {
+      "frame": "scale-100.png",
+      "region": "HUD",
+      "box": [
+        0,
+        435,
+        688,
+        453
+      ],
+      "identical": true
+    },
+    {
+      "frame": "scale-100.png",
+      "region": "message",
+      "box": [
+        0,
+        216,
+        688,
+        240
+      ],
+      "identical": true
+    },
+    {
+      "frame": "scale-125.png",
+      "region": "HUD",
+      "box": [
+        0,
+        544,
+        860,
+        566
+      ],
+      "identical": true
+    },
+    {
+      "frame": "scale-125.png",
+      "region": "message",
+      "box": [
+        0,
+        270,
+        860,
+        300
+      ],
+      "identical": true
+    },
+    {
+      "frame": "scale-150.png",
+      "region": "HUD",
+      "box": [
+        0,
+        652,
+        1032,
+        680
+      ],
+      "identical": true
+    },
+    {
+      "frame": "scale-150.png",
+      "region": "message",
+      "box": [
+        0,
+        324,
+        1032,
+        360
+      ],
+      "identical": true
+    },
+    {
+      "frame": "scale-200.png",
+      "region": "HUD",
+      "box": [
+        0,
+        870,
+        1376,
+        906
+      ],
+      "identical": true
+    },
+    {
+      "frame": "scale-200.png",
+      "region": "message",
+      "box": [
+        0,
+        432,
+        1376,
+        480
+      ],
+      "identical": true
+    }
+  ]
+}
