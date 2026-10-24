@@ -1,8 +1,9 @@
 object FrmMain: TFrmMain
   Left = 192
   Top = 107
-  BorderIcons = [biSystemMenu, biMinimize]
-  BorderStyle = bsSingle
+  AutoScroll = False
+  BorderIcons = [biSystemMenu, biMinimize, biMaximize]
+  BorderStyle = bsSizeable
   Caption = 'Delphi Blocks'
   ClientHeight = 453
   ClientWidth = 688
@@ -15,6 +16,7 @@ object FrmMain: TFrmMain
   KeyPreview = True
   Position = poMainFormCenter
   StyleElements = [seFont, seBorder]
+  WindowState = wsMaximized
   OnClick = FormClick
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown

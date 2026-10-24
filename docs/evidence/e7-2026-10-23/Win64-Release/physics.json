@@ -1,0 +1,528 @@
+{
+  "suite": "E3 continuous collisions and fixed timestep",
+  "passed": true,
+  "checks": 104,
+  "failures": 0,
+  "results": [
+    {
+      "name": "geometry_left_face_time_and_normal",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "geometry_right_face_time_and_normal",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "geometry_top_face_time_and_normal",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "geometry_bottom_face_time_and_normal",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "geometry_circular_corner_0",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "corner_reflection_preserves_speed_0",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "geometry_circular_corner_1",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "corner_reflection_preserves_speed_1",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "geometry_circular_corner_2",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "corner_reflection_preserves_speed_2",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "geometry_circular_corner_3",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "corner_reflection_preserves_speed_3",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "expanded_aabb_corner_is_not_a_circle_contact",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "swept_near_corner_miss_has_no_false_contact",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "exact_tangent_does_not_reflect_or_stick",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "stationary_noncontact_has_no_hit",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "moving_away_from_touching_face_has_no_hit",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "initial_overlap_returns_minimum_separation",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "separating_overlap_preserves_outward_velocity",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "center_inside_rectangle_has_deterministic_exit",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "contact_after_time_window_is_rejected",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "rounded_paddle_center_has_flat_top",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "rounded_paddle_left_tip_uses_combined_radii",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "rounded_paddle_right_tip_is_symmetric",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "empty_paddle_bounding_box_corner_does_not_bounce",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "brick_face_0_scores_once",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "descending_ball_bounces_up_from_top",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "removed_brick_0_cannot_score_or_bounce_again",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "brick_face_1_scores_once",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "rising_ball_bounces_down_from_bottom",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "removed_brick_1_cannot_score_or_bounce_again",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "brick_face_2_scores_once",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "lateral_face_2_reverses_only_horizontal",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "removed_brick_2_cannot_score_or_bounce_again",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "brick_face_3_scores_once",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "lateral_face_3_reverses_only_horizontal",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "removed_brick_3_cannot_score_or_bounce_again",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "brick_face_4_scores_once",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "lateral_face_4_reverses_only_horizontal",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "removed_brick_4_cannot_score_or_bounce_again",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "brick_face_5_scores_once",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "lateral_face_5_reverses_only_horizontal",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "removed_brick_5_cannot_score_or_bounce_again",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "high_speed_top_hit_does_not_tunnel",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "high_speed_side_hit_uses_remaining_time_after_bounce",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "initial_overlap_separates_without_inverting_outward_ball",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "seam_hits_both_bricks_but_reflects_once",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "simultaneous_left_top_wall_contact_reflects_both_axes",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "right_wall_reflects_inside_field",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "collision_budget_stops_at_safe_contact_and_reports_discard",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "ball_below_paddle_is_not_rescued_and_not_lost_early",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "lower_loss_line_works_even_directly_under_paddle",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "paddle_angle_-4_speed_and_vertical_bounds",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "paddle_angle_-4_proportional",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "paddle_angle_-3_speed_and_vertical_bounds",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "paddle_angle_-3_proportional",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "paddle_angle_-2_speed_and_vertical_bounds",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "paddle_angle_-2_proportional",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "paddle_angle_-1_speed_and_vertical_bounds",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "paddle_angle_-1_proportional",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "paddle_angle_0_speed_and_vertical_bounds",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "paddle_angle_1_speed_and_vertical_bounds",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "paddle_angle_1_proportional",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "paddle_angle_2_speed_and_vertical_bounds",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "paddle_angle_2_proportional",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "paddle_angle_3_speed_and_vertical_bounds",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "paddle_angle_3_proportional",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "paddle_angle_4_speed_and_vertical_bounds",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "paddle_angle_4_proportional",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "paddle_center_preserves_incoming_left_sign_and_min_angle",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "paddle_center_preserves_incoming_right_sign_and_min_angle",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "paddle_actual_contact_-1",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "paddle_actual_offset_-1",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "paddle_actual_contact_0",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "paddle_actual_contact_1",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "paddle_actual_offset_1",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "ascending_ball_is_not_reflected_by_paddle",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "fast_ball_cannot_tunnel_through_paddle",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "schedule_30_runs_360_fixed_steps",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "schedule_60_runs_360_fixed_steps",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "schedule_60_matches_30hz_trajectory_and_board",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "schedule_144_runs_360_fixed_steps",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "schedule_144_matches_30hz_trajectory_and_board",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "long_callback_accepts_100ms_at_most_12_steps_reports_1400ms_discard",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "pause_discards_fraction_and_wall_time_without_jump",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "resume_restarts_with_fresh_accumulator",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "deactivation_resets_accumulator",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "restart_resets_accumulator",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "life_loss_stops_catchup_after_one_step_and_resets_fraction",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "life_relaunch_has_no_old_remainder",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "victory_stops_catchup_and_clears_accumulator",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "manual_step_is_one_120th_second_with_no_clock_debt",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "level_completion_stops_catchup_and_clears_fraction",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "next_level_launch_has_no_old_clock_debt",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "seed_1_30s_replay_preserves_speed_bounds_and_collision_budget",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "seed_2_30s_replay_preserves_speed_bounds_and_collision_budget",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "seed_3_30s_replay_preserves_speed_bounds_and_collision_budget",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "seed_4_30s_replay_preserves_speed_bounds_and_collision_budget",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "seed_5_30s_replay_preserves_speed_bounds_and_collision_budget",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "seed_6_30s_replay_preserves_speed_bounds_and_collision_budget",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "seed_7_30s_replay_preserves_speed_bounds_and_collision_budget",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "seed_8_30s_replay_preserves_speed_bounds_and_collision_budget",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "seed_9_30s_replay_preserves_speed_bounds_and_collision_budget",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "seed_10_30s_replay_preserves_speed_bounds_and_collision_budget",
+      "passed": true,
+      "detail": ""
+    }
+  ]
+}

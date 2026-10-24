@@ -20,6 +20,13 @@ uses
   UE4ViewChecks in '..\e4\UE4ViewChecks.pas';
 
 type
+  { Automated checks must never confine the user's shared desktop cursor.
+    The view suite uses a separate form with recorded native calls. }
+  TViewCheckHost = class(TFrmMain)
+  protected
+    function CursorWindowActive: Boolean; override;
+  end;
+
   TBaseline = class
   private
     FControl: TTimer;
@@ -39,6 +46,9 @@ type
     constructor Create;
     destructor Destroy; override;
   end;
+
+function TViewCheckHost.CursorWindowActive: Boolean;
+begin Result := False; end;
 
 function Stamp: Int64;
 begin Result := TStopwatch.GetTimeStamp; end;
@@ -182,7 +192,13 @@ begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   Application.Title := 'Breakout E4';
-  Application.CreateForm(TFrmMain,FrmMain);
+  if SameText(ParamStr(1), '--e4') or SameText(ParamStr(1), '--e5') then
+  begin
+    Application.CreateForm(TViewCheckHost,FrmMain);
+    FrmMain.WindowState := wsNormal;
+  end
+  else
+    Application.CreateForm(TFrmMain,FrmMain);
   Baseline := TBaseline.Create;
   try Application.Run; finally Baseline.Free; end;
 end.

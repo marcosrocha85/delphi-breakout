@@ -2,8 +2,8 @@
 
 Date: 2026-10-23. Base: integrated E5 `82b7b24`.
 Environment: Delphi 13 Community Edition, Windows, VCL.
-Status: the manual route exposed paused diagnostic input and visual-stepping issues.
-Both corrections are implemented; the focused visual-stepping retest is pending.
+Status: completed and manually accepted by Marcos on 2026-10-23.
+Both diagnostic corrections passed his focused retest; he explicitly authorized PR #10 merge.
 
 ## Delivered changes
 
@@ -127,14 +127,15 @@ The new checks first failed against the previous implementation (five failed
 assertions), then passed with this correction. Fresh evidence is recorded in
 [evidence/e6-debug-visual-2026-10-23](evidence/e6-debug-visual-2026-10-23/README.md).
 
-## Human report and remaining retest
+## Human acceptance
 
 Marcos's report is the acceptance evidence for the other requested manual checks.
 No detailed duration, physical monitor/DPI setup, CPU/memory values, or new
 FPS benchmark was supplied; no such measurements are inferred from it. The
 automated handler and bitmap evidence remains narrower than native human play.
 
-Only this focused human retest is pending:
+Marcos confirmed that the corrected behavior worked and explicitly authorized
+merging PR #10 on 2026-10-23. The accepted focused sequence was:
 
 1. Launch a ball and show diagnostics with F10.
 2. Hit a brick and pause with F3 while it is fading and the score is counting.
@@ -144,5 +145,5 @@ Only this focused human retest is pending:
 4. Hide diagnostics with F10: mouse and F1 leave the paused match frozen.
 5. Resume with F3 and verify normal play.
 
-PR #10 was already marked ready for review when this correction began. Its
-review status is preserved; this record does not authorize merging it.
+This acceptance closes E6. The full automated results above remain the validation
+evidence; the user report supplies human acceptance without inventing measurements.

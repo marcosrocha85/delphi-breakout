@@ -14,6 +14,8 @@ const
   ExpectedPoints: array[TBrickKind] of Integer = (100, 150, 200, 250, 400, 500);
   Rates: array[0..2] of Integer = (30, 60, 144);
   Durations: array[0..2] of Integer = (250, 350, 500);
+  WindowSizes: array[0..3, 0..1] of Integer =
+    ((1000, 453), (688, 900), (1376, 906), (1101, 733));
 var
   Results: TJSONArray;
   Report: TJSONObject;
@@ -135,6 +137,23 @@ begin
       (V.ToLogicalX(481) = 325));
     V := TViewport.Fit(0, 0);
     Check('empty_viewport_safe', V.ToLogicalX(100) = 0);
+    for I := 0 to High(WindowSizes) do
+    begin
+      V := TViewport.Fit(WindowSizes[I, 0], WindowSizes[I, 1]);
+      Check('window_viewport_fits_and_centers_' + IntToStr(I),
+        (V.Scale > 0) and (V.OffsetX >= 0) and (V.OffsetY >= 0) and
+        SameValue(V.Width / V.Height, 688.0 / 453, 1.0E-8) and
+        SameValue(V.Width + 2 * V.OffsetX, WindowSizes[I, 0], 1.0E-8) and
+        SameValue(V.Height + 2 * V.OffsetY, WindowSizes[I, 1], 1.0E-8) and
+        ((V.OffsetX < 1.0E-8) or (V.OffsetY < 1.0E-8)));
+      Check('window_viewport_round_trip_with_pixel_rounding_' + IntToStr(I),
+        Abs(V.ToLogicalX(Round(V.OffsetX + 325 * V.Scale)) - 325) <=
+          0.5 / V.Scale + 1.0E-8);
+    end;
+    V := TViewport.Fit(0, 453);
+    Check('zero_width_viewport_safe', (V.Scale = 0) and (V.ToLogicalX(100) = 0));
+    V := TViewport.Fit(688, -1);
+    Check('negative_height_viewport_safe', (V.Scale = 0) and (V.Width = 0));
     for J := 0 to 1 do
     begin
       Raised := False;

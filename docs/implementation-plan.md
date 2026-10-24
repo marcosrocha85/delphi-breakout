@@ -2,7 +2,7 @@
 
 Created: 2026-10-22. Updated: 2026-10-23. Runtime environment: Delphi 13, Windows.
 
-Status: incremental implementation; **E0–E4 completed on 2026-10-22**. [E0](e0-baseline.md) records the baseline; [E1](e1-results.md) covers flow fixes; [E2](e2-results.md) extracts the engine and translation-ready text; [E3](e3-results.md) adds fixed-step continuous collision with a circular ball and rounded paddle; [E4](e4-results.md) adds Canvas, layering, animated scoring, fading, and a stretchable paddle. **E5 completed on 2026-10-23** adds a finite campaign and progression feedback; see [E5 results](e5-results.md). Next: **E6, consolidation**.
+Status: incremental implementation; **E0–E4 completed on 2026-10-22**. [E0](e0-baseline.md) records the baseline; [E1](e1-results.md) covers flow fixes; [E2](e2-results.md) extracts the engine and translation-ready text; [E3](e3-results.md) adds fixed-step continuous collision with a circular ball and rounded paddle; [E4](e4-results.md) adds Canvas, layering, animated scoring, fading, and a stretchable paddle. **E5 completed on 2026-10-23** adds a finite campaign and progression feedback; see [E5 results](e5-results.md). **E6 completed and manually accepted on 2026-10-23**; see [E6 results](e6-results.md). **E7 completed and accepted on 2026-10-23**; see [E7 results](e7-results.md). The initial menu precedes fullscreen and borderless fullscreen.
 
 ## 1. Goal and direction
 
@@ -198,7 +198,7 @@ Output: [Canvas/feedback results](e4-results.md), 191 non-VCL cases per configur
 
 Output: a finite three-board match with explicit Ready transitions, lives/score preservation, 5% compounded level speed capped at 300 units/s, localized state feedback, and a level HUD. See [E5 results](e5-results.md) and [progression chapter](study/levels-and-progression.md) for validation and human playtesting limits.
 
-### E6 — Consolidate project and documentation (delivered; diagnostic stepping retest pending)
+### E6 — Consolidate project and documentation (completed 2026-10-23)
 
 - Separate executable/DCU outputs by platform/configuration, e.g. build/Win32/Debug and build/Win64/Release.
 - Review duplicate targets imports/legacy project settings with before/after builds; preserve resources/icon.
@@ -214,9 +214,40 @@ and layout extraction are recorded in [E6 results](e6-results.md). Marcos
 authorized incorporating the preserved IDE/form changes and aligning the
 Delphi Blocks title on 2026-10-23. Marcos subsequently reported completing the
 manual route with paused diagnostic-input and visual-stepping issues. Those
-corrections and the focused human retest still pending are recorded in E6 results;
-no detailed
+corrections and the focused human retest are recorded in E6 results. Marcos
+confirmed both fixes worked and explicitly authorized merging PR #10. No detailed
 monitor setup or resource measurements were supplied with his report.
+
+### E7 — Resizable window (completed and accepted on 2026-10-23)
+
+Selected explicitly by Marcos on 2026-10-23 after accepting E6 and authorizing
+PR #10 merge. Base: integrated E6 `648cc82`.
+
+- Enable native border resizing and maximize/restore, starting at the existing
+  client size as the restored bounds and opening maximized. The initial DPI-scaled window dimensions define the minimum;
+  VCL scales the constraints during DPI changes.
+- Keep the 688 by 453 logical field and all physics/time rules independent of
+  client dimensions. Reuse the existing centered uniform viewport; unused space
+  stays black. Do not stretch sprites or force the window to a fixed ratio.
+- Use the same viewport for mouse inversion and rendering. Preserve edge clamps,
+  Ready ball attachment, pause, F1 visuals, and focus-loss behavior.
+- Confine and hide the cursor inside the displayed field while Playing in the
+  foreground; release/show it in Ready, pause, terminal states, on focus loss,
+  minimize/hide, handle destruction, and shutdown. Follow window movement,
+  client resizing, and DPI notifications. Pause before using native borders.
+- Cover wide, tall, doubled, and fractional client sizes; minimum bounds,
+  persistent buffer reuse, bounded GUI resources, and deterministic trajectories.
+- Rebuild all projects in Win32/Win64 Debug/Release, retain the E6 reference pixel
+  comparisons, update the study guide, and leave a native manual checklist visible.
+
+Output: a resizable game with unchanged logical mechanics and appearance at its
+original client size. See [E7 results](e7-results.md) and
+[verification instructions](../tools/e7/README.md). Interactive border dragging,
+maximizing/restoring, minimize/focus behavior and real monitor/DPI transitions
+remain native evaluation scenarios. Marcos accepted E7 on 2026-10-23 and
+explicitly requested the squash merge of PR #11. His acceptance did not specify
+monitor/DPI coverage. Fullscreen and borderless fullscreen come after the
+initial menu; E7 retains a native window.
 
 ## 7. Validation for each delivery
 
@@ -266,7 +297,7 @@ E0–E4 deliver organized code, separated engine, predictable physics, and compo
 - Preserve art and demonstrate smoothness changes by comparison/measurement.
 - Declared builds/tests pass with evidence and without overwriting local user work.
 
-With E0–E5 completed, proceed to E6. Keep simulation boundaries clear before graphics changes so regressions can be located. Speed, angle, cadence, and difficulty remain playtesting parameters.
+With E0–E7 completed, the initial menu precedes fullscreen and borderless fullscreen as confirmed by Marcos. Keep simulation boundaries clear before graphics changes so regressions can be located. Speed, angle, cadence, and difficulty remain playtesting parameters.
 
 ## 9. Desires after E6
 
@@ -277,7 +308,7 @@ Recorded by Marcos on 2026-10-22 for exploration after the established stages. P
 | Scaling/larger window | Resize while preserving proportions, logical geometry, readability, and mouse mapping. Presentation size stays independent of simulation speed/rules. |
 | Paddle size powerup | Define collection, duration, stacking, bounds, and repositioning. Preserve rounded caps and extend only the striped center, following the original TPanel/three-TImage composition. E4 prepares drawing only. |
 | Initial menu | Start a match/access implemented options with localization-ready text. Define navigation/transitions before integration. |
-| Fullscreen | Evaluate borderless and traditional/exclusive modes, transitions, focus/resume, available monitors; decide supported options after testing. |
+| Fullscreen | After the initial menu, evaluate borderless and traditional/exclusive modes, transitions, focus/resume, available monitors; decide supported options after testing. |
 | Canvas/OpenGL | Use E4 as baseline for a comparable prototype retaining engine/sprites. Choose by observed smoothness/flicker, frame intervals, simulation/drawing cost, resources, and compatibility. |
 | Template levels/endless progression | Seeded templates/variations allowing progression beyond a finite set. Evaluate diversity, bounded difficulty, playable layouts; lives can still end a match. Define completion policy when implementing. |
 

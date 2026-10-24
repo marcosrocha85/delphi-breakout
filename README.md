@@ -44,7 +44,13 @@ The group also contains `BaselineRunner.exe` for VCL checks and measurements, an
 | F10 | Show or hide diagnostics. |
 | F1, with diagnostics open and the game paused | Advance physics, brick fading, and score counting by one 1/120 s step; move the mouse to reposition the paddle between steps. |
 
-The cursor is hidden over the game, but the mouse can still leave the window. Losing focus pauses the match; return to the window and press F3 to resume.
+The game opens maximized, with a native border and title bar. While playing in
+the foreground, the cursor is hidden and confined to the displayed field,
+excluding black margins. Press F3 to pause and release it before using the
+window borders/buttons or another application. Resuming confines it again.
+Ready, paused, completed, and inactive windows leave the cursor free and visible.
+Losing application focus pauses the match; return and press F3 to resume.
+Fullscreen and borderless fullscreen are planned after the initial menu.
 
 ## Techniques already implemented
 
@@ -60,7 +66,7 @@ The cursor is hidden over the game, but the mouse can still leave the window. Lo
 - Initial speeds of **240 / 252 / 264.6 units/s**: 5% compounded per level, capped by configuration at 300 units/s.
 - Tests that control elapsed time and measurements that distinguish simulation, callbacks, and painting.
 
-The current implementation includes **E6 consolidation** of the [evolution plan](docs/implementation-plan.md): separate build outputs, consistent project settings, and named HUD layout. See [E6 results](docs/e6-results.md), [progression results](docs/e5-results.md), and [VCL checks](tools/e5/README.md). Marcos reported completing the manual route with paused diagnostic-input and visual-stepping issues; the final focused retest is pending. The window remains fixed; menus, fullscreen, template-based levels, powerups, and an OpenGL comparison are planned. The [E4 results](docs/e4-results.md) retain the rendering measurements and their limits. The published 1.0.1.0 binaries above precede E5; build this branch to try the campaign.
+The current implementation includes **E6 consolidation** of the [evolution plan](docs/implementation-plan.md): separate build outputs, consistent project settings, and named HUD layout. See [E6 results](docs/e6-results.md), [progression results](docs/e5-results.md), and [VCL checks](tools/e5/README.md). Marcos accepted E6 after completing the manual route and confirming both diagnostic fixes. E7 adds native resizing/maximize with a centered proportional field and the original size as its minimum; see [E7 results](docs/e7-results.md) and the [manual checklist](tools/e7/README.md). Marcos accepted E7 and authorized its squash merge on 2026-10-23. Menus, fullscreen, template-based levels, powerups, and an OpenGL comparison are planned. The [E4 results](docs/e4-results.md) retain the rendering measurements and their limits. The published 1.0.1.0 binaries above precede E5; build this branch to try the campaign.
 
 ## From a USB backup to a study project
 

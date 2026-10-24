@@ -15,8 +15,8 @@ Engine coordinates remain floating-point logical values. The renderer transforms
 `LogicalFieldWidth` and `LogicalFieldHeight` in `Breakout.Types` define the
 default 688 by 453 logical field. `TGameConfig.Default`, the default viewport,
 and the renderer refer to those shared dimensions. They are independent of
-client pixels and DPI; this consolidation does not make the window resizable
-or turn the renderer into a configurable field-size engine.
+client pixels and DPI. E7 enables native window resizing while retaining this
+logical field; it does not add configurable physics dimensions.
 
 The renderer's layout constants describe the 18-unit HUD band, five-unit margin,
 text baseline, font, life-icon crop/position/spacing, and 24-unit message band.
@@ -66,7 +66,7 @@ Using the same scale in both axes preserves proportions and centers the unused s
 logicalX = (clientX - ox) / s
 ```
 
-`TViewport.ToLogicalX` performs this inversion, then the engine clamps paddle movement. At destination size 1000 × 453, scale is 1 and horizontal offset is 156. Client X=481 maps to logical X=325. This transform exists already; the main window remains fixed. Testing bitmaps at 125%, 150%, or 200% does not validate actual DPI transitions between monitors.
+`TViewport.ToLogicalX` performs this inversion, then the engine clamps paddle movement. At destination size 1000 × 453, scale is 1 and horizontal offset is 156. Client X=481 maps to logical X=325. E7 uses this existing transform for the resizable main window. A tall client instead adds vertical offsets. The initial DPI-scaled client size remains the minimum, and the native maximize/restore controls are enabled. Resizing and repainting do not reset the engine, alter its dimensions, or consume simulation/animation time; timer callbacks retain the existing fixed-step policy. Mouse positions outside the logical field clamp at the paddle edges. Testing bitmaps at 125%, 150%, or 200% does not validate actual DPI transitions between monitors; native dragging and DPI changes remain in the [E7 manual checklist](../../tools/e7/README.md).
 
 ## What counts as a frame here
 

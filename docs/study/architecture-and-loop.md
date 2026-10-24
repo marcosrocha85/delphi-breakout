@@ -73,3 +73,40 @@ The timer may keep running in Ready and terminal states while fading or score de
 To reproduce a match, preserve configuration, seed, commands, and inputs applied at the same steps. A seed reproduces generation, not a match played with different movements. The loop has no OS clock, and the engine does not use global `Random`, making these factors controllable in tests.
 
 See [Breakout.Loop](../../src/Breakout.Loop.pas), [Breakout.Game](../../src/Breakout.Game.pas), and schedule tests in [Breakout.Physics.Tests](../../tests/Breakout.Physics.Tests.pas).
+
+## Resizing the native window
+
+E7 enables border resizing and native maximize/restore and opens maximized.
+The restored client starts at 688 by 453 logical units scaled by VCL for the current DPI. Its initial outer
+window dimensions become the minimum constraints; VCL rescales those constraints
+with DPI changes. The minimum protects the existing HUD readability.
+
+The renderer fits one uniform viewport inside the client rectangle and clears
+unused space to black. Input inverts that same viewport, then the engine clamps
+the paddle. OnResize updates cursor bounds and invalidates painting: it neither changes game geometry
+nor resets the loop accumulator, score counting, or fade ages. Native timer
+callbacks and focus-loss pause retain their existing policy. Programmatic size
+changes and painting are covered by regressions; interactive dragging,
+maximize/restore and real DPI/monitor changes require the [manual checks](../../tools/e7/README.md).
+
+## Cursor confinement belongs to the window adapter
+
+The foreground Playing window hides the pointer and confines it to the displayed
+field. The form converts viewport bounds into screen pixels for
+[ClipCursor](https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-clipcursor),
+rounding inward to exclude black margins. This shared desktop resource is
+released when leaving play, pausing, losing focus, minimizing/hiding, destroying
+the native handle, or closing. Ready and terminal screens leave the pointer free.
+F3 releases it before interacting with the native borders and buttons.
+
+State refreshes and window move/size/DPI messages maintain the bounds. Unchanged
+bounds avoid redundant native calls. Ownership is recorded only after a successful
+acquisition; failed releases retain ownership so the next update can retry.
+DestroyWnd releases before a handle is destroyed or recreated. No model or
+simulation timing rule depends on this desktop resource.
+
+The automated runner disables confinement on its host window. A separate hidden
+form exercises the real handlers with recorded cursor calls and simulated window
+eligibility, leaving the desktop cursor untouched. These tests cover policy,
+geometry, failure/retry, and cleanup; actual foreground confinement remains part
+of manual acceptance. Fullscreen and borderless fullscreen follow the menu.
