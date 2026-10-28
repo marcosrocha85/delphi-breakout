@@ -1,5 +1,7 @@
 # Delphi Blocks
 
+[![XERJ Corpus Hub contributor](https://hub.xerj.org/contributors/marcosrocha85/badge.svg)](https://hub.xerj.org/contributors/marcosrocha85)
+
 A Breakout inspired by the Arkanoid I played on a 386XT, originally written in Delphi around 2009–2010. Today, it also serves as a study project for developers building a 2D game engine and learning what happens between player input, simulation, and drawing a frame.
 
 <img src="images/main%20game.jpg" width="400" alt="Original Delphi Breakout appearance">
